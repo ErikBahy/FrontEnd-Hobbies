@@ -18,6 +18,7 @@ function UserProfile() {
         justifyContent="space-between"
       >
         <Feed />
+        <RightBar />
       </Stack>
     </>
   );

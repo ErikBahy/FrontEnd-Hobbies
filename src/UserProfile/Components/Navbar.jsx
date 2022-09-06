@@ -15,6 +15,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
+import { Home } from "@mui/icons-material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -146,6 +147,15 @@ export default function Navbar() {
           >
             SPORT
           </Typography>
+          <IconButton
+            size="large"
+            aria-label="show 4 new mails"
+            color="inherit"
+          >
+            <Home
+              sx={{ display: { xs: "block", sm: "none" }, marginRight: 3 }}
+            />
+          </IconButton>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
