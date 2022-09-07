@@ -1,6 +1,6 @@
 import { Stack } from "@mui/system";
 import React from "react";
-import Feed from "../Components/Feed";
+import Feed from "../Components/UserProfileFeed";
 import LeftBar from "../Components/LeftBar";
 import Navbar from "../Components/Navbar";
 import Post from "../Components/Post";
