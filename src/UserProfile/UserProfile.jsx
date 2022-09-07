@@ -1,10 +1,10 @@
 import { Stack } from "@mui/system";
 import React from "react";
-import Feed from "./Components/Feed";
-import LeftBar from "./Components/LeftBar";
-import Navbar from "./Components/Navbar";
-import Post from "./Components/Post";
-import RightBar from "./Components/RightBar";
+import Feed from "../Components/Feed";
+import LeftBar from "../Components/LeftBar";
+import Navbar from "../Components/Navbar";
+import Post from "../Components/Post";
+import RightBar from "../Components/RightBar";
 
 function UserProfile() {
   return (
@@ -18,7 +18,6 @@ function UserProfile() {
         justifyContent="space-between"
       >
         <Feed />
-        <RightBar />
       </Stack>
     </>
   );

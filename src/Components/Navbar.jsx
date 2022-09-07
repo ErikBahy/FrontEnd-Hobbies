@@ -19,6 +19,8 @@ import { Home } from "@mui/icons-material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
+  flex: 3,
+
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
   "&:hover": {
@@ -52,7 +54,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
-      width: "20ch",
+      width: "100%",
     },
   },
 }));
@@ -108,18 +110,7 @@ export default function Navbar() {
         </IconButton>
         <p>Messages</p>
       </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
+
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
@@ -136,36 +127,34 @@ export default function Navbar() {
   );
 
   return (
-    <Box sx={{ flexGrow: 1, top: 0, zIndex: 1 }} position="sticky">
+    <Box sx={{ top: 0, zIndex: 1 }} position="sticky">
       <AppBar position="static">
-        <Toolbar>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
-          >
-            SPORT
-          </Typography>
+        <Toolbar sx={{ justifyContent: "space-between" }}>
+          <Box sx={{ display: { xs: "none", sm: "block" } }}>
+            <Typography variant="h6" noWrap component="div">
+              SPORT
+            </Typography>
+          </Box>
+
           <IconButton
+            sx={{ display: { xs: "block", sm: "none" }, marginRight: 0 }}
             size="large"
-            aria-label="show 4 new mails"
             color="inherit"
           >
-            <Home
-              sx={{ display: { xs: "block", sm: "none" }, marginRight: 3 }}
-            />
+            <Home />
           </IconButton>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
-          <Box sx={{ flexGrow: 1 }} />
+          <Box>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Search>
+          </Box>
+
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
               size="large"
@@ -176,15 +165,7 @@ export default function Navbar() {
                 <MailIcon />
               </Badge>
             </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+
             <IconButton
               size="large"
               edge="end"

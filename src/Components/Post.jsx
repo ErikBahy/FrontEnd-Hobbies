@@ -34,11 +34,6 @@ function Post() {
           title="ERIK"
           subheader="September 14, 2016"
         />
-        <CardMedia
-          component="img"
-          image="https://wallpaperaccess.com/full/1890591.jpg"
-          alt="photo"
-        />
          
         <CardContent>
           <Typography variant="body2" color="text.secondary">

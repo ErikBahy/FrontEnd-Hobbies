@@ -10,7 +10,7 @@ function LeftBar() {
       flex={3}
       sx={{ backgroundColor: "lightgray" }}
     >
-      <Stack alignItems="center" sx={{ borderRadius: "30px" }}>
+      <Stack flexDirection="column" alignItems="center">
         <Avatar
           alt="Remy Sharp"
           src="https://wallpaperaccess.com/full/1890591.jpg"
@@ -29,21 +29,19 @@ function LeftBar() {
           <Button>198 Following</Button>
         </Stack>
         <Divider variant="middle" sx={{ width: "80%" }} />
-        <Typography sx={{ marginTop: 2 }}>Description : </Typography>
+        <Typography sx={{ marginX: 3, marginTop: 2, alignSelf: "flex-start" }}>
+          Description :{" "}
+        </Typography>
         <Typography sx={{ margin: 3 }}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat quasi
           quae vitae, ab alias omnis veritatis facilis doloribus nam
           reprehenderit itaque delectus numquam? Illo recusandae eos, quas ipsam
           aperiam excepturi?
         </Typography>
-        <Stack flexDirection="row" justifyContent="space-between">
-          <Button variant="outlined" startIcon={<Settings />}>
-            Settings
-          </Button>
-          <Button variant="outlined" startIcon={<Person2Outlined />}>
-            Edit Profile
-          </Button>
-        </Stack>
+
+        <Button variant="outlined" startIcon={<Person2Outlined />}>
+          Edit Profile
+        </Button>
       </Stack>
     </Stack>
   );
