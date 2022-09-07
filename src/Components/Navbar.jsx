@@ -16,6 +16,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Home } from "@mui/icons-material";
+import { Stack } from "@mui/material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -30,8 +31,8 @@ const Search = styled("div")(({ theme }) => ({
   marginLeft: 0,
   width: "100%",
   [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
+    marginLeft: theme.spacing(2),
+    width: "100%",
   },
 }));
 
@@ -127,70 +128,84 @@ export default function Navbar() {
   );
 
   return (
-    <Box sx={{ top: 0, zIndex: 5 }} position="sticky">
+    <Box sx={{ top: 0, zIndex: 2 }} position="sticky">
       <AppBar position="static">
-        <Toolbar sx={{ justifyContent: "space-between" }}>
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            <Typography variant="h6" noWrap component="div">
-              SPORT
-            </Typography>
+        <Stack flexDirection="row" justifyContent="space-between">
+          <Box flex={2} sx={{ display: { xs: "none", md: "flex" } }}>
+            {" "}
           </Box>
 
-          <IconButton
-            sx={{ display: { xs: "block", sm: "none" }, marginRight: 0 }}
-            size="large"
-            color="inherit"
-          >
-            <Home />
-          </IconButton>
-          <Box>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Search>
-          </Box>
+          <Box flex={5}>
+            <Toolbar sx={{ justifyContent: "space-around" }}>
+              <Box sx={{ display: { xs: "none", sm: "block" } }}>
+                <Typography variant="h6" noWrap component="div">
+                  SPORT
+                </Typography>
+              </Box>
 
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-            >
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
+              <IconButton
+                sx={{ display: { xs: "block", sm: "none" }, marginRight: 0 }}
+                size="large"
+                color="inherit"
+              >
+                <Home />
+              </IconButton>
+              <Box>
+                <Search>
+                  <SearchIconWrapper>
+                    <SearchIcon />
+                  </SearchIconWrapper>
+                  <StyledInputBase
+                    placeholder="Search…"
+                    inputProps={{ "aria-label": "search" }}
+                  />
+                </Search>
+              </Box>
 
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+              <Box sx={{ display: { xs: "none", md: "flex" } }}>
+                <IconButton
+                  size="large"
+                  aria-label="show 4 new mails"
+                  color="inherit"
+                >
+                  <Badge badgeContent={4} color="error">
+                    <MailIcon />
+                  </Badge>
+                </IconButton>
+
+                <IconButton
+                  size="large"
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  onClick={handleProfileMenuOpen}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+              </Box>
+              <Box
+                sx={{
+                  display: { xs: "flex", md: "none" },
+                  marginLeft: { sm: 2 },
+                }}
+              >
+                <IconButton
+                  size="large"
+                  aria-label="show more"
+                  aria-controls={mobileMenuId}
+                  aria-haspopup="true"
+                  onClick={handleMobileMenuOpen}
+                  color="inherit"
+                >
+                  <MoreIcon />
+                </IconButton>
+              </Box>
+            </Toolbar>
           </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </Box>
-        </Toolbar>
+          <Box flex={2} sx={{ display: { xs: "none", md: "flex" } }}></Box>
+        </Stack>
       </AppBar>
       {renderMobileMenu}
     </Box>
