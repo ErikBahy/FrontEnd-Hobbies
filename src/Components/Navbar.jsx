@@ -127,7 +127,7 @@ export default function Navbar() {
   );
 
   return (
-    <Box sx={{ top: 0, zIndex: 1 }} position="sticky">
+    <Box sx={{ top: 0, zIndex: 5 }} position="sticky">
       <AppBar position="static">
         <Toolbar sx={{ justifyContent: "space-between" }}>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
