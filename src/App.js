@@ -4,7 +4,7 @@ import UserProfile from "./UserProfile/UserProfile";
 function App() {
   return (
     <div className="App">
-      <MainPage />
+      <UserProfile />
     </div>
   );
 }

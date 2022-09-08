@@ -131,11 +131,9 @@ export default function Navbar() {
     <Box sx={{ top: 0, zIndex: 2 }} position="sticky">
       <AppBar position="static">
         <Stack flexDirection="row" justifyContent="space-between">
-          <Box flex={2} sx={{ display: { xs: "none", md: "flex" } }}>
-            {" "}
-          </Box>
+          <Box flex={2} sx={{ display: { xs: "none", md: "flex" } }}></Box>
 
-          <Box flex={5}>
+          <Box flex={8}>
             <Toolbar sx={{ justifyContent: "space-around" }}>
               <Box sx={{ display: { xs: "none", sm: "block" } }}>
                 <Typography variant="h6" noWrap component="div">
