@@ -27,6 +27,7 @@ function Post() {
   return (
     <Box>
       <Card sx={{ margin: 5, borderRadius: "30px" }}>
+       <Stack flexdirection="row"   width="100%">
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
@@ -36,9 +37,10 @@ function Post() {
           
           
           action={
-            <Box display="flex" direction="row" >
+             
+             <>
 
-            <Button flex={2} variant="outlined"  startIcon={<TagIcon />} sx={{marginRight:22, borderRadius:4}}>
+            <Button  variant="outlined"  startIcon={<TagIcon />} sx={{ borderRadius:4}}>
                 Tags
             </Button> 
             
@@ -46,7 +48,7 @@ function Post() {
              <MoreVertIcon />
             </IconButton>     
               
-              </Box>
+              </>
             
           }
           title="Username"
@@ -54,7 +56,8 @@ function Post() {
 
          
         />
-         
+        </Stack>
+       
         <CardContent>
           <Typography variant="body2" color="text.secondary">
             This impressive paella is a perfect party dish and a fun meal to
@@ -64,6 +67,7 @@ function Post() {
         </CardContent>
          
          <CardActions >
+          
           <Stack direction="row" justifyContent="space-between" alignItems="center" width="100%">
 
          <Box display="flex" direction="row" >
