@@ -1,6 +1,6 @@
-import { Stack } from "@mui/material";
 import React from "react";
 import Navbar from "../Components/Navbar";
+import NewPostModal from "../Components/NewPostModal";
 import Feed from "./Feed";
 import Tags from "./Tags";
 
@@ -10,8 +10,9 @@ function MainPage() {
       <Navbar />
       <Tags />
       <Feed />
+      <NewPostModal />
     </>
   );
 }
 
-export default MainPage
+export default MainPage;
