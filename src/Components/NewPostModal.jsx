@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import Tooltip from "@mui/material/Tooltip";
+import Tags from "./Tags";
 import {
   Avatar,
   Box,
@@ -102,6 +103,7 @@ function NewPostModal() {
               }}
               variant="outlined"
             />
+            <Tags />
           </Stack>
           <ButtonGroup
             fullWidth
