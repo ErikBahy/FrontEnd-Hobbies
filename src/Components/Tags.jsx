@@ -1,12 +1,12 @@
 import { Autocomplete, Box, Stack, TextField } from "@mui/material";
 import React from "react";
 
-
-function Tags() {
+function Tags({ called }) {
   const top100Films = [
     { title: "Futboll", year: 1994, category: "Sport" },
     { title: "Tirana", year: 1972, category: "City" },
     { title: "Durres", year: 1974, category: "City" },
+    { title: "Fier", year: 1974, category: "City" },
   ];
   const options = top100Films.map((option) => {
     const firstLetter = option.title[0].toUpperCase();
@@ -16,8 +16,13 @@ function Tags() {
     };
   });
   return (
-    <Stack flexDirection="row" marginTop={2}>
-      <Box flex={2} sx={{ display: { xs: "none", sm: "block" } }}></Box>
+    <Stack flexDirection="row" marginTop={called === "main" ? 2 : 0}>
+      <Box
+        flex={2}
+        sx={{
+          display: called === "modal" ? "none" : { xs: "none", sm: "block" },
+        }}
+      ></Box>
       <Box
         flex={4}
         sx={{
@@ -36,13 +41,13 @@ function Tags() {
           renderInput={(params) => (
             <TextField {...params} label="Choose Tags" placeholder="Tags" />
           )}
-          sx={{ width: "88%" }}
+          sx={{ width: called === "modal" ? "100%" : "88%" }}
         />
       </Box>
       <Box
         flex={2}
         sx={{
-          display: { xs: "none", sm: "block" },
+          display: called === "modal" ? "none" : { xs: "none", sm: "block" },
         }}
       ></Box>
     </Stack>

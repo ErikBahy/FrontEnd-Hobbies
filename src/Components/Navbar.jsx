@@ -17,6 +17,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Home } from "@mui/icons-material";
 import { Stack } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -112,7 +113,11 @@ export default function Navbar() {
         <p>Messages</p>
       </MenuItem>
 
-      <MenuItem onClick={handleProfileMenuOpen}>
+      <MenuItem
+        component={Link}
+        to="/UserProfile"
+        onClick={handleProfileMenuOpen}
+      >
         <IconButton
           size="large"
           aria-label="account of current user"
@@ -136,12 +141,14 @@ export default function Navbar() {
           <Box flex={8}>
             <Toolbar sx={{ justifyContent: "space-around" }}>
               <Box sx={{ display: { xs: "none", sm: "block" } }}>
-                <Typography variant="h6" noWrap component="div">
+                <Typography variant="h6" noWrap>
                   SPORT
                 </Typography>
               </Box>
 
               <IconButton
+                component={Link}
+                to="/"
                 sx={{ display: { xs: "block", sm: "none" }, marginRight: 0 }}
                 size="large"
                 color="inherit"
@@ -172,6 +179,8 @@ export default function Navbar() {
                 </IconButton>
 
                 <IconButton
+                  component={Link}
+                  to="/UserProfile"
                   size="large"
                   edge="end"
                   aria-label="account of current user"
