@@ -10,6 +10,7 @@ import {
   useTheme,
 } from "@mui/material";
 import React from "react";
+import { Edit } from "@mui/icons-material";
 //sdhjafjheiufhuidshudhuvhuisvuirufbewhdufehwiudhuoewhuio
 
 function UserDetails() {
@@ -41,10 +42,7 @@ function UserDetails() {
         >
           <Typography
             sx={{
-              border: 1,
-              borderColor: "gray",
               padding: 1,
-              borderRadius: "10px",
             }}
             variant="p"
             component="span"
@@ -54,10 +52,7 @@ function UserDetails() {
           </Typography>
           <Typography
             sx={{
-              border: 1,
-              borderColor: "gray",
               padding: 1,
-              borderRadius: "10px",
             }}
             variant="p"
             component="span"
@@ -65,6 +60,9 @@ function UserDetails() {
           >
             Followers
           </Typography>
+          <Button variant="text" startIcon={<Edit />}>
+            Edit
+          </Button>
         </Stack>
         <Stack
           justifyContent="space-around"
@@ -74,13 +72,14 @@ function UserDetails() {
             paddingY: 0,
             paddingX: 1,
             flexDirection: { xs: "column", sm: "row" },
+            paddingTop: { xs: 3 },
           }}
         >
           <Tooltip title="Users Description" placement="top-start">
             <TextField
               id="standard-multiline-static"
-              variant="standard"
-              label="Multiline"
+              maxLength={5}
+              label="Bio"
               disabled
               defaultValue="lorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhf"
               maxRows={matches === true ? 4 : 2}
@@ -95,10 +94,9 @@ function UserDetails() {
 
           <Typography
             sx={{
-              border: 1,
-              borderColor: "gray",
+              alignSelf: { xs: "flex-start", sm: "center" },
               padding: 1,
-              borderRadius: "10px",
+              marginTop: { xs: 1 },
             }}
             variant="p"
             component="span"
