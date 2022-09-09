@@ -1,9 +1,10 @@
-import { Box, Stack } from "@mui/material";
+import { Box, Stack,Button } from "@mui/material";
 import React from "react";
-
 import Post from "../Components/Post";
 
 function Feed() {
+
+
   return (
     <>
       <Stack flexDirection="row">

@@ -17,13 +17,15 @@ import Favorite from "@mui/icons-material/Favorite";
 import Checkbox from "@mui/material/Checkbox";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AddCommentOutlinedIcon from '@mui/icons-material/AddCommentOutlined';
-
-
+import useCollapse from "react-collapsed";
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import TagIcon from '@mui/icons-material/Tag';
 
 
 function Post() {
+  const { getToggleProps, getCollapseProps, isExpanded } = useCollapse({
+    defaultExpanded: true
+  });
   return (
     <Box>
       <Card sx={{ margin: 5, borderRadius: "30px" }}>
@@ -84,6 +86,30 @@ function Post() {
              
           <Tooltip title="Comment">
           <IconButton aria-label="add-comment" >
+          <div className="App">
+      <Button {...getToggleProps({ style: { display: "block" } })}>
+        {isExpanded ? "Collapse" : "Expand"}
+      </Button>
+      <div
+        {...getCollapseProps({
+          style: {
+            padding: 20,
+            backgroundColor: "grey"
+          }
+        })}
+      >
+        <p style={{ margin: 0 }}>
+          In the morning I walked down the Boulevard to the rue Soufflot for
+          coffee and brioche. It was a fine morning. The horse-chestnut trees in
+          the Luxembourg gardens were in bloom. There was the pleasant
+          early-morning feeling of a hot day. I read the papers with the coffee
+          and then smoked a cigarette. The flower-women were coming up from the
+          market and arranging their daily stock. Students went by going up to
+          the law school, or down to the Sorbonne. The Boulevard was busy with
+          trams and people going to work.
+        </p>
+      </div>
+    </div>
           <AddCommentOutlinedIcon/>
           </IconButton>
           </Tooltip>
