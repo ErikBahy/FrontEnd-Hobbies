@@ -1,11 +1,14 @@
 import MainPage from "./MainPage/MainPage";
 import UserProfile from "./UserProfile/UserProfile";
-
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 function App() {
   return (
-    <div className="App">
-      <UserProfile />
-    </div>
+       <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<MainPage />} />
+      <Route path="/userprofile" element={<UserProfile />} />
+        </Routes>
+        </BrowserRouter>
   );
 }
 
