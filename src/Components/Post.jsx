@@ -83,18 +83,23 @@ function Post() {
           </IconButton>
           </Tooltip>
           
-             
-          <Tooltip title="Comment">
-          <IconButton aria-label="add-comment" >
           <div className="App">
-      <Button {...getToggleProps({ style: { display: "block" } })}>
-        {isExpanded ? "Collapse" : "Expand"}
-      </Button>
+      <button {...getToggleProps({ style: { display: "block" } })}>
+        {isExpanded ? <Tooltip title="Comment">
+          <IconButton aria-label="add-comment" >
+          <AddCommentOutlinedIcon/>
+          </IconButton>
+          </Tooltip> : <Tooltip title="Comment">
+          <IconButton aria-label="add-comment" >
+          <AddCommentOutlinedIcon/>
+          </IconButton>
+          </Tooltip>}
+      </button>
       <div
         {...getCollapseProps({
           style: {
             padding: 20,
-            backgroundColor: "grey"
+            backgroundColor: "lightblue"
           }
         })}
       >
@@ -110,9 +115,6 @@ function Post() {
         </p>
       </div>
     </div>
-          <AddCommentOutlinedIcon/>
-          </IconButton>
-          </Tooltip>
 
           </Box>
 

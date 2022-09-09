@@ -4,7 +4,6 @@ import Post from "../Components/Post";
 
 function Feed() {
 
-
   return (
     <>
       <Stack flexDirection="row">
