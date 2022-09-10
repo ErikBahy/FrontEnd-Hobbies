@@ -17,15 +17,23 @@ import Favorite from "@mui/icons-material/Favorite";
 import Checkbox from "@mui/material/Checkbox";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AddCommentOutlinedIcon from '@mui/icons-material/AddCommentOutlined';
-import useCollapse from "react-collapsed";
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import TagIcon from '@mui/icons-material/Tag';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useState } from "react";
+import FormControl, { useFormControl } from '@mui/material/FormControl';
+import OutlinedInput from '@mui/material/OutlinedInput'
+import FormHelperText from '@mui/material/FormHelperText';
+import  "../stlyles.css"
 
 
 function Post() {
-  const { getToggleProps, getCollapseProps, isExpanded } = useCollapse({
-    defaultExpanded: true
-  });
+   
+const[isExpanded,setIsExpanded]=useState(false)
+ 
   return (
     <Box>
       <Card sx={{ margin: 5, borderRadius: "30px" }}>
@@ -83,39 +91,11 @@ function Post() {
           </IconButton>
           </Tooltip>
           
-          <div className="App">
-      <button {...getToggleProps({ style: { display: "block" } })}>
-        {isExpanded ? <Tooltip title="Comment">
-          <IconButton aria-label="add-comment" >
+           <Tooltip title="Comment">
+          <IconButton aria-label="add-comment">
           <AddCommentOutlinedIcon/>
           </IconButton>
-          </Tooltip> : <Tooltip title="Comment">
-          <IconButton aria-label="add-comment" >
-          <AddCommentOutlinedIcon/>
-          </IconButton>
-          </Tooltip>}
-      </button>
-      <div
-        {...getCollapseProps({
-          style: {
-            padding: 20,
-            backgroundColor: "lightblue"
-          }
-        })}
-      >
-        <p style={{ margin: 0 }}>
-          In the morning I walked down the Boulevard to the rue Soufflot for
-          coffee and brioche. It was a fine morning. The horse-chestnut trees in
-          the Luxembourg gardens were in bloom. There was the pleasant
-          early-morning feeling of a hot day. I read the papers with the coffee
-          and then smoked a cigarette. The flower-women were coming up from the
-          market and arranging their daily stock. Students went by going up to
-          the law school, or down to the Sorbonne. The Boulevard was busy with
-          trams and people going to work.
-        </p>
-      </div>
-    </div>
-
+          </Tooltip>
           </Box>
 
           <Tooltip title="Join room" sx={{marginRight:4}}>
@@ -130,8 +110,32 @@ function Post() {
  
             </Stack>
         </CardActions>
+        <Box component="form" noValidate autoComplete="off">
+      <FormControl sx={{ width: '100&',maxWidth:"600px",minWidth:"350px" }}>
+        <OutlinedInput placeholder="Please enter text" />
+      </FormControl>
+    </Box>
+        <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+          expanded={isExpanded}
+          onClick={()=>setIsExpanded(!isExpanded)}
+        >
+          <Typography>Comment</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            malesuada lacus ex, sit amet blandit leo lobortis eget.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+     
 
       </Card>
+      
     </Box>
   );
 }
