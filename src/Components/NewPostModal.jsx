@@ -6,7 +6,6 @@ import {
   Avatar,
   Box,
   Button,
-  ButtonGroup,
   Fab,
   InputAdornment,
   Modal,
@@ -17,7 +16,11 @@ import {
   useTheme,
 } from "@mui/material";
 import { Stack } from "@mui/system";
-import { AccountCircle, DateRange } from "@mui/icons-material";
+import { AccountCircle } from "@mui/icons-material";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import dayjs from "dayjs";
 
 const StyledModal = styled(Modal)({
   display: "flex",
@@ -33,6 +36,7 @@ const UserBox = styled(Box)({
 });
 
 function NewPostModal() {
+  const [value, setValue] = React.useState(dayjs());
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
 
@@ -149,16 +153,37 @@ function NewPostModal() {
               <Tags called="modal" />
             </Box>
           </Stack>
-          <ButtonGroup
+          <Stack
+            flexDirection="row"
             fullWidth
             variant="contained"
             aria-label="outlined primary button group"
           >
-            <Button>Post</Button>
-            <Button sx={{ width: "100px" }}>
-              <DateRange />
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ width: "50%" }}
+              flex={1}
+            >
+              Post
             </Button>
-          </ButtonGroup>
+            <Box flex={1} sx={{ width: "100%" }}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DateTimePicker
+                  renderInput={(props) => (
+                    <TextField
+                      sx={{ backgroundColor: "primary.main", borderRadius: 1n }}
+                      {...props}
+                    />
+                  )}
+                  value={value}
+                  onChange={(newValue) => {
+                    setValue(newValue);
+                  }}
+                />
+              </LocalizationProvider>
+            </Box>
+          </Stack>
         </Box>
       </StyledModal>
     </>
