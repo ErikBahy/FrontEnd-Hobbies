@@ -33,6 +33,7 @@ import  "../stlyles.css"
 function Post() {
    
 const[isExpanded,setIsExpanded]=useState(false)
+const[showComment,setShowComment]=useState(false)
  
   return (
     <Box>
@@ -91,7 +92,10 @@ const[isExpanded,setIsExpanded]=useState(false)
           </IconButton>
           </Tooltip>
           
-           <Tooltip title="Comment">
+           <Tooltip title="Comment" onClick={()=>
+          {
+            setShowComment(!showComment)
+          }}>
           <IconButton aria-label="add-comment">
           <AddCommentOutlinedIcon/>
           </IconButton>
@@ -110,34 +114,39 @@ const[isExpanded,setIsExpanded]=useState(false)
  
             </Stack>
         </CardActions>
-        <Typography sx={{my:1 }}>Add Comment:</Typography>
+        {
+          showComment ? <>
+           <Typography sx={{my:1 }}>Add Comment:</Typography>
 
-        <Box component="form" noValidate autoComplete="off" display={"flex"}>
-      <FormControl >
-        <OutlinedInput placeholder="Please enter text" />
-          
-        </FormControl>
-        <IconButton>
-            <AddIcon />
-            </IconButton> 
-    </Box>
-        <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-          expanded={isExpanded}
-          onClick={()=>setIsExpanded(!isExpanded)}
-        >
-          <Typography>Comment</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
+<Box component="form" noValidate autoComplete="off" display={"flex"} onClick={""}>
+<FormControl >
+<OutlinedInput placeholder="Please enter text" />
+  
+</FormControl>
+<IconButton>
+    <AddIcon />
+    </IconButton> 
+</Box>
+<Accordion>
+<AccordionSummary
+  expandIcon={<ExpandMoreIcon />}
+  aria-controls="panel1a-content"
+  id="panel1a-header"
+  expanded={isExpanded}
+  onClick={()=>setIsExpanded(!isExpanded)}
+>
+  <Typography>Comment</Typography>
+</AccordionSummary>
+<AccordionDetails>
+  <Typography>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+    malesuada lacus ex, sit amet blandit leo lobortis eget.
+  </Typography>
+</AccordionDetails>
+</Accordion> 
+          </> : null
+        }
+       
   
       </Card>
       
