@@ -26,7 +26,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useState } from "react";
 import FormControl, { useFormControl } from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput'
-import FormHelperText from '@mui/material/FormHelperText';
+import AddIcon from '@mui/icons-material/Add';
 import  "../stlyles.css"
 
 
@@ -110,10 +110,16 @@ const[isExpanded,setIsExpanded]=useState(false)
  
             </Stack>
         </CardActions>
-        <Box component="form" noValidate autoComplete="off">
-      <FormControl sx={{ width: '100&',maxWidth:"600px",minWidth:"350px" }}>
+        <Typography sx={{my:1}}>Add Comment:</Typography>
+
+        <Box component="form" noValidate autoComplete="off" display={"flex"}>
+      <FormControl sx={{ width: '100%',maxWidth:"600px",minWidth:"350px" ,display:"flex"}}>
         <OutlinedInput placeholder="Please enter text" />
-      </FormControl>
+          
+        </FormControl>
+        <IconButton>
+            <AddIcon />
+            </IconButton> 
     </Box>
         <Accordion>
         <AccordionSummary

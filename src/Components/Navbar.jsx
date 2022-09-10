@@ -61,7 +61,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Navbar() {
+function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -133,12 +133,11 @@ export default function Navbar() {
   );
 
   return (
-    <Box sx={{ top: 0, zIndex: 2 }} position="sticky">
+    <Box sx={{ top: 0, zIndex: 2,width:"100%" }} position="sticky">
       <AppBar position="static">
         <Stack flexDirection="row" justifyContent="space-between">
-          <Box flex={2} sx={{ display: { xs: "none", md: "flex" } }}></Box>
 
-          <Box flex={8}>
+          <Box flex={12}>
             <Toolbar sx={{ justifyContent: "space-around" }}>
               <Box sx={{ display: { xs: "none", sm: "block" } }}>
                 <Typography variant="h6" noWrap>
@@ -218,3 +217,6 @@ export default function Navbar() {
     </Box>
   );
 }
+
+
+export default React.memo(Navbar)
