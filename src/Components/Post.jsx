@@ -24,7 +24,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useState } from "react";
-import FormControl, { useFormControl } from '@mui/material/FormControl';
+import FormControl  from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput'
 import AddIcon from '@mui/icons-material/Add';
 import  "../stlyles.css"
@@ -113,7 +113,7 @@ const[isExpanded,setIsExpanded]=useState(false)
         <Typography sx={{my:1 }}>Add Comment:</Typography>
 
         <Box component="form" noValidate autoComplete="off" display={"flex"}>
-      <FormControl sx={{ width: '100%',maxWidth:"600px",minWidth:"250px" ,display:"flex"}}>
+      <FormControl >
         <OutlinedInput placeholder="Please enter text" />
           
         </FormControl>
