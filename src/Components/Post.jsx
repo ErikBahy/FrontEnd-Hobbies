@@ -110,10 +110,10 @@ const[isExpanded,setIsExpanded]=useState(false)
  
             </Stack>
         </CardActions>
-        <Typography sx={{my:1}}>Add Comment:</Typography>
+        <Typography sx={{my:1 }}>Add Comment:</Typography>
 
         <Box component="form" noValidate autoComplete="off" display={"flex"}>
-      <FormControl sx={{ width: '100%',maxWidth:"600px",minWidth:"350px" ,display:"flex"}}>
+      <FormControl sx={{ width: '100%',maxWidth:"600px",minWidth:"250px" ,display:"flex"}}>
         <OutlinedInput placeholder="Please enter text" />
           
         </FormControl>
@@ -138,8 +138,7 @@ const[isExpanded,setIsExpanded]=useState(false)
           </Typography>
         </AccordionDetails>
       </Accordion>
-     
-
+  
       </Card>
       
     </Box>
