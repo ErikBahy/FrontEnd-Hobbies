@@ -9,13 +9,17 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import { Edit } from "@mui/icons-material";
+import { UserContext } from "../contexts/UserContext";
+
 //sdhjafjheiufhuidshudhuvhuisvuirufbewhdufehwiudhuoewhuio
 
 function UserDetails() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
+  const userContext = useContext(UserContext);
+  const { username, bio, followers } = userContext.user;
 
   return (
     <>
@@ -48,7 +52,7 @@ function UserDetails() {
             component="span"
             fontWeight={100}
           >
-            Username
+            {username}
           </Typography>
           <Typography
             sx={{
@@ -58,7 +62,7 @@ function UserDetails() {
             component="span"
             fontWeight={100}
           >
-            Followers
+            {`${followers} Followers`}
           </Typography>
           <Button variant="text" startIcon={<Edit />}>
             Edit
@@ -81,7 +85,7 @@ function UserDetails() {
               maxLength={5}
               label="Bio"
               disabled
-              defaultValue="lorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhflorehiwhiwiiwfhf"
+              defaultValue={bio}
               maxRows={matches === true ? 4 : 2}
               multiline
               flex={1}
