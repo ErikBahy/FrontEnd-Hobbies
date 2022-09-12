@@ -141,7 +141,7 @@ function Navbar() {
           <Box flex={12}>
             <Toolbar sx={{ justifyContent: "space-around" }}>
               <Box sx={{ display: { xs: "none", sm: "block" } }}>
-                <Typography variant="h6" noWrap>
+                <Typography variant="h6" noWrap component={Link} to="/" sx={{textDecoration: 'none', color:"white", fontWeight:450}}>
                   SPORT
                 </Typography>
               </Box>
