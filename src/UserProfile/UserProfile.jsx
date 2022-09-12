@@ -11,7 +11,7 @@ function UserProfile() {
   const { posts } = userContext.user;
   return (
     <>
-      <Stack flexDirection="row" justifyContent="space-between">
+      <Stack mt={2} flexDirection="row" justifyContent="space-between">
         <Box flex={1} sx={{ display: { xs: "none", md: "block" } }}></Box>
         <Stack
           flex={4}

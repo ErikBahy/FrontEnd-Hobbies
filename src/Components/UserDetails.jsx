@@ -64,7 +64,7 @@ function UserDetails() {
           >
             {`${followers} Followers`}
           </Typography>
-          <Button variant="text" startIcon={<Edit />}>
+          <Button variant="text" href="/editUser" startIcon={<Edit />}>
             Edit
           </Button>
         </Stack>

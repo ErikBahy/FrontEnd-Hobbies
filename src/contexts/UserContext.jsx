@@ -19,6 +19,7 @@ function UserProvider(props) {
     <UserContext.Provider
       value={{
         user: user,
+        setUser: setUser,
       }}
     >
       {props.children}
