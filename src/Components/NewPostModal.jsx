@@ -121,6 +121,7 @@ function NewPostModal() {
             placeholder="What's on yo mind, huh?"
             rows={4}
             variant="standard"
+            onChange={(event, value) => console.log(value)}
           />
           <Stack direction="row" gap={1} mt={3} mb={3}>
             {matches === true ? (
@@ -130,7 +131,7 @@ function NewPostModal() {
                   id="outlined-number"
                   label="People limit"
                   type="number"
-                  onChange={(event) =>
+                  onChange={(event, value) =>
                     event.target.value < 0
                       ? (event.target.value = 0)
                       : event.target.value
@@ -167,7 +168,7 @@ function NewPostModal() {
             >
               Post
             </Button>
-            <Box flex={1} sx={{ width: "100%" }}>
+            <Box flex={1} sx={{ width: "100%", marginLeft: { xs: 0, sm: 1 } }}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateTimePicker
                   renderInput={(props) => (

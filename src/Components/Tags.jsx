@@ -36,6 +36,7 @@ function Tags({ called }) {
           options={top100Films}
           groupBy={(option) => option.category}
           getOptionLabel={(option) => option.title}
+          onChange={(event, value) => console.log(value)}
           multiple
           limitTags={2}
           renderInput={(params) => (

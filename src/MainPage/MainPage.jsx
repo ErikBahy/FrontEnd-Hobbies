@@ -7,7 +7,6 @@ import Tags from "../Components/Tags";
 function MainPage() {
   return (
     <>
-      <Navbar />
       <Tags called="main" />
       <Feed />
       <NewPostModal />
