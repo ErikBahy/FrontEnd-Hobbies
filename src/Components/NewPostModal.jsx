@@ -172,7 +172,7 @@ function NewPostModal() {
                 <DateTimePicker
                   renderInput={(props) => (
                     <TextField
-                      sx={{ backgroundColor: "primary.main", borderRadius: 1n }}
+                      sx={{ backgroundColor: "primary.main", borderRadius: 1 }}
                       {...props}
                     />
                   )}
