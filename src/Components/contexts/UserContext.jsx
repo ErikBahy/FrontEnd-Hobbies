@@ -1,9 +1,9 @@
 import React from "react";
 import { createContext } from "react";
 
-const ProductContext = createContext();
+const UserContext = createContext();
 
-function UserContext() {
+function UserProvider() {
   return <div></div>;
 }
 
