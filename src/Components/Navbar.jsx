@@ -133,9 +133,10 @@ function Navbar() {
   );
 
   return (
-    <Box sx={{ top: 0, zIndex: 2,width:"100%" }} position="sticky">
+    <Box sx={{ top: 0, zIndex: 2, width: "100%" }} position="sticky">
       <AppBar position="static">
         <Stack flexDirection="row" justifyContent="space-between">
+          <Box flex={2} sx={{ display: { xs: "none", md: "flex" } }}></Box>
 
           <Box flex={12}>
             <Toolbar sx={{ justifyContent: "space-around" }}>
@@ -218,5 +219,4 @@ function Navbar() {
   );
 }
 
-
-export default React.memo(Navbar)
+export default React.memo(Navbar);
