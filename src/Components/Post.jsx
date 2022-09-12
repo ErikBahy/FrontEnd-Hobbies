@@ -28,17 +28,23 @@ import FormControl  from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput'
 import AddIcon from '@mui/icons-material/Add';
 import  "../stlyles.css"
+import { Chip } from "@mui/material";
+import DoneIcon from '@mui/icons-material/Done';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 
 function Post() {
    
 const[isExpanded,setIsExpanded]=useState(false)
 const[showComment,setShowComment]=useState(false)
+
  
   return (
     <Box>
       <Card sx={{ margin: 5, borderRadius: "30px" }}>
-       <Stack flexdirection="row"   width="100%">
+       
+<Stack flexdirection="row"   width="100%">
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
@@ -49,17 +55,29 @@ const[showComment,setShowComment]=useState(false)
           
           action={
              
-             <>
+             
+<Stack  direction="row" >
+<Stack  direction="row" spacing={1} justifyContent="space-between" sx={{  marginLeft : {xs: 2, sm:1}, marginTop : {xs: 0.5, sm:1} , marginRight : {xl: 6} }} >
+      <Chip
+        label="Futboll"
+        deleteIcon={<DoneIcon />}
+        variant="outlined"
 
-            <Button  variant="outlined"  startIcon={<TagIcon />} sx={{ borderRadius:4}}>
-                Tags
-            </Button> 
-            
+      />
+      <Chip
+        label="Basketboll"
+        deleteIcon={<DeleteIcon />}
+        variant="outlined"
+      />
+
+</Stack>
+                
             <IconButton aria-label="settings" >
              <MoreVertIcon />
             </IconButton>     
+</Stack>
               
-              </>
+
             
           }
           title="Username"
@@ -67,7 +85,7 @@ const[showComment,setShowComment]=useState(false)
 
          
         />
-        </Stack>
+</Stack>
        
         <CardContent>
           <Typography variant="body2" color="text.secondary">
