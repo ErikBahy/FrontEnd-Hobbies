@@ -10,7 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/userprofile" element={<UserProfile />} />
-        <Route path="/editUser" element={<EditProfile />} />
+        {/* <Route path="/editUser" element={<EditProfile />} /> */}
       </Routes>
     </BrowserRouter>
   );

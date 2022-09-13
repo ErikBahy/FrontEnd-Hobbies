@@ -9,7 +9,6 @@ function EditProfile() {
   const [newBio, setBio] = useState(myUser.bio);
   const onSubmit = (e) => {
     e.preventDefault();
-    userContext.setUser({ ...myUser, username: newUsername, bio: newBio });
   };
 
   return (

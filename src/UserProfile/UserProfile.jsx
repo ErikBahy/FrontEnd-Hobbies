@@ -1,5 +1,5 @@
 import { Stack } from "@mui/system";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Feed from "../Components/UserProfileFeed";
 import Navbar from "../Components/Navbar";
 import UserDetails from "../Components/UserDetails";
@@ -9,6 +9,11 @@ import { UserContext } from "../contexts/UserContext";
 function UserProfile() {
   const userContext = useContext(UserContext);
   const { posts } = userContext.user;
+  useEffect(() => {
+    userContext.getUserFromDatabase();
+    console.log(userContext.user);
+  }, []);
+
   return (
     <>
       <Stack mt={2} flexDirection="row" justifyContent="space-between">

@@ -83,7 +83,7 @@ function UserDetails() {
             <TextField
               id="standard-multiline-static"
               maxLength={5}
-              label="Bio"
+              label=""
               disabled
               defaultValue={bio}
               maxRows={matches === true ? 4 : 2}
