@@ -128,13 +128,19 @@ const[showComment,setShowComment]=useState(false)
           </Tooltip>
           </Box>
 
+<Box display="flex" direction="row" alignItems="center" sx={{justifyContent:"space-between"}}>
+          
+          <Chip label="Limit is: " color="primary" sx={{marginRight:3}} />
+
+          
+
           <Tooltip title="Join room" sx={{marginRight:4}}>
           <IconButton aria-label="join-room" >
           <MeetingRoomIcon/>
           </IconButton>
           </Tooltip>
 
-
+</Box>
           
           
  

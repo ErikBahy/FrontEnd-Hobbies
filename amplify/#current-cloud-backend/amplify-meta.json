@@ -1,0 +1,111 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-frontendhobbies-dev-133842-authRole",
+      "UnauthRoleArn": "arn:aws:iam::875637363269:role/amplify-frontendhobbies-dev-133842-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::875637363269:role/amplify-frontendhobbies-dev-133842-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-frontendhobbies-dev-133842-deployment",
+      "UnauthRoleName": "amplify-frontendhobbies-dev-133842-unauthRole",
+      "StackName": "amplify-frontendhobbies-dev-133842",
+      "StackId": "arn:aws:cloudformation:eu-central-1:875637363269:stack/amplify-frontendhobbies-dev-133842/75219280-328f-11ed-aae7-02c016821fc2",
+      "AmplifyAppId": "d11uiwl5eypw43"
+    }
+  },
+  "function": {
+    "FHlambda": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [],
+      "lastBuildTimeStamp": "2022-09-12T11:59:25.551Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2022-09-12T11:59:25.588Z",
+      "distZipFilename": "FHlambda-6f6a62664c6e34713273-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-frontendhobbies-dev-133842-deployment",
+        "s3Key": "amplify-builds/FHlambda-6f6a62664c6e34713273-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-frontendhobbies-dev-133842-deployment/amplify-cfn-templates/function/FHlambda-cloudformation-template.json",
+        "logicalId": "functionFHlambda"
+      },
+      "lastPushTimeStamp": "2022-09-12T14:40:10.856Z",
+      "output": {
+        "Region": "eu-central-1",
+        "Arn": "arn:aws:lambda:eu-central-1:875637363269:function:FHlambda-dev",
+        "Name": "FHlambda-dev",
+        "LambdaExecutionRole": "frontendhobbiesLambdaRolea3725369-dev"
+      },
+      "lastPushDirHash": "9o3ORZ6sLuoBufa3jHOxNIqDEHk="
+    }
+  },
+  "api": {
+    "apiFH": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "FHlambda",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ],
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-frontendhobbies-dev-133842-deployment/amplify-cfn-templates/api/apiFH-cloudformation-template.json",
+        "logicalId": "apiapiFH"
+      },
+      "lastPushTimeStamp": "2022-09-12T14:40:10.858Z",
+      "output": {
+        "ApiName": "apiFH",
+        "RootUrl": "https://99b5yhbxsd.execute-api.eu-central-1.amazonaws.com/dev",
+        "ApiId": "99b5yhbxsd"
+      },
+      "lastPushDirHash": "FK6IWoadCulcLCHswG2iDvfcSqk="
+    }
+  },
+  "auth": {
+    "frontendhobbies28a03289": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-frontendhobbies-dev-133842-deployment/amplify-cfn-templates/auth/frontendhobbies28a03289-cloudformation-template.json",
+        "logicalId": "authfrontendhobbies28a03289"
+      },
+      "lastPushTimeStamp": "2022-09-12T14:40:11.149Z",
+      "output": {
+        "UserPoolId": "eu-central-1_aERDZxAwm",
+        "AppClientIDWeb": "ekf8451ib38j01dfkrahpun4p",
+        "AppClientID": "1u1bq5umkv3ahh6ht2s6q76v85",
+        "IdentityPoolId": "eu-central-1:d91c2864-5e81-40dd-9609-d0376ff2938b",
+        "UserPoolArn": "arn:aws:cognito-idp:eu-central-1:875637363269:userpool/eu-central-1_aERDZxAwm",
+        "IdentityPoolName": "frontendhobbies28a03289_identitypool_28a03289__dev",
+        "UserPoolName": "frontendhobbies28a03289_userpool_28a03289"
+      },
+      "lastPushDirHash": "TSGS+hPEGlj8nX1dw3bAzwfdxpU="
+    }
+  }
+}
