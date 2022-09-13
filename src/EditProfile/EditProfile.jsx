@@ -12,7 +12,7 @@ function EditProfile() {
   };
 
   return (
-    <Box my={2}>
+    <Box my={2} >
       <form onSubmit={(e) => onSubmit(e)}>
         <TextField
           onChange={(newValue) => {

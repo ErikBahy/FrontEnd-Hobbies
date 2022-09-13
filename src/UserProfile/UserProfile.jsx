@@ -1,7 +1,6 @@
 import { Stack } from "@mui/system";
 import React, { useContext, useEffect } from "react";
 import Feed from "../Components/UserProfileFeed";
-import Navbar from "../Components/Navbar";
 import UserDetails from "../Components/UserDetails";
 import { Box, Divider, Chip } from "@mui/material";
 import { UserContext } from "../contexts/UserContext";

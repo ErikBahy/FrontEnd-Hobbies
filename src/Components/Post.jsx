@@ -31,6 +31,7 @@ import  "../stlyles.css"
 import { Chip } from "@mui/material";
 import DoneIcon from '@mui/icons-material/Done';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Link } from "react-router-dom";
 
 
 
@@ -46,8 +47,14 @@ const[showComment,setShowComment]=useState(false)
        
 <Stack flexdirection="row"   width="100%">
         <CardHeader
+
+        title={
+          <Typography sx={{ fontSize: 14, fontWeight: 150, textDecoration:"none" }} color="text.secondary" component={Link} to="userprofile">
+          Username
+        </Typography>
+        }
           avatar={
-            <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
+            <Avatar sx={{ bgcolor: "red", textDecoration: "none" }} aria-label="recipe" >
               R
             </Avatar>
           }
@@ -80,7 +87,7 @@ const[showComment,setShowComment]=useState(false)
 
             
           }
-          title="Username"
+          
           subheader="07/09/2022"
 
          
@@ -117,6 +124,7 @@ const[showComment,setShowComment]=useState(false)
           <IconButton aria-label="add-comment">
           <AddCommentOutlinedIcon/>
           </IconButton>
+          
           </Tooltip>
           </Box>
 
