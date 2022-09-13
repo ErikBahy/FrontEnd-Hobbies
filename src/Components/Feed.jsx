@@ -1,6 +1,6 @@
 import { LineAxisOutlined } from "@mui/icons-material";
 import { Box, Stack, Button } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Post from "./Post";
 import axios from "axios";
 
@@ -9,8 +9,15 @@ const url = "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com";
 function Feed() {
   const [posts, setPosts] = useState([]);
   const getPosts = async () => {
-    const res = await axios.get();
+    const res = await axios.get(`${url}/dev/allposts`);
+    const data = res.data;
+    setPosts(data);
+    console.log(data);
   };
+
+  useEffect(() => {
+    getPosts();
+  }, []);
 
   // let a = [];
   // for (let i = 0; i < 100; i++) {
@@ -21,7 +28,7 @@ function Feed() {
       <Stack flexDirection="row">
         <Box flex={2} sx={{ display: { xs: "none", sm: "block" } }}></Box>
         <Box flex={4}>
-          {a.map((el) => {
+          {posts.map((el) => {
             return <Post />;
           })}
         </Box>
