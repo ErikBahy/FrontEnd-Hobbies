@@ -1,0 +1,26 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-frontendhobbies-dev-133842-authRole",
+      "UnauthRoleArn": "arn:aws:iam::875637363269:role/amplify-frontendhobbies-dev-133842-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::875637363269:role/amplify-frontendhobbies-dev-133842-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-frontendhobbies-dev-133842-deployment",
+      "UnauthRoleName": "amplify-frontendhobbies-dev-133842-unauthRole",
+      "StackName": "amplify-frontendhobbies-dev-133842",
+      "StackId": "arn:aws:cloudformation:eu-central-1:875637363269:stack/amplify-frontendhobbies-dev-133842/75219280-328f-11ed-aae7-02c016821fc2",
+      "AmplifyAppId": "d11uiwl5eypw43"
+    },
+    "categories": {
+      "function": {
+        "FHlambda": {
+          "deploymentBucketName": "amplify-frontendhobbies-dev-133842-deployment",
+          "s3Key": "amplify-builds/FHlambda-6f6a62664c6e34713273-build.zip"
+        }
+      },
+      "auth": {
+        "frontendhobbies28a03289": {}
+      }
+    }
+  }
+}

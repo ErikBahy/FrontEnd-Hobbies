@@ -16,8 +16,18 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Home } from "@mui/icons-material";
-import { Stack } from "@mui/material";
+import { Stack,Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { API,Auth } from 'aws-amplify';
+
+
+async function signOut() {
+  try {
+      await Auth.signOut();
+  } catch (error) {
+      console.log('error signing out: ', error);
+  }
+}
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -118,6 +128,8 @@ function Navbar() {
         to="/UserProfile"
         onClick={handleProfileMenuOpen}
       >
+                    <Button onClick={signOut} style={{float:"right",margin:"10px"}}>Sign Out</Button>
+
         <IconButton
           size="large"
           aria-label="account of current user"

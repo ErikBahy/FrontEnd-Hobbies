@@ -32,6 +32,7 @@ import  "../stlyles.css"
 
 function Post() {
    
+
 const[isExpanded,setIsExpanded]=useState(false)
 const[showComment,setShowComment]=useState(false)
  
@@ -116,10 +117,10 @@ const[showComment,setShowComment]=useState(false)
         </CardActions>
         {
           showComment ? <>
-           <Typography sx={{my:1 }}>Add Comment:</Typography>
+           <Typography sx={{my:1,marginLeft:2 }}>Add Comment:</Typography>
 
 <Box component="form" noValidate autoComplete="off" display={"flex"} onClick={""}>
-<FormControl >
+<FormControl /*sx={{width:"100%"}}*/>
 <OutlinedInput placeholder="Please enter text" />
   
 </FormControl>
@@ -147,7 +148,7 @@ const[showComment,setShowComment]=useState(false)
           </> : null
         }
        
-  
+
       </Card>
       
     </Box>
