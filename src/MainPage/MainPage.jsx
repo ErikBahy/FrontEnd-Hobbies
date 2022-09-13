@@ -8,7 +8,7 @@ function MainPage() {
   return (
     <>
       <Tags called="main" />
-      <Feed />
+      <Feed called="main" />
       <NewPostModal />
     </>
   );

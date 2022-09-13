@@ -29,7 +29,7 @@ function UserProfile() {
           </Divider>
           <Stack>
             {" "}
-            <Feed />
+            <Feed called="UserProfile" />
           </Stack>
         </Stack>
         <Box flex={1} sx={{ display: { xs: "none", md: "block" } }}></Box>

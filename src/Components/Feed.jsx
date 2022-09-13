@@ -6,10 +6,11 @@ import axios from "axios";
 
 const url = "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com";
 
-function Feed() {
+function Feed({ called }) {
   const [posts, setPosts] = useState([]);
+  const endpoint = called == "main" ? "/dev/allposts" : "sf";
   const getPosts = async () => {
-    const res = await axios.get(`${url}/dev/allposts`);
+    const res = await axios.get(`${url}${endpoint}`);
     const data = res.data;
     setPosts(data);
     console.log(data);
