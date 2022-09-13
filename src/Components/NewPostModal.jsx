@@ -21,6 +21,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs from "dayjs";
+import axios from "axios";
+
 
 const StyledModal = styled(Modal)({
   display: "flex",
@@ -36,12 +38,38 @@ const UserBox = styled(Box)({
 });
 
 function NewPostModal() {
-  const [value, setValue] = React.useState(dayjs());
+  const [value, setValue] = useState(dayjs());
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
+  const[text,setText]=useState("")
+  const[limit,setLimit]=useState("")
+  const [open,setOpen] = useState(false);
 
-  const [open, setopen] = useState(false);
+  const clear=()=>{
+    setLimit("")
+    setText("")
+  }
 
+  const postPost=async()=>{
+   /* const user = await Auth.currentAuthenticatedUser()
+    const token = user.signInUserSession.idToken.jwtToken
+    const requestInfo = {
+        headers: {
+            Authorization: token
+        }
+      }*/
+        try {
+           await axios.post(``,  {
+                text:text,
+                limit:limit,
+            })
+            clear()
+            setOpen(false)
+          //  fetchPost()
+        } catch (err) {
+            console.log(err)
+        }
+    }
   return (
     <>
       <Tooltip
@@ -51,7 +79,7 @@ function NewPostModal() {
           bottom: 20,
           right: { xs: "calc(0% + 30px)", md: 30 },
         }}
-        onClick={(e) => setopen(true)}
+        onClick={(e) => setOpen(true)}
       >
         <Fab color="primary" aria-label="add">
           <AddIcon />
@@ -59,7 +87,7 @@ function NewPostModal() {
       </Tooltip>
       <StyledModal
         open={open}
-        onClose={(e) => setopen(false)}
+        onClose={(e) => setOpen(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -92,11 +120,12 @@ function NewPostModal() {
                   label="People limit"
                   type="number"
                   size="small"
-                  onChange={(event) =>
-                    event.target.value < 0
-                      ? (event.target.value = 0)
-                      : event.target.value
-                  }
+                  value={limit}
+                  onChange={(e) =>setLimit(
+                    e.target.value < 0
+                      ? (e.target.value = 0)
+                      : e.target.value
+            )}
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -121,7 +150,8 @@ function NewPostModal() {
             placeholder="What's on yo mind, huh?"
             rows={4}
             variant="standard"
-            onChange={(event, value) => console.log(value)}
+            value={text}
+            onChange={(e) =>setText(e.target.value)}
           />
           <Stack direction="row" gap={1} mt={3} mb={3}>
             {matches === true ? (
@@ -131,11 +161,13 @@ function NewPostModal() {
                   id="outlined-number"
                   label="People limit"
                   type="number"
-                  onChange={(event, value) =>
-                    event.target.value < 0
-                      ? (event.target.value = 0)
-                      : event.target.value
-                  }
+                  value={limit}
+                  onChange={(e) =>setLimit(
+                    e.target.value < 0
+                      ? (e.target.value = 0)
+                      : e.target.value
+            )}
+          
                   InputLabelProps={{
                     shrink: true,
                   }}

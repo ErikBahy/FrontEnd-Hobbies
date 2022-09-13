@@ -4,7 +4,10 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { UserProvider } from "./contexts/UserContext";
+import { Amplify } from 'aws-amplify';
+import config from './aws-exports';
 
+Amplify.configure(config);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <UserProvider>
