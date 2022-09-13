@@ -1,12 +1,21 @@
+import { LineAxisOutlined } from "@mui/icons-material";
 import { Box, Stack, Button } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import Post from "./Post";
+import axios from "axios";
+
+const url = "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com";
 
 function Feed() {
-  let a = [];
-  for (let i = 0; i < 100; i++) {
-    a.push(i);
-  }
+  const [posts, setPosts] = useState([]);
+  const getPosts = async () => {
+    const res = await axios.get();
+  };
+
+  // let a = [];
+  // for (let i = 0; i < 100; i++) {
+  //   a.push(i);
+  // }
   return (
     <>
       <Stack flexDirection="row">
