@@ -9,15 +9,23 @@ import InputBase from "@mui/material/InputBase";
 import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Home } from "@mui/icons-material";
-import { Stack } from "@mui/material";
+import { Stack,Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { Auth } from 'aws-amplify'; 
+
+
+async function signOut() {
+  try {
+      await Auth.signOut();
+  } catch (error) {
+      console.log('error signing out: ', error);
+  }
+}
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -118,6 +126,8 @@ function Navbar() {
         to="/UserProfile"
         onClick={handleProfileMenuOpen}
       >
+          <Button onClick={signOut} style={{margin:"10px"}}>Sign out</Button>
+
         <IconButton
           size="large"
           aria-label="account of current user"
@@ -133,15 +143,14 @@ function Navbar() {
   );
 
   return (
-    <Box sx={{ top: 0, zIndex: 2, width: "100%" }} position="sticky">
+    <Box sx={{ top: 0, zIndex: 2,width:"100%" }} position="sticky">
       <AppBar position="static">
         <Stack flexDirection="row" justifyContent="space-between">
-          <Box flex={2} sx={{ display: { xs: "none", md: "flex" } }}></Box>
 
           <Box flex={12}>
             <Toolbar sx={{ justifyContent: "space-around" }}>
               <Box sx={{ display: { xs: "none", sm: "block" } }}>
-                <Typography variant="h6" noWrap component={Link} to="/" sx={{textDecoration: 'none', color:"white", fontWeight:450}}>
+                <Typography variant="h6" noWrap>
                   SPORT
                 </Typography>
               </Box>
@@ -219,4 +228,5 @@ function Navbar() {
   );
 }
 
-export default React.memo(Navbar);
+
+export default React.memo(Navbar)
