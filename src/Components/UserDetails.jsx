@@ -61,7 +61,7 @@ function UserDetails() {
             component="span"
             fontWeight={100}
           >
-            {`${followers} Followers`}
+            {` Followers`}
           </Typography>
           <Button variant="text" href="/editUser" startIcon={<Edit />}>
             Edit

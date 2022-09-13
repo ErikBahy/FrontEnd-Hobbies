@@ -25,7 +25,7 @@ function UserProfile() {
           <UserDetails />
           <Divider sx={{ width: 1, marginTop: 3, fontWeight: 200 }}>
             {" "}
-            <Chip label={posts + " " + " POSTS"} />
+            <Chip label={+" " + " POSTS"} />
           </Divider>
           <Stack>
             {" "}

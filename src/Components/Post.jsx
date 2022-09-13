@@ -33,9 +33,10 @@ import DoneIcon from "@mui/icons-material/Done";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
 
-function Post() {
+function Post(post) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showComment, setShowComment] = useState(false);
+  const { username, text, tags, date, startTime, limit } = post.post;
 
   return (
     <Box>
@@ -49,7 +50,7 @@ function Post() {
                 component={Link}
                 to="userprofile"
               >
-                Username
+                {username}
               </Typography>
             }
             avatar={
@@ -57,47 +58,23 @@ function Post() {
                 sx={{ bgcolor: "red", textDecoration: "none" }}
                 aria-label="recipe"
               >
-                R
+                {username}
               </Avatar>
             }
             action={
               <Stack direction="row">
-                <Stack
-                  direction="row"
-                  spacing={1}
-                  justifyContent="space-between"
-                  sx={{
-                    marginLeft: { xs: 2, sm: 1 },
-                    marginTop: { xs: 0.5, sm: 1 },
-                    marginRight: { xl: 6 },
-                  }}
-                >
-                  <Chip
-                    label="Futboll"
-                    deleteIcon={<DoneIcon />}
-                    variant="outlined"
-                  />
-                  <Chip
-                    label="Basketboll"
-                    deleteIcon={<DeleteIcon />}
-                    variant="outlined"
-                  />
-                </Stack>
-
                 <IconButton aria-label="settings">
                   <MoreVertIcon />
                 </IconButton>
               </Stack>
             }
-            subheader="07/09/2022"
+            subheader={date}
           />
         </Stack>
 
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            This impressive paella is a perfect party dish and a fun meal to
-            cook together with your guests. Add 1 cup of frozen peas along with
-            the mussels, if you like.
+            {text}
           </Typography>
         </CardContent>
 
