@@ -14,16 +14,15 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Home } from "@mui/icons-material";
-import { Stack,Button } from "@mui/material";
+import { Stack, Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import { Auth } from 'aws-amplify'; 
-
+import { Auth } from "aws-amplify";
 
 async function signOut() {
   try {
-      await Auth.signOut();
+    await Auth.signOut();
   } catch (error) {
-      console.log('error signing out: ', error);
+    console.log("error signing out: ", error);
   }
 }
 
@@ -126,7 +125,9 @@ function Navbar() {
         to="/UserProfile"
         onClick={handleProfileMenuOpen}
       >
-          <Button onClick={signOut} style={{margin:"10px"}}>Sign out</Button>
+        <Button onClick={signOut} style={{ margin: "10px" }}>
+          Sign out
+        </Button>
 
         <IconButton
           size="large"
@@ -143,9 +144,10 @@ function Navbar() {
   );
 
   return (
-    <Box sx={{ top: 0, zIndex: 2,width:"100%" }} position="sticky">
+    <Box sx={{ top: 0, zIndex: 2, width: "100%" }} position="sticky">
       <AppBar position="static">
         <Stack flexDirection="row" justifyContent="space-between">
+          <Box flex={2} sx={{ display: { xs: "none", md: "flex" } }}></Box>
 
           <Box flex={12}>
             <Toolbar sx={{ justifyContent: "space-around" }}>
@@ -228,5 +230,4 @@ function Navbar() {
   );
 }
 
-
-export default React.memo(Navbar)
+export default React.memo(Navbar);
