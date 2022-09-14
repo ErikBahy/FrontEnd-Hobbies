@@ -24,6 +24,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useState } from "react";
+<<<<<<< Updated upstream
 import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import AddIcon from "@mui/icons-material/Add";
@@ -38,11 +39,22 @@ function Post(post) {
   const [showComment, setShowComment] = useState(false);
   const { username, text, tags, date, startTime, limit } = post.post;
 
+=======
+import FormControl, { useFormControl } from "@mui/material/FormControl";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import AddIcon from "@mui/icons-material/Add";
+import "../stlyles.css";
+
+function Post() {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+>>>>>>> Stashed changes
   return (
     <Box>
       <Card sx={{ margin: 5, borderRadius: "30px" }}>
         <Stack flexdirection="row" width="100%">
           <CardHeader
+<<<<<<< Updated upstream
             title={
               <Typography
                 sx={{ fontSize: 14, fontWeight: 150, textDecoration: "none" }}
@@ -69,6 +81,30 @@ function Post(post) {
               </Stack>
             }
             subheader={date}
+=======
+            avatar={
+              <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
+                R
+              </Avatar>
+            }
+            action={
+              <>
+                <Button
+                  variant="outlined"
+                  startIcon={<TagIcon />}
+                  sx={{ borderRadius: 4 }}
+                >
+                  Tags
+                </Button>
+
+                <IconButton aria-label="settings">
+                  <MoreVertIcon />
+                </IconButton>
+              </>
+            }
+            title="Username"
+            subheader="07/09/2022"
+>>>>>>> Stashed changes
           />
         </Stack>
 
@@ -77,6 +113,7 @@ function Post(post) {
             {text}
           </Typography>
         </CardContent>
+<<<<<<< Updated upstream
 
         <CardActions>
           <Stack
@@ -165,6 +202,75 @@ function Post(post) {
             </Accordion>
           </>
         ) : null}
+=======
+
+        <CardActions>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            width="100%"
+          >
+            <Box display="flex" direction="row">
+              <Tooltip title="Like">
+                <IconButton aria-label="add to favorites">
+                  <Checkbox
+                    icon={<FavoriteBorder />}
+                    checkedIcon={<Favorite sx={{ color: "red" }} />}
+                  />
+                </IconButton>
+              </Tooltip>
+
+              <Tooltip title="Comment">
+                <IconButton aria-label="add-comment">
+                  <AddCommentOutlinedIcon />
+                </IconButton>
+              </Tooltip>
+            </Box>
+
+            <Tooltip title="Join room" sx={{ marginRight: 4 }}>
+              <IconButton aria-label="join-room">
+                <MeetingRoomIcon />
+              </IconButton>
+            </Tooltip>
+          </Stack>
+        </CardActions>
+        <Typography sx={{ my: 1 }}>Add Comment:</Typography>
+
+        <Box component="form" noValidate autoComplete="off" display={"flex"}>
+          <FormControl
+            sx={{
+              width: "100%",
+              maxWidth: "600px",
+              minWidth: "350px",
+              display: "flex",
+            }}
+          >
+            <OutlinedInput placeholder="Please enter text" />
+          </FormControl>
+          <IconButton>
+            <AddIcon />
+          </IconButton>
+        </Box>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+            expanded={isExpanded}
+            onClick={() => setIsExpanded(!isExpanded)}
+          >
+            <Typography>Comment</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
+              eget.
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+>>>>>>> Stashed changes
       </Card>
     </Box>
   );
