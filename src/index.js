@@ -11,9 +11,7 @@ Amplify.configure(config);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <UserProvider>
-    <React.StrictMode>
       <App />
-    </React.StrictMode>
   </UserProvider>
 );
 

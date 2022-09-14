@@ -23,7 +23,7 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import AddIcon from "@mui/icons-material/Add";
@@ -32,11 +32,37 @@ import { Chip } from "@mui/material";
 import DoneIcon from "@mui/icons-material/Done";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 function Post(post) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showComment, setShowComment] = useState(false);
+  const[texts,setTexts]= useState([]);
+  const[comments,setComments]= useState([]);
   const { username, text, tags, date, startTime, limit } = post.post;
+
+  // const clear =()=>{
+  //   setTexts("")
+  // }
+
+  //   useEffect(()=>{
+  //     const allComments=async()=>{
+  //       /* const user = await Auth.currentAuthenticatedUser()
+  //        const token = user.signInUserSession.idToken.jwtToken
+  //        const requestInfo = {
+  //            headers: {
+  //                Authorization: token
+  //            }
+  //          }*/
+  //            try {
+  //               await axios.get(`https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comments/post/630f472e08fc7cd993939a70`)
+  //                setComments(comments.data) 
+  //            } catch (err) {
+  //                console.log(err)
+  //            }
+  //        }
+  //     allComments()
+  // },[comments])
 
   return (
     <Box>
@@ -156,16 +182,20 @@ function Post(post) {
                 <Typography>Comment</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Typography>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                  eget.
-                </Typography>
+              {/* {
+              comments.length > 0 ? comments.map((data) => {
+                    return (
+                        <Typography key={data._id}>
+                          {data.texts}
+                        </Typography>
+                    )}):""
+                    }  */}
+            
               </AccordionDetails>
             </Accordion>
           </>
-        ) : null}
-      </Card>
+       ) : null}
+        </Card>
     </Box>
   );
 }
