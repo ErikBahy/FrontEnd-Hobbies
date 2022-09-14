@@ -9,7 +9,7 @@ function UserProvider(props) {
 
   const getUserFromDatabase = async () => {
     const res = await axios.get(
-      "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/user/6320478c0864939b883df92f"
+      "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/user/630f428ddf5233796ac5cde1"
     );
     setUser(res.data);
   };

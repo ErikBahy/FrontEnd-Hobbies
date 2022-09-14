@@ -23,7 +23,6 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs from "dayjs";
 import axios from "axios";
 
-
 const StyledModal = styled(Modal)({
   display: "flex",
   justifyContent: "center",
@@ -41,45 +40,63 @@ function NewPostModal() {
   const [value, setValue] = useState(dayjs());
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
-  const[text,setText]=useState("")
-  const[limit,setLimit]=useState("")
-  const [open,setOpen] = useState(false);
+  const [text, setText] = useState("");
+  const [limit, setLimit] = useState("");
+  const [open, setOpen] = useState(false);
+  const [tag, setTag] = useState();
 
-  const clear=()=>{
-    setLimit("")
-    setText("")
-  }
+  console.log(text, "     console logging text ");
+  console.log(value.$d, " console logging date ");
+  console.log(limit, "     console logging limit ");
+  console.log(tag, "     console logging tag from newpostmodal ");
 
-  const postPost=async()=>{
-   /* const user = await Auth.currentAuthenticatedUser()
+  const clear = () => {
+    setLimit("");
+    setText("");
+    setTag([]);
+  };
+
+  const postPost = async (e) => {
+    /* const user = await Auth.currentAuthenticatedUser()
     const token = user.signInUserSession.idToken.jwtToken
     const requestInfo = {
-        headers: {
-            Authorization: token
+      headers: {
+        Authorization: token
+      }
+    }*/
+    try {
+      e.preventDefault();
+      await axios.post(
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/post/user/630f428ddf5233796ac5cde1`,
+        {
+          text: text,
+          limit: limit,
+          startTime: value.$d,
+          username: "retarded samurai",
+          tags: tag,
         }
-      }*/
-        try {
-           await axios.post(``,  {
-                text:text,
-                limit:limit,
-            })
-            clear()
-            setOpen(false)
-          //  fetchPost()
-        } catch (err) {
-            console.log(err)
-        }
+      );
+      console.log("postPostRan when clicked");
+      clear();
+      setOpen(false);
+      //  fetchPost()
+    } catch (err) {
+      console.log(err);
     }
+  };
   return (
     <>
       <Tooltip
-        title="Delete"
+        title="POST"
         sx={{
           position: "fixed",
           bottom: 20,
           right: { xs: "calc(0% + 30px)", md: 30 },
         }}
-        onClick={(e) => setOpen(true)}
+        onClick={(e) => {
+          setTag([]);
+          setOpen(true);
+        }}
       >
         <Fab color="primary" aria-label="add">
           <AddIcon />
@@ -92,7 +109,7 @@ function NewPostModal() {
         aria-describedby="modal-modal-description"
       >
         <Box
-          sx={{ width: { xs: 300, sm: 500 }, height: { xs: 350, sm: 350 } }}
+          sx={{ width: { xs: 300, sm: 500 }, height: { xs: 350, sm: 400 } }}
           bgcolor="background.default"
           color="text.primary"
           borderRadius={5}
@@ -121,11 +138,11 @@ function NewPostModal() {
                   type="number"
                   size="small"
                   value={limit}
-                  onChange={(e) =>setLimit(
-                    e.target.value < 0
-                      ? (e.target.value = 0)
-                      : e.target.value
-            )}
+                  onChange={(e) =>
+                    setLimit(
+                      e.target.value < 0 ? (e.target.value = 0) : e.target.value
+                    )
+                  }
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -151,7 +168,7 @@ function NewPostModal() {
             rows={4}
             variant="standard"
             value={text}
-            onChange={(e) =>setText(e.target.value)}
+            onChange={(e) => setText(e.target.value)}
           />
           <Stack direction="row" gap={1} mt={3} mb={3}>
             {matches === true ? (
@@ -162,12 +179,11 @@ function NewPostModal() {
                   label="People limit"
                   type="number"
                   value={limit}
-                  onChange={(e) =>setLimit(
-                    e.target.value < 0
-                      ? (e.target.value = 0)
-                      : e.target.value
-            )}
-          
+                  onChange={(e) =>
+                    setLimit(
+                      e.target.value < 0 ? (e.target.value = 0) : e.target.value
+                    )
+                  }
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -183,7 +199,7 @@ function NewPostModal() {
               </Box>
             ) : null}
             <Box flex={4}>
-              <Tags called="modal" />
+              <Tags called="modal" tag={tag} setTag={setTag} />
             </Box>
           </Stack>
           <Stack
@@ -197,9 +213,11 @@ function NewPostModal() {
               color="primary"
               sx={{ width: "50%" }}
               flex={1}
+              onClick={(e) => postPost(e)}
             >
               Post
             </Button>
+
             <Box flex={1} sx={{ width: "100%", marginLeft: { xs: 0, sm: 1 } }}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateTimePicker
