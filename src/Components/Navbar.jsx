@@ -9,15 +9,23 @@ import InputBase from "@mui/material/InputBase";
 import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-
+import LogoutIcon from '@mui/icons-material/Logout';
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Home } from "@mui/icons-material";
 import { Stack } from "@mui/material";
 import { Link } from "react-router-dom";
+import { Auth } from 'aws-amplify';
+
+async function signOut() {
+  try {
+      await Auth.signOut();
+  } catch (error) {
+      console.log('error signing out: ', error);
+  }
+}
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -191,6 +199,8 @@ function Navbar() {
                 >
                   <AccountCircle />
                 </IconButton>
+                <LogoutIcon  onClick={signOut} style={{float:"right",margin:"10px"}} >
+                                  </LogoutIcon>
               </Box>
               <Box
                 sx={{
@@ -208,6 +218,8 @@ function Navbar() {
                 >
                   <MoreIcon />
                 </IconButton>
+                <LogoutIcon  onClick={signOut} style={{float:"right",margin:"10px"}} >
+                </LogoutIcon>
               </Box>
             </Toolbar>
           </Box>

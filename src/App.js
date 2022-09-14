@@ -20,7 +20,6 @@ function App() {
     }
     const data = await API.get('apiFH', '/', requestInfo)
     console.log({ data })
-    console.log(callApi());
   }
   return (
     <BrowserRouter>
