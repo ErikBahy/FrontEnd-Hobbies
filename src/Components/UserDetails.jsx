@@ -1,6 +1,9 @@
 import {
   Avatar,
+  Box,
   Button,
+  InputAdornment,
+  Modal,
   Stack,
   TextField,
   Tooltip,
@@ -9,8 +12,24 @@ import {
   useTheme,
 } from "@mui/material";
 import React, { useContext } from "react";
-import { Edit } from "@mui/icons-material";
+import { AccountCircle, Edit } from "@mui/icons-material";
 import { UserContext } from "../contexts/UserContext";
+import DescriptionIcon from '@mui/icons-material/Description';
+import EditLocationIcon from '@mui/icons-material/EditLocation';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 //sdhjafjheiufhuidshudhuvhuisvuirufbewhdufehwiudhuoewhuio
 
@@ -19,6 +38,11 @@ function UserDetails() {
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const userContext = useContext(UserContext);
   const { username, bio, followers } = userContext.user;
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
 
   return (
     <>
@@ -63,9 +87,53 @@ function UserDetails() {
           >
             {` Followers`}
           </Typography>
-          <Button variant="text" href="/editUser" startIcon={<Edit />}>
-            Edit
-          </Button>
+          
+          <Button onClick={handleOpen}>Edit</Button>
+<Modal
+  open={open}
+  onClose={handleClose}
+  aria-labelledby="modal-modal-title"
+  aria-describedby="modal-modal-description"
+>
+  <Box sx={style}  flexdirection="column" >
+    <Box display="flex" flexdirection="row" justifyContent="center" >
+  <TextField sx={{mb:2, mr:1}}
+        id="input-with-icon-textfield"
+        label="Change your bio"
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <DescriptionIcon />
+            </InputAdornment>
+          ),
+        }}
+        variant="standard"
+      />
+      <Button variant="outlined" sx={{borderRadius:2, height:40}}  startIcon={<CheckCircleOutlineIcon />}>
+  Done
+</Button>
+</Box> 
+<Box display="flex" flexdirection="row" justifyContent="center" >
+    <TextField sx={{mr:1}}
+        id="input-with-icon-textfield"
+        label="Change your location"
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              < EditLocationIcon/>
+            </InputAdornment>
+          ),
+        }}
+        variant="standard"
+      />
+      <Button  variant="outlined" sx={{borderRadius:2, height:40}}  startIcon={<CheckCircleOutlineIcon />}>
+  Done
+</Button>
+      </Box>
+  </Box>
+
+  
+</Modal>
         </Stack>
         <Stack
           justifyContent="space-around"

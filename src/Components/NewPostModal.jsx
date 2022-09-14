@@ -87,7 +87,7 @@ function NewPostModal() {
   return (
     <>
       <Tooltip
-        title="Delete"
+        title="POST"
         sx={{
           position: "fixed",
           bottom: 20,
