@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import React, { useEffect } from "react";
 import Post from "./Post";
 import axios from "axios";
@@ -10,7 +10,7 @@ function Feed() {
   const [userPosts, setUserPosts] = useState([]);
   const getUserPosts = async () => {
     const res = await axios.get(
-      `${url}/dev/posts/user/6320478c0864939b883df92f`
+      `${url}/dev/posts/user/630f428ddf5233796ac5cde1`
     );
     const data = res.data;
     setUserPosts(data);
@@ -20,11 +20,11 @@ function Feed() {
   }, []);
 
   return (
-    <Box flex={8}>
+    <Stack flex={8}>
       {userPosts.map((el) => {
         return <Post post={el} />;
       })}
-    </Box>
+    </Stack>
   );
 }
 

@@ -114,7 +114,7 @@ function Post(post) {
               sx={{ justifyContent: "space-between" }}
             >
               <Chip
-                label="Limit is: "
+                label={`Limit is: ${limit}`}
                 color="primary"
                 sx={{ marginRight: 3 }}
               />
