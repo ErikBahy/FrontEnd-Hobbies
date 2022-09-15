@@ -34,33 +34,34 @@ import axios from "axios";
 function Post(post) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showComment, setShowComment] = useState(false);
-  const [texts, setTexts] = useState([]);
   const [comments, setComments] = useState([]);
   const { username, text, tags, date, startTime, limit } = post.post;
   const clear = () => {
-    setTexts("");
+    setComments("");
   };
-
-  useEffect(() => {
-    const allComments = async () => {
-      /* const user = await Auth.currentAuthenticatedUser()
+console.log(comments, "state comment");
+const {
+  texts
+} = comments
+    useEffect(()=>{
+      const allComments=async()=>{
+        /* const user = await Auth.currentAuthenticatedUser()
          const token = user.signInUserSession.idToken.jwtToken
          const requestInfo = {
              headers: {
                  Authorization: token
              }
            }*/
-      try {
-        await axios.get(
-          `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comments/post/630f472e08fc7cd993939a70`
-        );
-        setComments(Comment.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    allComments();
-  }, [comments]);
+             try {
+                const res = await axios.get(`https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comments/post/630f472e08fc7cd993939a70`)
+                console.log(res.data , "comment data");
+                 setComments(res.data) 
+             } catch (err) {
+                 console.log(err)
+             }
+         }
+      allComments()
+  },[])
 
   // const postComments=async()=>{
   //   // const user = await Auth.currentAuthenticatedUser()
@@ -74,13 +75,14 @@ function Post(post) {
   //          await axios.post(`https://egw1r79dz5.execute-api.eu-central-1.amazonaws.com/dev/newProduct`,{
   //               text:texts
   //          })
-
+           
   //            clear()
-  //           allComments()
+  //           comments()
   //       } catch (err) {
   //           console.log(err)
   //       }
   //   }
+
 
   return (
     <Box>
@@ -199,16 +201,17 @@ function Post(post) {
                 <Typography>Comment</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                {/* {
-              comments.length = 0 ? comments.map((data) => {
+              {
+              comments.length > 0 ? comments.map((data) => {
                     return (
                         <Typography key={data._id}>
-                          {data.texts}
+                          {data.text}
                         </Typography>
                     )
                    
                   }):null
-                    }  */}
+                    } 
+                    
               </AccordionDetails>
             </Accordion>
           </>
