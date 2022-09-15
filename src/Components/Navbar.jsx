@@ -208,6 +208,7 @@ function Navbar() {
                   aria-label="account of current user"
                   aria-controls={menuId}
                   aria-haspopup="true"
+                  onClick={addUser()}
                   color="inherit"
                 >
                   <AccountCircle />

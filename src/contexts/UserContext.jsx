@@ -11,7 +11,12 @@ function UserProvider(props) {
     // const token = user.signInUserSession.idToken.jwtToken;
     const userId = currentUser.attributes.sub;
     axios.post(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/chechandpost/user/${userId}`
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/chechandpost/user/${userId}`,
+      {
+        username: "erik erik bahyyyyy",
+        location: "me dhipa",
+        bio: "naruto",
+      }
     );
     console.log(userId);
   };
