@@ -6,7 +6,7 @@ import EditProfile from "./EditProfile/EditProfile";
 import Navbar from "./Components/Navbar";
 import { API, Auth } from "aws-amplify";
 import { withAuthenticator } from "@aws-amplify/ui-react";
-import "@aws-amplify/ui-react/styles.css";
+
 function App() {
   async function callApi() {
     const user = await Auth.currentAuthenticatedUser();
@@ -20,7 +20,6 @@ function App() {
     };
     const data = await API.get("apiFH", "/", requestInfo);
     console.log({ data });
-    console.log(callApi());
   }
   return (
     <BrowserRouter>
