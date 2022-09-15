@@ -1,7 +1,6 @@
 import {
   Avatar,
   Box,
-  Button,
   Card,
   CardActions,
   CardContent,
@@ -18,7 +17,6 @@ import Checkbox from "@mui/material/Checkbox";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AddCommentOutlinedIcon from "@mui/icons-material/AddCommentOutlined";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
-import TagIcon from "@mui/icons-material/Tag";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -29,8 +27,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import AddIcon from "@mui/icons-material/Add";
 import "../stlyles.css";
 import { Chip } from "@mui/material";
-import DoneIcon from "@mui/icons-material/Done";
-import DeleteIcon from "@mui/icons-material/Delete";
+
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -40,29 +37,49 @@ function Post(post) {
   const[texts,setTexts]= useState([]);
   const[comments,setComments]= useState([]);
   const { username, text, tags, date, startTime, limit } = post.post;
+  const clear =()=>{
+    setTexts("")
+  }
 
-  // const clear =()=>{
-  //   setTexts("")
-  // }
+    useEffect(()=>{
+      const allComments=async()=>{
+        /* const user = await Auth.currentAuthenticatedUser()
+         const token = user.signInUserSession.idToken.jwtToken
+         const requestInfo = {
+             headers: {
+                 Authorization: token
+             }
+           }*/
+             try {
+                await axios.get(`https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comments/post/630f472e08fc7cd993939a70`)
+                 setComments(Comment.data) 
+             } catch (err) {
+                 console.log(err)
+             }
+         }
+      allComments()
+  },[comments])
 
-  //   useEffect(()=>{
-  //     const allComments=async()=>{
-  //       /* const user = await Auth.currentAuthenticatedUser()
-  //        const token = user.signInUserSession.idToken.jwtToken
-  //        const requestInfo = {
-  //            headers: {
-  //                Authorization: token
-  //            }
-  //          }*/
-  //            try {
-  //               await axios.get(`https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comments/post/630f472e08fc7cd993939a70`)
-  //                setComments(comments.data) 
-  //            } catch (err) {
-  //                console.log(err)
-  //            }
-  //        }
-  //     allComments()
-  // },[comments])
+  // const postComments=async()=>{
+  //   // const user = await Auth.currentAuthenticatedUser()
+  //   // const token = user.signInUserSession.idToken.jwtToken
+  //   // const requestInfo = {
+  //   //     headers: {
+  //   //         Authorization: token
+  //   //     }
+  //   //   }
+  //       try {
+  //          await axios.post(`https://egw1r79dz5.execute-api.eu-central-1.amazonaws.com/dev/newProduct`,{
+  //               text:texts
+  //          })
+           
+  //            clear()
+  //           allComments()
+  //       } catch (err) {
+  //           console.log(err)
+  //       }
+  //   }
+
 
   return (
     <Box>
@@ -162,7 +179,6 @@ function Post(post) {
               noValidate
               autoComplete="off"
               display={"flex"}
-              onClick={""}
             >
               <FormControl>
                 <OutlinedInput placeholder="Please enter text" />
@@ -183,14 +199,16 @@ function Post(post) {
               </AccordionSummary>
               <AccordionDetails>
               {/* {
-              comments.length > 0 ? comments.map((data) => {
+              comments.length = 0 ? comments.map((data) => {
                     return (
                         <Typography key={data._id}>
                           {data.texts}
                         </Typography>
-                    )}):""
+                    )
+                   
+                  }):null
                     }  */}
-            
+                    
               </AccordionDetails>
             </Accordion>
           </>

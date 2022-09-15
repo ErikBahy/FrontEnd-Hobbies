@@ -12,7 +12,6 @@ import {
   useTheme,
 } from "@mui/material";
 import React, { useContext } from "react";
-import { AccountCircle, Edit } from "@mui/icons-material";
 import { UserContext } from "../contexts/UserContext";
 import DescriptionIcon from '@mui/icons-material/Description';
 import EditLocationIcon from '@mui/icons-material/EditLocation';
