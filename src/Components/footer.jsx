@@ -10,11 +10,13 @@ export default function Footer() {
         py={{ xs: 2 }}
         bgcolor="text.secondary"
         color="white"
+        position="fixed"
+        sx={{ bottom: 0 }}
       >
         <Container maxWidth="lg">
           <Box textAlign="center">
             <Stack spacing={1} direction="row" justifyContent="center">
-            <Pagination count={10}/>
+              <Pagination count={10} />
             </Stack>
           </Box>
         </Container>

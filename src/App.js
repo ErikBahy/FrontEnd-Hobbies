@@ -26,7 +26,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/userprofile" element={<UserProfile />} />
+        <Route path="/userprofile/:cognitoId" element={<UserProfile />} />
       </Routes>
     </BrowserRouter>
   );

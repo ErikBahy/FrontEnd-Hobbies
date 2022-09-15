@@ -4,12 +4,15 @@ import Feed from "../Components/UserProfileFeed";
 import UserDetails from "../Components/UserDetails";
 import { Box, Divider, Chip } from "@mui/material";
 import { UserContext } from "../contexts/UserContext";
+import { useParams } from "react-router-dom";
 
 function UserProfile() {
+  const { cognitoId } = useParams();
   const userContext = useContext(UserContext);
   const { posts } = userContext.user;
   useEffect(() => {
-    userContext.getUserFromDatabase();
+    userContext.getUserFromDatabase(cognitoId);
+    userContext.getCurrentUserId();
   }, []);
 
   return (
@@ -21,7 +24,7 @@ function UserProfile() {
           flexDirection="row"
           sx={{ backgroundColor: "", flexWrap: "wrap", alignItems: "center" }}
         >
-          <UserDetails />
+          <UserDetails userId={cognitoId} />
           <Divider sx={{ width: 1, marginTop: 3, fontWeight: 200 }}>
             {" "}
             <Chip label={+" " + " POSTS"} />

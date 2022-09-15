@@ -35,7 +35,8 @@ function Post(post) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const [comments, setComments] = useState([]);
-  const { username, text, tags, date, startTime, limit } = post.post;
+  const { username, text, tags, date, startTime, limit, postCognitoId } =
+    post.post;
   const clear = () => {
     setComments("");
   };
@@ -93,7 +94,7 @@ function Post(post) {
                 sx={{ fontSize: 14, fontWeight: 150, textDecoration: "none" }}
                 color="text.secondary"
                 component={Link}
-                to="userprofile"
+                to={`userprofile/${postCognitoId}`}
               >
                 {username}
               </Typography>

@@ -20,23 +20,33 @@ function UserProvider(props) {
     );
     console.log(userId);
   };
+  const [currentUserId, setCurrentUserId] = useState();
+  const getCurrentUserId = async () => {
+    const currentUser = await Auth.currentAuthenticatedUser();
+
+    const userId = currentUser.attributes.sub;
+    setCurrentUserId(userId);
+  };
 
   const [user, setUser] = useState([]);
 
-  const getUserFromDatabase = async () => {
+  const getUserFromDatabase = async (cognitoId) => {
     const currentUser = await Auth.currentAuthenticatedUser();
     const userId = currentUser.attributes.sub;
+
     const res = await axios.get(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/user/632330ee7c09870d4bd5ce97`
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/userCognitoForErikWithLove/${cognitoId}`
     );
     setUser(res.data);
-    console.log(res.data, "user data from context");
+    console.log(cognitoId, "cognito idfrom context");
   };
 
   return (
     <UserContext.Provider
       value={{
         user: user,
+        getCurrentUserId: getCurrentUserId,
+        currentUserId: currentUserId,
 
         addUser: addUser,
         setUser: setUser,

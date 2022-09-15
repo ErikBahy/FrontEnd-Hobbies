@@ -69,10 +69,11 @@ function NewPostModal() {
       await axios.post(
         `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/post/user/630f428ddf5233796ac5cde1`,
         {
+          postCognitoId: "329djfjakllw",
           text: text,
           limit: limit,
           startTime: value.$d,
-          username: "retarded samurai",
+          username: "retarded retard",
           tags: tag,
         }
       );
