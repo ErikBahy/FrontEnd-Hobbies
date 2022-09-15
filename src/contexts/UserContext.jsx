@@ -24,16 +24,20 @@ function UserProvider(props) {
   const [user, setUser] = useState([]);
 
   const getUserFromDatabase = async () => {
+    const currentUser = await Auth.currentAuthenticatedUser();
+    const userId = currentUser.attributes.sub;
     const res = await axios.get(
-      "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/user/630f428ddf5233796ac5cde1"
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/user/632330ee7c09870d4bd5ce97`
     );
     setUser(res.data);
+    console.log(res.data, "user data from context");
   };
 
   return (
     <UserContext.Provider
       value={{
         user: user,
+
         addUser: addUser,
         setUser: setUser,
         getUserFromDatabase: getUserFromDatabase,

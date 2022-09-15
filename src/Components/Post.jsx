@@ -39,29 +39,29 @@ function Post(post) {
   const clear = () => {
     setComments("");
   };
-console.log(comments, "state comment");
-const {
-  texts
-} = comments
-    useEffect(()=>{
-      const allComments=async()=>{
-        /* const user = await Auth.currentAuthenticatedUser()
+
+  const { texts } = comments;
+  useEffect(() => {
+    const allComments = async () => {
+      /* const user = await Auth.currentAuthenticatedUser()
          const token = user.signInUserSession.idToken.jwtToken
          const requestInfo = {
              headers: {
                  Authorization: token
              }
            }*/
-             try {
-                const res = await axios.get(`https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comments/post/630f472e08fc7cd993939a70`)
-                console.log(res.data , "comment data");
-                 setComments(res.data) 
-             } catch (err) {
-                 console.log(err)
-             }
-         }
-      allComments()
-  },[])
+      try {
+        const res = await axios.get(
+          `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comments/post/630f472e08fc7cd993939a70`
+        );
+
+        setComments(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    allComments();
+  }, []);
 
   // const postComments=async()=>{
   //   // const user = await Auth.currentAuthenticatedUser()
@@ -75,14 +75,13 @@ const {
   //          await axios.post(`https://egw1r79dz5.execute-api.eu-central-1.amazonaws.com/dev/newProduct`,{
   //               text:texts
   //          })
-           
+
   //            clear()
   //           comments()
   //       } catch (err) {
   //           console.log(err)
   //       }
   //   }
-
 
   return (
     <Box>
@@ -201,17 +200,13 @@ const {
                 <Typography>Comment</Typography>
               </AccordionSummary>
               <AccordionDetails>
-              {
-              comments.length > 0 ? comments.map((data) => {
-                    return (
-                        <Typography key={data._id}>
-                          {data.text}
-                        </Typography>
-                    )
-                   
-                  }):null
-                    } 
-                    
+                {comments.length > 0
+                  ? comments.map((data) => {
+                      return (
+                        <Typography key={data._id}>{data.text}</Typography>
+                      );
+                    })
+                  : null}
               </AccordionDetails>
             </Accordion>
           </>

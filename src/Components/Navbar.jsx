@@ -202,7 +202,7 @@ function Navbar() {
 
                 <IconButton
                   component={Link}
-                  to="/UserProfile"
+                  to={`/UserProfile`}
                   size="large"
                   edge="end"
                   aria-label="account of current user"

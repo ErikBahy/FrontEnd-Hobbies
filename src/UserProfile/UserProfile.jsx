@@ -10,7 +10,6 @@ function UserProfile() {
   const { posts } = userContext.user;
   useEffect(() => {
     userContext.getUserFromDatabase();
-    console.log(userContext.user);
   }, []);
 
   return (
