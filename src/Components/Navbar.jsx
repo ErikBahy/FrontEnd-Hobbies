@@ -9,7 +9,7 @@ import InputBase from "@mui/material/InputBase";
 import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
@@ -17,13 +17,15 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import { Home } from "@mui/icons-material";
 import { Stack } from "@mui/material";
 import { Link } from "react-router-dom";
-import { Auth } from 'aws-amplify';
+import { Auth } from "aws-amplify";
+import { UserContext } from "../contexts/UserContext";
+import { useContext } from "react";
 
 async function signOut() {
   try {
-      await Auth.signOut();
+    await Auth.signOut();
   } catch (error) {
-      console.log('error signing out: ', error);
+    console.log("error signing out: ", error);
   }
 }
 
@@ -70,6 +72,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function Navbar() {
+  const userContext = useContext(UserContext);
+  const { addUser } = userContext;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -148,8 +152,18 @@ function Navbar() {
 
           <Box flex={12}>
             <Toolbar sx={{ justifyContent: "space-around" }}>
-              <Box sx={{ display: { xs: "none", sm: "block" , textDecoration: 'none' } }}>
-                <Typography variant="h6" noWrap component={Link} to='/' color={"inherit"}>
+              <Box
+                sx={{
+                  display: { xs: "none", sm: "block", textDecoration: "none" },
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component={Link}
+                  to="/"
+                  color={"inherit"}
+                >
                   SPORT
                 </Typography>
               </Box>
@@ -194,13 +208,14 @@ function Navbar() {
                   aria-label="account of current user"
                   aria-controls={menuId}
                   aria-haspopup="true"
-                  onClick={handleProfileMenuOpen}
                   color="inherit"
                 >
                   <AccountCircle />
                 </IconButton>
-                <LogoutIcon  onClick={signOut} style={{float:"right",margin:"10px"}} >
-                                  </LogoutIcon>
+                <LogoutIcon
+                  onClick={signOut}
+                  style={{ float: "right", margin: "10px" }}
+                ></LogoutIcon>
               </Box>
               <Box
                 sx={{
@@ -218,8 +233,10 @@ function Navbar() {
                 >
                   <MoreIcon />
                 </IconButton>
-                <LogoutIcon  onClick={signOut} style={{float:"right",margin:"10px"}} >
-                </LogoutIcon>
+                <LogoutIcon
+                  onClick={signOut}
+                  style={{ float: "right", margin: "10px" }}
+                ></LogoutIcon>
               </Box>
             </Toolbar>
           </Box>
