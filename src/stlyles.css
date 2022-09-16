@@ -1,16 +1,20 @@
-.css-1elwnq4-MuiPaper-root-MuiAccordion-root:before{
-    height: 0;
-  }
-  .css-1qoym6q {
-    width: 100%;
-  }
-  .css-nen11g-MuiStack-root {
-    width: 100%;
-  }
-  .css-401arl-MuiStack-root {
-    width: 100%;
-  }
+.css-1elwnq4-MuiPaper-root-MuiAccordion-root:before {
+  height: 0;
+}
+.css-1qoym6q {
+  width: 100%;
+}
+.css-nen11g-MuiStack-root {
+  width: 100%;
+}
+.css-401arl-MuiStack-root {
+  width: 100%;
+}
 
-  .css-401arl-MuiStack-root {
-    width: 100%;
-  }
+.css-401arl-MuiStack-root {
+  width: 100%;
+}
+.footer {
+  height: 10vh;
+  margin-top: auto;
+}

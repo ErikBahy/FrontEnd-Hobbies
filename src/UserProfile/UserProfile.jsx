@@ -12,7 +12,6 @@ function UserProfile() {
   const { posts } = userContext.user;
   useEffect(() => {
     userContext.getUserFromDatabase(cognitoId);
-    userContext.getCurrentUserId();
   }, []);
 
   return (
@@ -31,7 +30,7 @@ function UserProfile() {
           </Divider>
           <Stack>
             {" "}
-            <Feed called="UserProfile" />
+            <Feed called="UserProfile" cognitoId={cognitoId} />
           </Stack>
         </Stack>
         <Box flex={1} sx={{ display: { xs: "none", md: "block" } }}></Box>

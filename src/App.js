@@ -7,6 +7,9 @@ import Navbar from "./Components/Navbar";
 import { API, Auth } from "aws-amplify";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 
+import { useContext, useEffect } from "react";
+import { UserContext } from "./contexts/UserContext";
+
 function App() {
   async function callApi() {
     const user = await Auth.currentAuthenticatedUser();
@@ -21,6 +24,11 @@ function App() {
     const data = await API.get("apiFH", "/", requestInfo);
     console.log({ data });
   }
+  const userContext = useContext(UserContext);
+  useEffect(() => {
+    userContext.getCurrentUserId();
+  }, []);
+
   return (
     <BrowserRouter>
       <Navbar />

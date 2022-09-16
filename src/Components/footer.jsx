@@ -5,7 +5,7 @@ import Stack from "@mui/material/Stack";
 
 export default function Footer() {
   return (
-    <footer>
+    <footer className="footer">
       <Box
         py={{ xs: 2 }}
         bgcolor="text.secondary"

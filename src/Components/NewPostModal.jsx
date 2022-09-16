@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import Tooltip from "@mui/material/Tooltip";
 import Tags from "./Tags";
@@ -22,6 +22,12 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs from "dayjs";
 import axios from "axios";
+import {
+  getCurrentUserId,
+  getMongoIdFromCognitoId,
+  getUserFromCognitoId,
+} from "../apiCalls";
+import { UserContext } from "../contexts/UserContext";
 
 const StyledModal = styled(Modal)({
   display: "flex",
@@ -44,6 +50,12 @@ function NewPostModal() {
   const [limit, setLimit] = useState("");
   const [open, setOpen] = useState(false);
   const [tag, setTag] = useState();
+  const [cognitoId, setcognitoId] = useState();
+  const [mongoId, setmongoId] = useState();
+  const userContext = useContext(UserContext);
+  const { loggedUser } = userContext;
+
+  console.log(cognitoId, "and currentuser ", mongoId, "hopefully");
 
   console.log(text, "     console logging text ");
   console.log(value.$d, " console logging date ");
@@ -67,13 +79,13 @@ function NewPostModal() {
     try {
       e.preventDefault();
       await axios.post(
-        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/post/user/630f428ddf5233796ac5cde1`,
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/post/user/${mongoId._id}`,
         {
-          postCognitoId: "329djfjakllw",
+          postCognitoId: cognitoId,
           text: text,
           limit: limit,
           startTime: value.$d,
-          username: "retarded retard",
+          username: loggedUser.username,
           tags: tag,
         }
       );
@@ -85,6 +97,14 @@ function NewPostModal() {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    getCurrentUserId().then((id) => {
+      setcognitoId(id);
+      getUserFromCognitoId(id).then((data) => setmongoId(data));
+    });
+  }, []);
+
   return (
     <>
       <Tooltip
@@ -126,9 +146,7 @@ function NewPostModal() {
                 alt="Erik"
                 src="https://images.unsplash.com/photo-1517348573020-98fb6f1ccc80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"
               />
-              <Typography fontWeight={500} variant="span">
-                Erik
-              </Typography>
+              <Typography fontWeight={500} variant="span"></Typography>
             </Stack>
             {matches === false ? (
               <Box flex={3}>

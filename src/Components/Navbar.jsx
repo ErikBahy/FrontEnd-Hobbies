@@ -20,6 +20,7 @@ import { Link } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { UserContext } from "../contexts/UserContext";
 import { useContext } from "react";
+import { addUser } from "../apiCalls";
 
 async function signOut() {
   try {
@@ -73,7 +74,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function Navbar() {
   const userContext = useContext(UserContext);
-  const { addUser } = userContext;
+  const { currentUserId } = userContext;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -202,7 +203,7 @@ function Navbar() {
 
                 <IconButton
                   component={Link}
-                  to={`/UserProfile`}
+                  to={`/UserProfile/${currentUserId}`}
                   size="large"
                   edge="end"
                   aria-label="account of current user"
