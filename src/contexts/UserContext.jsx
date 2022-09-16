@@ -8,6 +8,9 @@ const UserContext = createContext();
 function UserProvider(props) {
   const [currentUserId, setCurrentUserId] = useState();
   const [loggedUser, setloggedUser] = useState();
+  const [userMongoId, setuserMongoId] = useState();
+  const [currentUserMongoId, setcurrentUserMongoId] = useState();
+  const [isFollowed, setisFollowed] = useState();
   const getCurrentUserId = async () => {
     const currentUser = await Auth.currentAuthenticatedUser();
 
@@ -37,6 +40,12 @@ function UserProvider(props) {
         currentUserId: currentUserId,
         loggedUser: loggedUser,
         setUser: setUser,
+        setuserMongoId: setuserMongoId,
+        setcurrentUserMongoId: setcurrentUserMongoId,
+        userMongoId: userMongoId,
+        currentUserMongoId: currentUserMongoId,
+        setisFollowed: setisFollowed,
+        isFollowed: isFollowed,
         getUserFromDatabase: getUserFromDatabase,
       }}
     >

@@ -16,7 +16,11 @@ import { UserContext } from "../contexts/UserContext";
 import DescriptionIcon from "@mui/icons-material/Description";
 import EditLocationIcon from "@mui/icons-material/EditLocation";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import { getCurrentUserId, getMongoIdFromCognitoId } from "../apiCalls";
+import {
+  checkFollow,
+  getCurrentUserId,
+  getMongoIdFromCognitoId,
+} from "../apiCalls";
 import axios from "axios";
 
 const style = {
@@ -38,9 +42,17 @@ function UserDetails({ userId }) {
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const userContext = useContext(UserContext);
   const { username, bio, followers } = userContext.user;
-  const [userMongoId, setuserMongoId] = useState();
-  const [currentUserMongoId, setcurrentUserMongoId] = useState();
-  const [isFollowed, setisFollowed] = useState(false);
+  const {
+    isFollowed,
+
+    currentUserMongoId,
+    userMongoId,
+  } = userContext;
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const checkId = userId === userContext.currentUserId;
 
   console.log(isFollowed);
 
@@ -59,20 +71,7 @@ function UserDetails({ userId }) {
     console.log(idk.data);
   };
 
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const checkId = userId === userContext.currentUserId;
-  console.log(checkId, "the user id should fucking be here");
-
-  useEffect(() => {
-    getMongoIdFromCognitoId(userId).then((id) => setuserMongoId(id));
-    getCurrentUserId().then((id) =>
-      getMongoIdFromCognitoId(id).then((mongoId) =>
-        setcurrentUserMongoId(mongoId)
-      )
-    );
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <>
@@ -122,14 +121,13 @@ function UserDetails({ userId }) {
           ) : checkId === false && isFollowed === false ? (
             <Button
               onClick={(e) => {
-                setisFollowed(true);
                 follow(e, currentUserMongoId, userMongoId);
               }}
             >
               follow
             </Button>
           ) : (
-            <Button onClick={setisFollowed(false)}>Unfollow</Button>
+            <Button>Unfollow</Button>
           )}
 
           <Modal

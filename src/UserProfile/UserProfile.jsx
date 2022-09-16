@@ -5,14 +5,36 @@ import UserDetails from "../Components/UserDetails";
 import { Box, Divider, Chip } from "@mui/material";
 import { UserContext } from "../contexts/UserContext";
 import { useParams } from "react-router-dom";
+import {
+  checkFollow,
+  getCurrentUserId,
+  getMongoIdFromCognitoId,
+} from "../apiCalls";
 
 function UserProfile() {
   const { cognitoId } = useParams();
   const userContext = useContext(UserContext);
   const { posts } = userContext.user;
+  const {
+    setuserMongoId,
+    setcurrentUserMongoId,
+    currentUserMongoId,
+    userMongoId,
+    setisFollowed,
+  } = userContext;
+
   useEffect(() => {
     userContext.getUserFromDatabase(cognitoId);
-  }, []);
+    getMongoIdFromCognitoId(cognitoId).then((id) => setuserMongoId(id));
+    getCurrentUserId().then((id) =>
+      getMongoIdFromCognitoId(id).then((mongoId) =>
+        setcurrentUserMongoId(mongoId)
+      )
+    );
+    checkFollow(currentUserMongoId, userMongoId).then((bool) =>
+      setisFollowed(bool)
+    );
+  }, [cognitoId, currentUserMongoId, userMongoId]);
 
   return (
     <>

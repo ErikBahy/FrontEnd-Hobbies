@@ -50,3 +50,10 @@ export const getCurrentUserId = async () => {
 
   return userId;
 };
+export const checkFollow = async (currentUserMongoId, userMongoId) => {
+  const res = await axios.get(
+    `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/boolIfFollows/${currentUserMongoId}/${userMongoId}`
+  );
+  console.log(res.data, "res.data is followed or no");
+  return await res.data;
+};
