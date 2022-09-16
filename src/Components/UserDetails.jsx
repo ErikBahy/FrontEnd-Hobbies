@@ -17,6 +17,7 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import EditLocationIcon from "@mui/icons-material/EditLocation";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { getCurrentUserId, getMongoIdFromCognitoId } from "../apiCalls";
+import axios from "axios";
 
 const style = {
   position: "absolute",
@@ -39,6 +40,9 @@ function UserDetails({ userId }) {
   const { username, bio, followers } = userContext.user;
   const [userMongoId, setuserMongoId] = useState();
   const [currentUserMongoId, setcurrentUserMongoId] = useState();
+  const [isFollowed, setisFollowed] = useState(false);
+
+  console.log(isFollowed);
 
   console.log(
     userMongoId,
@@ -46,6 +50,14 @@ function UserDetails({ userId }) {
     currentUserMongoId,
     "currentUsermongo"
   );
+
+  const follow = async (e, currentUserMongoId, userMongoId) => {
+    e.preventDefault();
+    const idk = axios.get(
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/followers/${currentUserMongoId}/${userMongoId}`
+    );
+    console.log(idk.data);
+  };
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -107,8 +119,17 @@ function UserDetails({ userId }) {
           </Typography>
           {checkId === true ? (
             <Button onClick={handleOpen}>Edit</Button>
+          ) : checkId === false && isFollowed === false ? (
+            <Button
+              onClick={(e) => {
+                setisFollowed(true);
+                follow(e, currentUserMongoId, userMongoId);
+              }}
+            >
+              follow
+            </Button>
           ) : (
-            <Button>follow</Button>
+            <Button onClick={setisFollowed(false)}>Unfollow</Button>
           )}
 
           <Modal
