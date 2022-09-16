@@ -23,6 +23,7 @@ export const getUserFromDatabase = async (cognitoId) => {
   console.log(res.data, "cognito idfrom context");
   return res.data;
 };
+
 export const addUser = async () => {
   const currentUser = await Auth.currentAuthenticatedUser();
   // const token = user.signInUserSession.idToken.jwtToken;

@@ -26,6 +26,7 @@ import {
   getCurrentUserId,
   getMongoIdFromCognitoId,
   getUserFromCognitoId,
+  addUser
 } from "../apiCalls";
 import { UserContext } from "../contexts/UserContext";
 
@@ -117,6 +118,7 @@ function NewPostModal() {
         onClick={(e) => {
           setTag([]);
           setOpen(true);
+          addUser();
         }}
       >
         <Fab color="primary" aria-label="add">
