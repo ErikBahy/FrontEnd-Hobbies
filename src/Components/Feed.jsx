@@ -9,10 +9,12 @@ const url = "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com";
 function Feed({ called }) {
   const [posts, setPosts] = useState([]);
   const [pageNumber, setPageNumber] = useState();
-  const [totalPages,setTotalPages] = useState();
+  const [totalPages, setTotalPages] = useState();
 
   const getAllPosts = async () => {
-    const page = await axios.get(`https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/allpostsPages`);
+    const page = await axios.get(
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/allpostsPages`
+    );
     setTotalPages(parseInt(page.data));
     console.log(totalPages);
     //const res = await axios.get(`${url}/dev/allposts`);
@@ -42,7 +44,7 @@ function Feed({ called }) {
         <Box flex={2} sx={{ display: { xs: "none", sm: "block" } }}></Box>
         <Box flex={4}>
           {posts.map((el) => {
-            return <Post post={el} />;
+            return <Post called="feed" post={el} />;
           })}
         </Box>
         <Box flex={2} sx={{ display: { xs: "none", sm: "block" } }}></Box>

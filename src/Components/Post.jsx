@@ -31,12 +31,11 @@ import { Chip } from "@mui/material";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-function Post(post) {
+function Post({ post, called }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const [comments, setComments] = useState([]);
-  const { username, text, tags, date, startTime, limit, postCognitoId } =
-    post.post;
+  const { username, text, tags, date, startTime, limit, postCognitoId } = post;
   const clear = () => {
     setComments("");
   };
@@ -109,9 +108,11 @@ function Post(post) {
             }
             action={
               <Stack direction="row">
-                <IconButton aria-label="settings">
-                  <MoreVertIcon />
-                </IconButton>
+                {called === "userProfile" ? (
+                  <IconButton aria-label="settings">
+                    <MoreVertIcon />
+                  </IconButton>
+                ) : null}
               </Stack>
             }
             subheader={date}
@@ -160,7 +161,7 @@ function Post(post) {
               sx={{ justifyContent: "space-between" }}
             >
               <Chip
-                label="Limit is: "
+                label={`Limit is: ${limit}`}
                 color="primary"
                 sx={{ marginRight: 3 }}
               />

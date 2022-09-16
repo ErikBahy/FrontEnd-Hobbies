@@ -25,7 +25,7 @@ function Feed({ cognitoId }) {
   return (
     <Stack flex={8}>
       {userPosts.map((el) => {
-        return <Post post={el} />;
+        return <Post called="userProfile" post={el} />;
       })}
     </Stack>
   );
