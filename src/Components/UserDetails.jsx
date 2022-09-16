@@ -11,11 +11,12 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
 import DescriptionIcon from "@mui/icons-material/Description";
 import EditLocationIcon from "@mui/icons-material/EditLocation";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import { getCurrentUserId, getMongoIdFromCognitoId } from "../apiCalls";
 
 const style = {
   position: "absolute",
@@ -36,12 +37,30 @@ function UserDetails({ userId }) {
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const userContext = useContext(UserContext);
   const { username, bio, followers } = userContext.user;
+  const [userMongoId, setuserMongoId] = useState();
+  const [currentUserMongoId, setcurrentUserMongoId] = useState();
+
+  console.log(
+    userMongoId,
+    " userMongo",
+    currentUserMongoId,
+    "currentUsermongo"
+  );
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const checkId = userId === userContext.currentUserId;
   console.log(checkId, "the user id should fucking be here");
+
+  useEffect(() => {
+    getMongoIdFromCognitoId(userId).then((id) => setuserMongoId(id));
+    getCurrentUserId().then((id) =>
+      getMongoIdFromCognitoId(id).then((mongoId) =>
+        setcurrentUserMongoId(mongoId)
+      )
+    );
+  }, []);
 
   return (
     <>

@@ -30,6 +30,7 @@ import { Chip } from "@mui/material";
 
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { DeleteOutline } from "@mui/icons-material";
 
 function Post({ post, called }) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -38,6 +39,12 @@ function Post({ post, called }) {
   const { username, text, tags, date, startTime, limit, postCognitoId } = post;
   const clear = () => {
     setComments("");
+  };
+  const deletePost = async (e, _id) => {
+    e.preventDefault();
+    await axios.delete(
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/post/delete/${_id}`
+    );
   };
 
   const { texts } = comments;
@@ -109,8 +116,11 @@ function Post({ post, called }) {
             action={
               <Stack direction="row">
                 {called === "userProfile" ? (
-                  <IconButton aria-label="settings">
-                    <MoreVertIcon />
+                  <IconButton
+                    onClick={(e) => deletePost(e, post._id)}
+                    aria-label="settings"
+                  >
+                    <DeleteOutline />
                   </IconButton>
                 ) : null}
               </Stack>
