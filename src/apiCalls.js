@@ -1,5 +1,7 @@
 import axios from "axios";
 import { Auth } from "aws-amplify";
+export const url =
+  "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev";
 
 export const getMongoIdFromCognitoId = async (cognitoId) => {
   const res = await axios.get(
