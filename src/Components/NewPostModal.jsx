@@ -26,7 +26,7 @@ import {
   getCurrentUserId,
   getMongoIdFromCognitoId,
   getUserFromCognitoId,
-  addUser
+  addUser,
 } from "../apiCalls";
 import { UserContext } from "../contexts/UserContext";
 
@@ -148,7 +148,9 @@ function NewPostModal() {
                 alt="Erik"
                 src="https://images.unsplash.com/photo-1517348573020-98fb6f1ccc80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"
               />
-              <Typography fontWeight={500} variant="span"></Typography>
+              <Typography fontWeight={500} variant="span">
+                {loggedUser?.username}
+              </Typography>
             </Stack>
             {matches === false ? (
               <Box flex={3}>
