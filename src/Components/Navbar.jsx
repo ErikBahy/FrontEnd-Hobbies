@@ -21,6 +21,7 @@ import { Auth } from "aws-amplify";
 import { UserContext } from "../contexts/UserContext";
 import { useContext } from "react";
 import { addUser } from "../apiCalls";
+import group169 from "../logos/Group 169.png";
 
 async function signOut() {
   try {
@@ -178,7 +179,7 @@ function Navbar() {
                 size="large"
                 color="inherit"
               >
-                <Home />
+                <img src={group169} height={25} width={75} />
               </IconButton>
               <Box>
                 <Search   >
@@ -189,7 +190,7 @@ function Navbar() {
                    onClick={console.log("asdsadsadsadsadasd")}
                     placeholder="Search…"
                     inputProps={{ "aria-label": "search" }}
-                  />
+                  /> */}
                 </Search>
               </Box>
 

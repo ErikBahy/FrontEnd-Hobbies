@@ -44,6 +44,7 @@ function UserDetails({ userId }) {
   const { username, bio, followers } = userContext.user;
   const {
     isFollowed,
+    setIsFollowed,
 
     currentUserMongoId,
     userMongoId,
@@ -67,6 +68,14 @@ function UserDetails({ userId }) {
     e.preventDefault();
     const idk = axios.get(
       `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/followers/${currentUserMongoId}/${userMongoId}`
+    );
+    console.log(idk.data);
+  };
+
+  const unfollow = async (e, currentUserMongoId, userMongoId) => {
+    e.preventDefault();
+    const idk = axios.get(
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/unfollow/${currentUserMongoId}/${userMongoId}`
     );
     console.log(idk.data);
   };
@@ -127,7 +136,13 @@ function UserDetails({ userId }) {
               follow
             </Button>
           ) : (
-            <Button>Unfollow</Button>
+            <Button
+              onClick={(e) => {
+                unfollow(e, currentUserMongoId, userMongoId);
+              }}
+            >
+              Unfollow
+            </Button>
           )}
 
           <Modal
