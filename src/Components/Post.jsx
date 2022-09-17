@@ -28,7 +28,6 @@ import AddIcon from "@mui/icons-material/Add";
 import "../stlyles.css";
 import { Chip } from "@mui/material";
 import { DeleteOutline } from "@mui/icons-material";
-
 import { Link } from "react-router-dom";
 import axios from "axios";
 import {  getCurrentUserId,
@@ -39,46 +38,46 @@ function Post({post , called}) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const [comments, setComments] = useState([]);
-  const [mongoId, setmongoId] = useState();
-  const [cognitoId, setcognitoId] = useState();
-  
- 
- 
-const { texts } = comments;
-  const { username, text, tags, date, startTime, limit,postCognitoId , _id} = post;
+  const [user, setUser] = useState([]);
+  const { username, text, tags, date, startTime, limit,postCognitoId , _commentCognitoId , _id} = post;
   console.log(_id , "post id for comments bahy");
-
+  console.log(_commentCognitoId,"comments cognito id ::::");
   const clear = () => {
     setComments("");
   };
 
-  const deletePost = async (e, _id) => {
-    e.preventDefault();
-    await axios.delete(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/post/delete/${_id}`
-    );
-  };
-  
+
   useEffect(() => {
-    getCurrentUserId().then((id) => {
-      setcognitoId(id);
-    });
+  const GetUserFromDatabase = async() => {
+    try {
+      const res = await axios.get(
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comments/post/${ _commentCognitoId }`
+      );
+      setUser(res.data);
+    console.log(res.data,"userid");    
+      return res.data
+    } catch (error) {
+      console.log(error);
+    }
+  }
+    GetUserFromDatabase();
   }, []);
 
 
-  // const allComments = async () => {
-   
-  //   const res = await axios.get(
-  //     `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/allposts?page=${pageNumber}`
-  //   );
-  //   const data = res.data;
+  const deletePost = async (e, _id) => {
+    e.preventDefault();
+    await axios.delete(
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/post/delete/${ _id }`
+    );
+  };
+  
+  // useEffect(() => {
+  //   getCurrentUserId().then((id) => {
+  //     setcognitoId(id);
+  //   });
+  // }, []);
 
-  //   let i = [];
-  //   data.post.map((el) => i.push(el));
 
-  //   setPosts(i);
-  //   console.log(posts, " state from feed");
-  // };
   useEffect(() => {
     const allComments = async () => {
       /* const user = await Auth.currentAuthenticatedUser()
@@ -89,9 +88,8 @@ const { texts } = comments;
              }
            }*/ 
       try {
-        const res = await axios.get(`https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comments/post/${_id}`);
-        
-        console.log(res.data,"comments....");
+        const res = await axios.get(`https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comments/post/${ _id }`);
+        setComments(res.data)
         return  res.data
       } catch (err) {
         console.log(err);
@@ -99,6 +97,8 @@ const { texts } = comments;
     };
     allComments();
   }, []);
+
+
 
   // const postComments=async()=>{
   //   // const user = await Auth.currentAuthenticatedUser()
@@ -242,10 +242,24 @@ const { texts } = comments;
                 <Typography>Comment</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                {comments.length > 0 ? comments.map((data) => {
+                {
+                user.length > 0 ? user.map((data) => {
+                      return (
+                        <Typography key={data.commentCognitoId}>
+                          {
+                          data?.username
+                          }
+                          </Typography>
+                      );
+                    })
+                  : null}
+                {
+                comments.length > 0 ? comments.map((data) => {
                       return (
                         <Typography key={data._id}>
-                          {data.texts}
+                          {
+                          data?.text
+                          }
                           </Typography>
                       );
                     })
