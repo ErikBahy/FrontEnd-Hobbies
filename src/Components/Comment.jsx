@@ -5,15 +5,16 @@ import { getUserFromCognitoId } from "../apiCalls";
 
 function Comment(data) {
   const [user, setUser] = useState();
+  console.log(data , "data  " , user , "and user " );
 
   useEffect(() => {
-    getUserFromCognitoId(data.commentCognitoId).then((userr) => setUser(userr));
+    getUserFromCognitoId(data.data.commentCognitoId).then((userr) => setUser(userr));
   }, []);
 
+
   return (
-    <Stack>
-      <Typography>username</Typography>
-      <Typography>commentText</Typography>
+    <Stack display={"flex"}> 
+      <Typography>{user?.username} : {data?.data?.text}</Typography>
     </Stack>
   );
 }

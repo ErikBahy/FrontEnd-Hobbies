@@ -33,36 +33,24 @@ import axios from "axios";
 import {  getCurrentUserId,
   getMongoIdFromCognitoId,
   getUserFromCognitoId, } from "../apiCalls"
+import Comment from "./Comment";
 
 function Post({post , called}) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const [comments, setComments] = useState([]);
   const [user, setUser] = useState([]);
+  const [commentsText, setCommentsText] = useState("");
   const { username, text, tags, date, startTime, limit,postCognitoId , _id} = post;
+  console.log(commentsText , 'state commentttt');
   console.log(_id , "post id for comments bahy");
  // console.log(_commentCognitoId,"comments cognito id ::::");
   const clear = () => {
-    setComments("");
+    setCommentsText("");
   };
 
 
-  useEffect(() => {
-  const GetUserFromDatabase = async() => {
-    try {
-      const res = await axios.get(
-        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comments/post/`
-      );
-      setUser(res.data);
-    console.log(res.data,"userid");    
-      return res.data
-    } catch (error) {
-      console.log(error);
-    }
-  }
-    GetUserFromDatabase();
-  }, []);
-
+ 
 
   const deletePost = async (e, _id) => {
     e.preventDefault();
@@ -79,46 +67,46 @@ function Post({post , called}) {
 
 
   useEffect(() => {
-    const allComments = async () => {
-      /* const user = await Auth.currentAuthenticatedUser()
-         const token = user.signInUserSession.idToken.jwtToken
-         const requestInfo = {
-             headers: {
-                 Authorization: token
-             }
-           }*/ 
-      try {
-        const res = await axios.get(`https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comments/post/${ _id }`);
-        setComments(res.data)
-        return  res.data
-      } catch (err) {
-        console.log(err);
-      }
-    };
     allComments();
   }, []);
 
+  const allComments = async () => {
+    /* const user = await Auth.currentAuthenticatedUser()
+       const token = user.signInUserSession.idToken.jwtToken
+       const requestInfo = {
+           headers: {
+               Authorization: token
+           }
+         }*/ 
+    try {
+      const res = await axios.get(`https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comments/post/${ _id }`);
+      setComments(res.data)
+      return  res.data
+    } catch (err) {
+      console.log(err);
+    }
+  };
+//  allComments();
 
 
-  // const postComments=async()=>{
-  //   // const user = await Auth.currentAuthenticatedUser()
-  //   // const token = user.signInUserSession.idToken.jwtToken
-  //   // const requestInfo = {
-  //   //     headers: {
-  //   //         Authorization: token
-  //   //     }
-  //   //   }
-  //       try {
-  //          await axios.post(`https://egw1r79dz5.execute-api.eu-central-1.amazonaws.com/dev/newProduct`,{
-  //               text:texts
-  //          })
+  const postComment=async()=>{
+    // const user = await Auth.currentAuthenticatedUser()
+    // const token = user.signInUserSession.idToken.jwtToken
+    // const requestInfo = {
+    //     headers: {
+    //         Authorization: token
+    //     }
+    //   }
+        try {
+           await axios.post(`https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comment/post/${_id}`,{
+                text:commentsText,
+           })
 
-  //            clear()
-  //           comments()
-  //       } catch (err) {
-  //           console.log(err)
-  //       }
-  //   }
+            clear();
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
   return (
     <Box>
@@ -225,10 +213,10 @@ function Post({post , called}) {
               display={"flex"}
             >
               <FormControl>
-                <OutlinedInput placeholder="Please enter text" />
+                <OutlinedInput placeholder="Please enter text" value={commentsText} onChange={(e)=>setCommentsText(e.target.value)}/>
               </FormControl>
               <IconButton>
-                <AddIcon />
+                <AddIcon onClick={()=>{postComment()}}/>
               </IconButton>
             </Box>
             <Accordion>
@@ -243,24 +231,9 @@ function Post({post , called}) {
               </AccordionSummary>
               <AccordionDetails>
                 {
-                user.length > 0 ? user.map((data) => {
-                      return (
-                        <Typography key={data.commentCognitoId}>
-                          {
-                          data?.username
-                          }
-                          </Typography>
-                      );
-                    })
-                  : null}
-                {
                 comments.length > 0 ? comments.map((data) => {
                       return (
-                        <Typography key={data._id}>
-                          {
-                          data?.text
-                          }
-                          </Typography>
+                        <Comment data={data} />
                       );
                     })
                   : null}
