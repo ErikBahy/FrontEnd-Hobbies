@@ -39,9 +39,9 @@ function Post({post , called}) {
   const [showComment, setShowComment] = useState(false);
   const [comments, setComments] = useState([]);
   const [user, setUser] = useState([]);
-  const { username, text, tags, date, startTime, limit,postCognitoId , _commentCognitoId , _id} = post;
+  const { username, text, tags, date, startTime, limit,postCognitoId , _id} = post;
   console.log(_id , "post id for comments bahy");
-  console.log(_commentCognitoId,"comments cognito id ::::");
+ // console.log(_commentCognitoId,"comments cognito id ::::");
   const clear = () => {
     setComments("");
   };
@@ -51,7 +51,7 @@ function Post({post , called}) {
   const GetUserFromDatabase = async() => {
     try {
       const res = await axios.get(
-        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comments/post/${ _commentCognitoId }`
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comments/post/`
       );
       setUser(res.data);
     console.log(res.data,"userid");    
