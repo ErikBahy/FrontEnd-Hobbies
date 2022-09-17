@@ -21,33 +21,64 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
 import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import AddIcon from "@mui/icons-material/Add";
 import "../stlyles.css";
 import { Chip } from "@mui/material";
+import { DeleteOutline } from "@mui/icons-material";
 
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { DeleteOutline } from "@mui/icons-material";
+import {  getCurrentUserId,
+  getMongoIdFromCognitoId,
+  getUserFromCognitoId, } from "../apiCalls"
 
-function Post({ post, called }) {
+function Post({post , called}) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const [comments, setComments] = useState([]);
-  const { username, text, tags, date, startTime, limit, postCognitoId } = post;
+  const [mongoId, setmongoId] = useState();
+  const [cognitoId, setcognitoId] = useState();
+  
+ 
+ 
+const { texts } = comments;
+  const { username, text, tags, date, startTime, limit,postCognitoId , _id} = post;
+  console.log(_id , "post id for comments bahy");
+
   const clear = () => {
     setComments("");
   };
+
   const deletePost = async (e, _id) => {
     e.preventDefault();
     await axios.delete(
       `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/post/delete/${_id}`
     );
   };
+  
+  useEffect(() => {
+    getCurrentUserId().then((id) => {
+      setcognitoId(id);
+    });
+  }, []);
 
-  const { texts } = comments;
+
+  // const allComments = async () => {
+   
+  //   const res = await axios.get(
+  //     `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/allposts?page=${pageNumber}`
+  //   );
+  //   const data = res.data;
+
+  //   let i = [];
+  //   data.post.map((el) => i.push(el));
+
+  //   setPosts(i);
+  //   console.log(posts, " state from feed");
+  // };
   useEffect(() => {
     const allComments = async () => {
       /* const user = await Auth.currentAuthenticatedUser()
@@ -56,13 +87,12 @@ function Post({ post, called }) {
              headers: {
                  Authorization: token
              }
-           }*/
+           }*/ 
       try {
-        const res = await axios.get(
-          `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comments/post/630f472e08fc7cd993939a70`
-        );
-
-        setComments(res.data);
+        const res = await axios.get(`https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comments/post/${_id}`);
+        
+        console.log(res.data,"comments....");
+        return  res.data
       } catch (err) {
         console.log(err);
       }
@@ -145,6 +175,7 @@ function Post({ post, called }) {
             <Box display="flex" direction="row">
               <Tooltip title="Like">
                 <IconButton aria-label="add to favorites">
+
                   <Checkbox
                     icon={<FavoriteBorder />}
                     checkedIcon={<Favorite sx={{ color: "red" }} />}
@@ -178,7 +209,7 @@ function Post({ post, called }) {
 
               <Tooltip title="Join room" sx={{ marginRight: 4 }}>
                 <IconButton aria-label="join-room">
-                  <MeetingRoomIcon />
+                  <MeetingRoomIcon onClick={()=> window.location.href = "https://d3rr23y8wyk3tl.cloudfront.net/"}/>
                 </IconButton>
               </Tooltip>
             </Box>
@@ -186,8 +217,7 @@ function Post({ post, called }) {
         </CardActions>
         {showComment ? (
           <>
-            <Typography sx={{ my: 1 }}>Add Comment:</Typography>
-
+            <Typography sx={{ my: 1 }} marginLeft={2.5}>Add Comment:</Typography>
             <Box
               component="form"
               noValidate
@@ -212,10 +242,11 @@ function Post({ post, called }) {
                 <Typography>Comment</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                {comments.length > 0
-                  ? comments.map((data) => {
+                {comments.length > 0 ? comments.map((data) => {
                       return (
-                        <Typography key={data._id}>{data.text}</Typography>
+                        <Typography key={data._id}>
+                          {data.texts}
+                          </Typography>
                       );
                     })
                   : null}
