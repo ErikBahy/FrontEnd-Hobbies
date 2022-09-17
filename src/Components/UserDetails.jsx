@@ -50,12 +50,13 @@ function UserDetails({ userId }) {
     userMongoId,
   } = userContext;
 
+  const [followState, setfollowState] = useState(isFollowed);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const checkId = userId === userContext.currentUserId;
 
-  console.log(isFollowed);
+  console.log(followState, "followState");
 
   console.log(
     userMongoId,
@@ -66,7 +67,8 @@ function UserDetails({ userId }) {
 
   const follow = async (e, currentUserMongoId, userMongoId) => {
     e.preventDefault();
-    const idk = axios.get(
+
+    const idk = await axios.get(
       `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/followers/${currentUserMongoId}/${userMongoId}`
     );
     console.log(idk.data);
@@ -74,11 +76,33 @@ function UserDetails({ userId }) {
 
   const unfollow = async (e, currentUserMongoId, userMongoId) => {
     e.preventDefault();
-    const idk = axios.get(
+
+    const idk = await axios.get(
       `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/unfollow/${currentUserMongoId}/${userMongoId}`
     );
     console.log(idk.data);
   };
+  const renderFollowButton = (
+    <>
+      {checkId === false && isFollowed === false ? (
+        <Button
+          onClick={(e) => {
+            follow(e, currentUserMongoId, userMongoId);
+          }}
+        >
+          follow
+        </Button>
+      ) : checkId === false && isFollowed === true ? (
+        <Button
+          onClick={(e) => {
+            unfollow(e, currentUserMongoId, userMongoId);
+          }}
+        >
+          Unfollow
+        </Button>
+      ) : null}
+    </>
+  );
 
   useEffect(() => {}, []);
 
@@ -123,26 +147,14 @@ function UserDetails({ userId }) {
             component="span"
             fontWeight={100}
           >
-            {` Followers`}
+            {followers?.length == 1
+              ? `${followers?.length}  Follower`
+              : `${followers?.length}  Followers `}
           </Typography>
           {checkId === true ? (
             <Button onClick={handleOpen}>Edit</Button>
-          ) : checkId === false && isFollowed === false ? (
-            <Button
-              onClick={(e) => {
-                follow(e, currentUserMongoId, userMongoId);
-              }}
-            >
-              follow
-            </Button>
           ) : (
-            <Button
-              onClick={(e) => {
-                unfollow(e, currentUserMongoId, userMongoId);
-              }}
-            >
-              Unfollow
-            </Button>
+            renderFollowButton
           )}
 
           <Modal

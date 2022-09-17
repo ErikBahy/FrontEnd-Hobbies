@@ -31,8 +31,7 @@ async function signOut() {
   }
 }
 
-const Search = 
-styled("div")(({ theme }) => ({
+const Search = styled("div")(({ theme }) => ({
   position: "relative",
   flex: 3,
   borderRadius: theme.shape.borderRadius,
@@ -48,7 +47,6 @@ styled("div")(({ theme }) => ({
     width: "100%",
   },
 }));
-
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
@@ -104,14 +102,13 @@ function Navbar() {
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
-    <Menu 
+    <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{
         vertical: "top",
         horizontal: "right",
       }}
       id={mobileMenuId}
-      
       keepMounted
       transformOrigin={{
         vertical: "top",
@@ -182,15 +179,15 @@ function Navbar() {
                 <img src={group169} height={25} width={75} />
               </IconButton>
               <Box>
-                <Search   >
-                  <SearchIconWrapper   >
+                <Search>
+                  <SearchIconWrapper>
                     <SearchIcon />
                   </SearchIconWrapper>
                   <StyledInputBase
-                   onClick={console.log("asdsadsadsadsadasd")}
+                    onClick={console.log("asdsadsadsadsadasd")}
                     placeholder="Search…"
                     inputProps={{ "aria-label": "search" }}
-                  /> */}
+                  />
                 </Search>
               </Box>
 

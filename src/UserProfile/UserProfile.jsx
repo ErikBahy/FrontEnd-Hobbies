@@ -21,6 +21,7 @@ function UserProfile() {
     currentUserMongoId,
     userMongoId,
     setisFollowed,
+    isFollowed,
   } = userContext;
 
   useEffect(() => {
@@ -34,7 +35,7 @@ function UserProfile() {
     checkFollow(currentUserMongoId, userMongoId).then((bool) =>
       setisFollowed(bool)
     );
-  }, [cognitoId, currentUserMongoId, userMongoId]);
+  }, [cognitoId, currentUserMongoId, userMongoId, isFollowed]);
 
   return (
     <>
@@ -48,7 +49,7 @@ function UserProfile() {
           <UserDetails userId={cognitoId} />
           <Divider sx={{ width: 1, marginTop: 3, fontWeight: 200 }}>
             {" "}
-            <Chip label={+" " + " POSTS"} />
+            <Chip label={posts?.length + " " + " POSTS"} />
           </Divider>
           <Stack>
             {" "}
