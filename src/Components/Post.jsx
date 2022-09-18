@@ -36,23 +36,32 @@ import {
   getUserFromCognitoId,
 } from "../apiCalls";
 import Comment from "./Comment";
-import Likes from "./likes"
+import Likes from "./likes";
 import { UserContext } from "../contexts/UserContext";
 
 function Post({ post, called }) {
   const userContext = useContext(UserContext);
-  const {  currentUserMongoId,currentUserId } = userContext;
+  const { currentUserMongoId, currentUserId } = userContext;
   const [isExpanded, setIsExpanded] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const [comments, setComments] = useState([]);
-  const [like,setLike] = useState([]);
+  const [like, setLike] = useState([]);
   const [commentsText, setCommentsText] = useState("");
-  const [liked,setLiked]  = useState("")
-  const { username, likes , text, tags, date, startTime, limit, postCognitoId, _id } =
-    post;
+  const [liked, setLiked] = useState("");
+  const {
+    username,
+    likes,
+    text,
+    tags,
+    date,
+    startTime,
+    limit,
+    postCognitoId,
+    _id,
+  } = post;
   console.log(commentsText, "state commentttt");
   console.log(_id, "post id for comments bahy");
-  console.log(postCognitoId,"<---postcognitoid");
+  console.log(postCognitoId, "<---postcognitoid");
   console.log(
     currentUserMongoId,
     "currentUsermongo",
@@ -60,7 +69,6 @@ function Post({ post, called }) {
     "current user id"
   );
   // console.log(_commentCognitoId,"comments cognito id ::::");
-
 
   const clear = () => {
     setCommentsText("");
@@ -70,7 +78,7 @@ function Post({ post, called }) {
   const deletePost = async (e, _id) => {
     e.preventDefault();
     await axios.delete(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/post/delete/${_id}`
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/delete/post/${currentUserMongoId}/${_id}`
     );
   };
 
@@ -83,7 +91,6 @@ function Post({ post, called }) {
     getMongoIdFromCognitoId(postCognitoId).then((id) => addLikeAtPost(id));
   }, []);
 
-  
   useEffect(() => {
     allComments();
   }, []);
@@ -143,18 +150,19 @@ function Post({ post, called }) {
     }
   };
 
-
-  const addLikeAtPost = async (mongoId)  =>{
+  const addLikeAtPost = async (mongoId) => {
     try {
-      await axios.get(`https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/addLike/users/${mongoId}/${_id}`,
-      {
-          likes: like
-      })
-      console.log(mongoId,"mongoid");
+      await axios.get(
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/addLike/users/${mongoId}/${_id}`,
+        {
+          likes: like,
+        }
+      );
+      console.log(mongoId, "mongoid");
     } catch (error) {
-     console.log(error); 
+      console.log(error);
     }
-  }
+  };
   return (
     <Box>
       <Card sx={{ margin: 5, borderRadius: "30px" }}>
@@ -202,18 +210,18 @@ function Post({ post, called }) {
           >
             <Box display="flex" direction="row">
               <Tooltip title="Like">
-                <IconButton aria-label="add to favorites" onClick={
-                like.length > 0
+                <IconButton
+                  aria-label="add to favorites"
+                  onClick={
+                    like.length > 0
                       ? like.map((data) => {
                           return <Likes data={data} />;
                         })
-                      : null} >
-                  <Checkbox 
-                    icon={<FavoriteBorder 
-                    onClick={
-                      addLikeAtPost()
-                    }
-                    />}
+                      : null
+                  }
+                >
+                  <Checkbox
+                    icon={<FavoriteBorder onClick={addLikeAtPost()} />}
                     checkedIcon={<Favorite sx={{ color: "red" }} />}
                   />
                 </IconButton>

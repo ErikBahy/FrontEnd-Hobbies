@@ -41,7 +41,7 @@ function UserProfile() {
   return (
     <>
       <div>
-        <Navbar called="userProfile" />
+        <Navbar called="userProfile" userId={cognitoId} />
       </div>
       <div>
         <Stack mt={2} flexDirection="row" justifyContent="space-between">

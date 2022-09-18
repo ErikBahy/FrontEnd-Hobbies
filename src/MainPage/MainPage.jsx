@@ -9,14 +9,11 @@ function MainPage() {
   console.log(tag, "from main page");
   return (
     <>
-      <div>
-        <Navbar called="main" />
-      </div>
-      <div>
-        <Tags called="main" tag={tag} setTag={setTag} />
-        <Feed called="main" />
-        <NewPostModal />
-      </div>
+      <Navbar called="main" />
+
+      <Tags called="main" tag={tag} setTag={setTag} />
+      <Feed called="main" />
+      <NewPostModal />
     </>
   );
 }

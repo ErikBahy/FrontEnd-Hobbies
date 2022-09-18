@@ -28,13 +28,14 @@ import { Link } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { UserContext } from "../contexts/UserContext";
 import { useContext } from "react";
-import { addUser } from "../apiCalls";
+import { addUser, getUserFromCognitoId } from "../apiCalls";
 import group169 from "../logos/Group 169.png";
 import userProfileIcon from "../logos/Group 172.png";
 import searchIcon from "../logos/Group 173.png";
 import xIcon from "../logos/Group 182.png";
 import backIcon from "../logos/Group 181.png";
 import { useState } from "react";
+import { useEffect } from "react";
 
 async function signOut() {
   try {
@@ -85,7 +86,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function Navbar({ called }) {
+function Navbar({ called, userId }) {
+  const [username, setusername] = useState("");
   const theme = useTheme();
   const matchesDesktop = useMediaQuery(theme.breakpoints.up("sm"));
   const userContext = useContext(UserContext);
@@ -96,6 +98,9 @@ function Navbar({ called }) {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  useEffect(() => {
+    getUserFromCognitoId(userId).then((data) => setusername(data.username));
+  }, [userId]);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -366,7 +371,7 @@ function Navbar({ called }) {
                 <img src={backIcon} height={25} width={25} />
               </IconButton>
 
-              <Typography> Username </Typography>
+              <Typography> {username} </Typography>
             </Box>
 
             <Box sx={{ display: { xs: "flex", md: "none" } }}>

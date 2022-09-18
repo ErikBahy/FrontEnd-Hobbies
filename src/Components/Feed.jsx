@@ -1,5 +1,12 @@
 import { LineAxisOutlined } from "@mui/icons-material";
-import { Box, Stack, Container, Pagination } from "@mui/material";
+import {
+  Box,
+  Stack,
+  Container,
+  Pagination,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Post from "./Post";
 import axios from "axios";
@@ -10,6 +17,8 @@ function Feed({ called }) {
   const [posts, setPosts] = useState([]);
   const [pageNumber, setPageNumber] = useState();
   const [totalPages, setTotalPages] = useState();
+  const theme = useTheme();
+  const matchesDesktop = useMediaQuery(theme.breakpoints.up("sm"));
 
   const getAllPosts = async () => {
     const page = await axios.get(
@@ -40,14 +49,18 @@ function Feed({ called }) {
   // }
   return (
     <>
-      <Stack flexDirection="row">
-        <Box flex={2} sx={{ display: { xs: "none", sm: "block" } }}></Box>
-        <Box flex={4}>
+      <Stack flexDirection={matchesDesktop ? "row" : "column"}>
+        {matchesDesktop ? (
+          <Box flex={2} sx={{ display: { xs: "none", sm: "block" } }}></Box>
+        ) : null}
+        <Box sx={{ flex: { xs: 1, sm: 4 } }}>
           {posts.map((el) => {
             return <Post called="feed" post={el} />;
           })}
         </Box>
-        <Box flex={2} sx={{ display: { xs: "none", sm: "block" } }}></Box>
+        {matchesDesktop ? (
+          <Box flex={2} sx={{ display: { xs: "none", sm: "block" } }}></Box>
+        ) : null}
       </Stack>
       <footer>
         <Box py={{ xs: 2 }} bgcolor="text.secondary" color="white">
