@@ -35,28 +35,31 @@ const style = {
   p: 4,
 };
 
-
-function UserDetails({ userId }) {
+function UserDetails({ userId, bio, location }) {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const userContext = useContext(UserContext);
-  const { username, bio, followers } = userContext.user;
+  const { username, followers } = userContext.user;
   const {
     isFollowed,
     setisFollowed,
+
+    setuserMongoId,
+    setcurrentUserMongoId,
 
     currentUserMongoId,
     userMongoId,
   } = userContext;
 
   const [followState, setfollowState] = useState(isFollowed);
+  const [bioUpdate, setbioUpdate] = useState("");
+  const [locationUpdate, setlocationUpdate] = useState("");
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const checkId = userId === userContext.currentUserId;
   const [runEffect, setrunEffect] = useState(false);
-
-  console.log(followState, "followState");
+  console.log(bioUpdate, locationUpdate);
 
   console.log(
     userMongoId,
@@ -64,6 +67,16 @@ function UserDetails({ userId }) {
     currentUserMongoId,
     "currentUsermongo"
   );
+
+  const updateUserInfo = async (e) => {
+    e.preventDefault();
+    await axios.patch(
+      ` https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/user/put/${currentUserMongoId}`,
+      { bio: bioUpdate, location: locationUpdate }
+    );
+
+    setOpen(false);
+  };
 
   const follow = async (e, currentUserMongoId, userMongoId) => {
     e.preventDefault();
@@ -113,6 +126,15 @@ function UserDetails({ userId }) {
       ) : null}
     </>
   );
+  useEffect(() => {
+    userContext.getUserFromDatabase(userId);
+    getMongoIdFromCognitoId(userId).then((id) => setuserMongoId(id));
+    getCurrentUserId().then((id) =>
+      getMongoIdFromCognitoId(id).then((mongoId) =>
+        setcurrentUserMongoId(mongoId)
+      )
+    );
+  }, [open, isFollowed]);
 
   useEffect(() => {
     checkFollow(currentUserMongoId, userMongoId).then((bool) =>
@@ -177,12 +199,25 @@ function UserDetails({ userId }) {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
-            <Box sx={style} flexdirection="column">
-              <Box display="flex" flexdirection="row" justifyContent="center">
+            <Stack
+              spacing={0}
+              sx={style}
+              flexDirection="row"
+              justifyContent="space-around"
+              alignContent="center"
+            >
+              <Stack
+                display="flex"
+                flexdirection="column"
+                alignItems="center"
+                justifyContent="center"
+              >
                 <TextField
                   sx={{ mb: 2, mr: 1 }}
                   id="input-with-icon-textfield"
                   label="Change your bio"
+                  value={bioUpdate}
+                  onChange={(e) => setbioUpdate(e.target.value)}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -192,19 +227,12 @@ function UserDetails({ userId }) {
                   }}
                   variant="standard"
                 />
-                <Button
-                  variant="outlined"
-                  sx={{ borderRadius: 2, height: 40 }}
-                  startIcon={<CheckCircleOutlineIcon />}
-                >
-                  Done
-                </Button>
-              </Box>
-              <Box display="flex" flexdirection="row" justifyContent="center">
                 <TextField
                   sx={{ mr: 1 }}
                   id="input-with-icon-textfield"
                   label="Change your location"
+                  onChange={(e) => setlocationUpdate(e.target.value)}
+                  value={locationUpdate}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -214,15 +242,22 @@ function UserDetails({ userId }) {
                   }}
                   variant="standard"
                 />
+              </Stack>
+              <Stack
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+              >
                 <Button
                   variant="outlined"
+                  onClick={(e) => updateUserInfo(e)}
                   sx={{ borderRadius: 2, height: 40 }}
                   startIcon={<CheckCircleOutlineIcon />}
                 >
                   Done
                 </Button>
-              </Box>
-            </Box>
+              </Stack>
+            </Stack>
           </Modal>
         </Stack>
         <Stack

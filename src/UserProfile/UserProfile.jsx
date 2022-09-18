@@ -15,28 +15,7 @@ import Navbar from "../Components/Navbar";
 function UserProfile() {
   const { cognitoId } = useParams();
   const userContext = useContext(UserContext);
-  const { posts } = userContext.user;
-  const {
-    setuserMongoId,
-    setcurrentUserMongoId,
-    currentUserMongoId,
-    userMongoId,
-    setisFollowed,
-    isFollowed,
-  } = userContext;
-
-  useEffect(() => {
-    userContext.getUserFromDatabase(cognitoId);
-    getMongoIdFromCognitoId(cognitoId).then((id) => setuserMongoId(id));
-    getCurrentUserId().then((id) =>
-      getMongoIdFromCognitoId(id).then((mongoId) =>
-        setcurrentUserMongoId(mongoId)
-      )
-    );
-    checkFollow(currentUserMongoId, userMongoId).then((bool) =>
-      setisFollowed(bool)
-    );
-  }, [cognitoId]);
+  const { posts, bio, location } = userContext.user;
 
   return (
     <>
@@ -51,7 +30,7 @@ function UserProfile() {
             flexDirection="row"
             sx={{ backgroundColor: "", flexWrap: "wrap", alignItems: "center" }}
           >
-            <UserDetails userId={cognitoId} />
+            <UserDetails userId={cognitoId} bio={bio} location={location} />
             <Divider sx={{ width: 1, marginTop: 3, fontWeight: 200 }}>
               {" "}
               <Chip label={posts?.length + " " + " POSTS"} />
