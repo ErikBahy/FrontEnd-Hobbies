@@ -21,7 +21,7 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useState, useEffect,useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import AddIcon from "@mui/icons-material/Add";
@@ -30,41 +30,43 @@ import { Chip } from "@mui/material";
 import { DeleteOutline } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import {  getCurrentUserId,
+import {
+  getCurrentUserId,
   getMongoIdFromCognitoId,
-  getUserFromCognitoId, } from "../apiCalls"
+  getUserFromCognitoId,
+} from "../apiCalls";
 import Comment from "./Comment";
+import { UserContext } from "../contexts/UserContext";
 
-function Post({post , called}) {
+function Post({ post, called }) {
+  const userContext = useContext(UserContext);
+  const { currentUserId } = userContext;
   const [isExpanded, setIsExpanded] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const [comments, setComments] = useState([]);
   const [user, setUser] = useState([]);
   const [commentsText, setCommentsText] = useState("");
-  const { username, text, tags, date, startTime, limit,postCognitoId , _id} = post;
-  console.log(commentsText , 'state commentttt');
-  console.log(_id , "post id for comments bahy");
- // console.log(_commentCognitoId,"comments cognito id ::::");
+  const { username, text, tags, date, startTime, limit, postCognitoId, _id } =
+    post;
+  console.log(commentsText, "state commentttt");
+  console.log(_id, "post id for comments bahy");
+  // console.log(_commentCognitoId,"comments cognito id ::::");
   const clear = () => {
     setCommentsText("");
   };
 
-
- 
-
   const deletePost = async (e, _id) => {
     e.preventDefault();
     await axios.delete(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/post/delete/${ _id }`
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/post/delete/${_id}`
     );
   };
-  
+
   // useEffect(() => {
   //   getCurrentUserId().then((id) => {
   //     setcognitoId(id);
   //   });
   // }, []);
-
 
   useEffect(() => {
     allComments();
@@ -77,19 +79,33 @@ function Post({post , called}) {
            headers: {
                Authorization: token
            }
-         }*/ 
+         }*/
     try {
-      const res = await axios.get(`https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comments/post/${ _id }`);
-      setComments(res.data)
-      return  res.data
+      const res = await axios.get(
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comments/post/${_id}`
+      );
+      setComments(res.data);
+      return res.data;
     } catch (err) {
       console.log(err);
     }
   };
-//  allComments();
+  const renderDeleteButton = (
+    <>
+      {postCognitoId === currentUserId ? (
+        <IconButton
+          onClick={(e) => deletePost(e, post._id)}
+          aria-label="settings"
+        >
+          <DeleteOutline />
+        </IconButton>
+      ) : null}
+    </>
+  );
 
+  //  allComments();
 
-  const postComment=async()=>{
+  const postComment = async () => {
     // const user = await Auth.currentAuthenticatedUser()
     // const token = user.signInUserSession.idToken.jwtToken
     // const requestInfo = {
@@ -97,16 +113,19 @@ function Post({post , called}) {
     //         Authorization: token
     //     }
     //   }
-        try {
-           await axios.post(`https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comment/post/${_id}`,{
-                text:commentsText,
-           })
-
-            clear();
-        } catch (err) {
-            console.log(err)
+    try {
+      await axios.post(
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comment/post/${_id}`,
+        {
+          text: commentsText,
         }
+      );
+
+      clear();
+    } catch (err) {
+      console.log(err);
     }
+  };
 
   return (
     <Box>
@@ -133,14 +152,7 @@ function Post({post , called}) {
             }
             action={
               <Stack direction="row">
-                {called === "userProfile" ? (
-                  <IconButton
-                    onClick={(e) => deletePost(e, post._id)}
-                    aria-label="settings"
-                  >
-                    <DeleteOutline />
-                  </IconButton>
-                ) : null}
+                {called === "userProfile" ? renderDeleteButton : null}
               </Stack>
             }
             subheader={date}
@@ -163,7 +175,6 @@ function Post({post , called}) {
             <Box display="flex" direction="row">
               <Tooltip title="Like">
                 <IconButton aria-label="add to favorites">
-
                   <Checkbox
                     icon={<FavoriteBorder />}
                     checkedIcon={<Favorite sx={{ color: "red" }} />}
@@ -197,7 +208,12 @@ function Post({post , called}) {
 
               <Tooltip title="Join room" sx={{ marginRight: 4 }}>
                 <IconButton aria-label="join-room">
-                  <MeetingRoomIcon onClick={()=> window.location.href = "https://d3rr23y8wyk3tl.cloudfront.net/"}/>
+                  <MeetingRoomIcon
+                    onClick={() =>
+                      (window.location.href =
+                        "https://d3rr23y8wyk3tl.cloudfront.net/")
+                    }
+                  />
                 </IconButton>
               </Tooltip>
             </Box>
@@ -205,7 +221,9 @@ function Post({post , called}) {
         </CardActions>
         {showComment ? (
           <>
-            <Typography sx={{ my: 1 }} marginLeft={2.5}>Add Comment:</Typography>
+            <Typography sx={{ my: 1 }} marginLeft={2.5}>
+              Add Comment:
+            </Typography>
             <Box
               component="form"
               noValidate
@@ -213,10 +231,18 @@ function Post({post , called}) {
               display={"flex"}
             >
               <FormControl>
-                <OutlinedInput placeholder="Please enter text" value={commentsText} onChange={(e)=>setCommentsText(e.target.value)}/>
+                <OutlinedInput
+                  placeholder="Please enter text"
+                  value={commentsText}
+                  onChange={(e) => setCommentsText(e.target.value)}
+                />
               </FormControl>
               <IconButton>
-                <AddIcon onClick={()=>{postComment()}}/>
+                <AddIcon
+                  onClick={() => {
+                    postComment();
+                  }}
+                />
               </IconButton>
             </Box>
             <Accordion>
@@ -230,11 +256,9 @@ function Post({post , called}) {
                 <Typography>Comment</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                {
-                comments.length > 0 ? comments.map((data) => {
-                      return (
-                        <Comment data={data} />
-                      );
+                {comments.length > 0
+                  ? comments.map((data) => {
+                      return <Comment data={data} />;
                     })
                   : null}
               </AccordionDetails>

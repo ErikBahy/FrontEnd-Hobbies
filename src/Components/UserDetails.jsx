@@ -44,7 +44,7 @@ function UserDetails({ userId }) {
   const { username, bio, followers } = userContext.user;
   const {
     isFollowed,
-    setIsFollowed,
+    setisFollowed,
 
     currentUserMongoId,
     userMongoId,
@@ -55,6 +55,7 @@ function UserDetails({ userId }) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const checkId = userId === userContext.currentUserId;
+  const [runEffect, setrunEffect] = useState(false);
 
   console.log(followState, "followState");
 
@@ -72,6 +73,11 @@ function UserDetails({ userId }) {
       `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/followers/${currentUserMongoId}/${userMongoId}`
     );
     console.log(idk.data);
+    if (runEffect) {
+      setrunEffect(false);
+    } else {
+      setrunEffect(true);
+    }
   };
 
   const unfollow = async (e, currentUserMongoId, userMongoId) => {
@@ -81,6 +87,11 @@ function UserDetails({ userId }) {
       `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/unfollow/${currentUserMongoId}/${userMongoId}`
     );
     console.log(idk.data);
+    if (runEffect) {
+      setrunEffect(false);
+    } else {
+      setrunEffect(true);
+    }
   };
   const renderFollowButton = (
     <>
@@ -104,7 +115,11 @@ function UserDetails({ userId }) {
     </>
   );
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    checkFollow(currentUserMongoId, userMongoId).then((bool) =>
+      setisFollowed(bool)
+    );
+  }, [isFollowed, currentUserMongoId, userMongoId, runEffect]);
 
   return (
     <>
