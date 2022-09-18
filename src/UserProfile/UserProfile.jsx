@@ -35,7 +35,7 @@ function UserProfile() {
     checkFollow(currentUserMongoId, userMongoId).then((bool) =>
       setisFollowed(bool)
     );
-  }, [cognitoId, currentUserMongoId, userMongoId, isFollowed]);
+  }, [cognitoId]);
 
   return (
     <>
