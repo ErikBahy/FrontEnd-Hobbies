@@ -35,7 +35,6 @@ const style = {
   p: 4,
 };
 
-//sdhjafjheiufhuidshudhuvhuisvuirufbewhdufehwiudhuoewhuio
 
 function UserDetails({ userId }) {
   const theme = useTheme();
@@ -51,7 +50,7 @@ function UserDetails({ userId }) {
   } = userContext;
 
   const [followState, setfollowState] = useState(isFollowed);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const checkId = userId === userContext.currentUserId;

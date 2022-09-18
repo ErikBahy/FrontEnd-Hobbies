@@ -36,23 +36,35 @@ import {
   getUserFromCognitoId,
 } from "../apiCalls";
 import Comment from "./Comment";
+import Likes from "./likes"
 import { UserContext } from "../contexts/UserContext";
 
 function Post({ post, called }) {
   const userContext = useContext(UserContext);
-  const { currentUserId } = userContext;
+  const {  currentUserMongoId,currentUserId } = userContext;
   const [isExpanded, setIsExpanded] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const [comments, setComments] = useState([]);
-  const [user, setUser] = useState([]);
+  const [like,setLike] = useState([]);
   const [commentsText, setCommentsText] = useState("");
-  const { username, text, tags, date, startTime, limit, postCognitoId, _id } =
+  const [liked,setLiked]  = useState("")
+  const { username, likes , text, tags, date, startTime, limit, postCognitoId, _id } =
     post;
   console.log(commentsText, "state commentttt");
   console.log(_id, "post id for comments bahy");
+  console.log(postCognitoId,"<---postcognitoid");
+  console.log(
+    currentUserMongoId,
+    "currentUsermongo",
+    currentUserId,
+    "current user id"
+  );
   // console.log(_commentCognitoId,"comments cognito id ::::");
+
+
   const clear = () => {
     setCommentsText("");
+    setLiked("");
   };
 
   const deletePost = async (e, _id) => {
@@ -67,7 +79,11 @@ function Post({ post, called }) {
   //     setcognitoId(id);
   //   });
   // }, []);
+  useEffect(() => {
+    getMongoIdFromCognitoId(postCognitoId).then((id) => addLikeAtPost(id));
+  }, []);
 
+  
   useEffect(() => {
     allComments();
   }, []);
@@ -127,6 +143,18 @@ function Post({ post, called }) {
     }
   };
 
+
+  const addLikeAtPost = async (mongoId)  =>{
+    try {
+      await axios.get(`https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/addLike/users/${mongoId}/${_id}`,
+      {
+          likes: like
+      })
+      console.log(mongoId,"mongoid");
+    } catch (error) {
+     console.log(error); 
+    }
+  }
   return (
     <Box>
       <Card sx={{ margin: 5, borderRadius: "30px" }}>
@@ -174,9 +202,18 @@ function Post({ post, called }) {
           >
             <Box display="flex" direction="row">
               <Tooltip title="Like">
-                <IconButton aria-label="add to favorites">
-                  <Checkbox
-                    icon={<FavoriteBorder />}
+                <IconButton aria-label="add to favorites" onClick={
+                like.length > 0
+                      ? like.map((data) => {
+                          return <Likes data={data} />;
+                        })
+                      : null} >
+                  <Checkbox 
+                    icon={<FavoriteBorder 
+                    onClick={
+                      addLikeAtPost()
+                    }
+                    />}
                     checkedIcon={<Favorite sx={{ color: "red" }} />}
                   />
                 </IconButton>
