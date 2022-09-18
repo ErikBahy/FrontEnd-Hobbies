@@ -14,7 +14,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import { Home } from "@mui/icons-material";
+import { Home, Logout, MoreVert, Settings } from "@mui/icons-material";
 import {
   FormControl,
   InputAdornment,
@@ -117,6 +117,26 @@ function Navbar({ called }) {
   const menuId = "primary-search-account-menu";
 
   const mobileMenuId = "primary-search-account-menu-mobile";
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Log Out</MenuItem>
+    </Menu>
+  );
 
   const renderMobileSearchInput = searchOpen ? (
     <OutlinedInput
@@ -159,11 +179,9 @@ function Navbar({ called }) {
     >
       <MenuItem>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
+          <Settings />
         </IconButton>
-        <p>Messages</p>
+        <p>Settings</p>
       </MenuItem>
 
       <MenuItem
@@ -178,80 +196,80 @@ function Navbar({ called }) {
           aria-haspopup="true"
           color="inherit"
         >
-          <AccountCircle />
+          <Logout />
         </IconButton>
-        <p>Profile</p>
+        <p>Log Out</p>
       </MenuItem>
     </Menu>
   );
   const renderMobileNavbar = (
     <>
-      <Box sx={{ top: 0, zIndex: 2, width: "100%" }} position="sticky">
-        <AppBar position="static">
-          <Stack flexDirection="row" justifyContent="space-between">
-            <Box flex={2} sx={{ display: { xs: "none", md: "flex" } }}></Box>
+      <AppBar sx={{ top: 0, zIndex: 2, width: "100%" }} position="sticky">
+        <Toolbar sx={{ justifyContent: "space-between" }}>
+          {searchOpen ? (
+            <IconButton
+              onClick={() => setsearchOpen(false)}
+              to="/"
+              sx={{
+                display: { xs: "block", sm: "none" },
+                marginRight: 0,
+              }}
+              size="large"
+              color="inherit"
+            >
+              <img src={backIcon} height={25} width={25} />
+            </IconButton>
+          ) : (
+            <IconButton
+              sx={{
+                display: { xs: "block", sm: "none" },
+                marginRight: 0,
+              }}
+              size="large"
+              color="inherit"
+            >
+              <img src={group169} height={25} width={75} />
+            </IconButton>
+          )}
+          {renderMobileSearchInput}
 
-            <Box flex={12}>
-              <Toolbar sx={{ justifyContent: "space-around" }}>
-                {searchOpen ? (
-                  <IconButton
-                    onClick={() => setsearchOpen(false)}
-                    to="/"
-                    sx={{
-                      display: { xs: "block", sm: "none" },
-                      marginRight: 0,
-                    }}
-                    size="large"
-                    color="inherit"
-                  >
-                    <img src={backIcon} height={25} width={25} />
-                  </IconButton>
-                ) : (
-                  <IconButton
-                    component={Link}
-                    to="/"
-                    sx={{
-                      display: { xs: "block", sm: "none" },
-                      marginRight: 0,
-                    }}
-                    size="large"
-                    color="inherit"
-                  >
-                    <img src={group169} height={25} width={75} />
-                  </IconButton>
-                )}
-                <Box>{renderMobileSearchInput}</Box>
-
-                <Box
-                  sx={{
-                    display: { xs: "flex", md: "none" },
-                    alignItems: "center",
-                    marginLeft: { sm: 2 },
-                  }}
+          <Box
+            sx={{
+              display: { xs: "flex", md: "none" },
+              alignItems: "center",
+              marginLeft: { sm: 2 },
+            }}
+          >
+            {searchOpen ? null : (
+              <>
+                <IconButton
+                  size="large"
+                  aria-label="show more"
+                  aria-controls={mobileMenuId}
+                  aria-haspopup="true"
+                  onClick={() => setsearchOpen(true)}
+                  color="inherit"
                 >
-                  {searchOpen ? null : (
-                    <>
-                      <IconButton
-                        size="large"
-                        aria-label="show more"
-                        aria-controls={mobileMenuId}
-                        aria-haspopup="true"
-                        onClick={() => setsearchOpen(true)}
-                        color="inherit"
-                      >
-                        <img src={searchIcon} height={20} width={20} />
-                      </IconButton>
-                      <img src={userProfileIcon} height={25} width={25} />
-                    </>
-                  )}
-                </Box>
-              </Toolbar>
-            </Box>
-            <Box flex={2} sx={{ display: { xs: "none", md: "flex" } }}></Box>
-          </Stack>
-        </AppBar>
-        {renderMobileMenu}
-      </Box>
+                  <img src={searchIcon} height={20} width={20} />
+                </IconButton>
+                <IconButton
+                  size="large"
+                  aria-label="show more"
+                  aria-controls={mobileMenuId}
+                  aria-haspopup="true"
+                  component={Link}
+                  to={`userProfile/${currentUserId}`}
+                  color="inherit"
+                >
+                  <img src={userProfileIcon} height={25} width={25} />
+                </IconButton>
+              </>
+            )}
+          </Box>
+        </Toolbar>
+      </AppBar>
+      {renderMobileMenu}
+      {renderMenu}
     </>
   );
 
@@ -324,39 +342,49 @@ function Navbar({ called }) {
 
   const renderUserProfileNavbar = (
     <>
-      <Box sx={{ top: 0, zIndex: 2, width: "100%" }} position="sticky">
+      <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
-          <Stack flexDirection="row" justifyContent="space-between">
-            <Box flex={2} sx={{ display: { xs: "none", md: "flex" } }}></Box>
+          <Toolbar
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <IconButton
+                onClick={() => setsearchOpen(false)}
+                component={Link}
+                to="/"
+                sx={{
+                  display: { xs: "block", sm: "block" },
+                  marginRight: 0,
+                }}
+                size="large"
+                color="inherit"
+              >
+                <img src={backIcon} height={25} width={25} />
+              </IconButton>
 
-            <Box flex={12}>
-              <Toolbar sx={{ justifyContent: "space-between" }}>
-                <IconButton
-                  onClick={() => setsearchOpen(false)}
-                  to="/"
-                  sx={{
-                    display: { xs: "block", sm: "none" },
-                    marginRight: 0,
-                  }}
-                  size="large"
-                  color="inherit"
-                >
-                  <img src={backIcon} height={25} width={25} />
-                </IconButton>
-
-                <Box
-                  sx={{
-                    display: { xs: "flex", md: "none" },
-                    alignItems: "center",
-                    marginLeft: { sm: 2 },
-                  }}
-                ></Box>
-              </Toolbar>
+              <Typography> Username </Typography>
             </Box>
-            <Box flex={2} sx={{ display: { xs: "none", md: "flex" } }}></Box>
-          </Stack>
+
+            <Box sx={{ display: { xs: "flex", md: "none" } }}>
+              <IconButton
+                size="large"
+                aria-label="show more"
+                aria-controls={mobileMenuId}
+                aria-haspopup="true"
+                onClick={handleMobileMenuOpen}
+                color="inherit"
+              >
+                <MoreIcon />
+              </IconButton>
+            </Box>
+          </Toolbar>
         </AppBar>
         {renderMobileMenu}
+        {renderMenu}
       </Box>
     </>
   );
