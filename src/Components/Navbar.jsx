@@ -15,13 +15,26 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Home } from "@mui/icons-material";
-import { Stack } from "@mui/material";
+import {
+  FormControl,
+  InputAdornment,
+  OutlinedInput,
+  Stack,
+  TextField,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { UserContext } from "../contexts/UserContext";
 import { useContext } from "react";
 import { addUser } from "../apiCalls";
 import group169 from "../logos/Group 169.png";
+import userProfileIcon from "../logos/Group 172.png";
+import searchIcon from "../logos/Group 173.png";
+import xIcon from "../logos/Group 182.png";
+import backIcon from "../logos/Group 181.png";
+import { useState } from "react";
 
 async function signOut() {
   try {
@@ -72,11 +85,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function Navbar() {
+function Navbar({ called }) {
+  const theme = useTheme();
+  const matchesDesktop = useMediaQuery(theme.breakpoints.up("sm"));
   const userContext = useContext(UserContext);
   const { currentUserId } = userContext;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [searchOpen, setsearchOpen] = useState(false);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -101,6 +117,30 @@ function Navbar() {
   const menuId = "primary-search-account-menu";
 
   const mobileMenuId = "primary-search-account-menu-mobile";
+
+  const renderMobileSearchInput = searchOpen ? (
+    <OutlinedInput
+      sx={{ backgroundColor: "gray", height: "40px" }}
+      id="outlined-adornment-weight"
+      placeholder="Search"
+      value=""
+      startAdornment={
+        <InputAdornment position="start">
+          <img src={searchIcon} height={20} width={20} />
+        </InputAdornment>
+      }
+      endAdornment={
+        <InputAdornment onClick={() => setsearchOpen(false)} position="end">
+          <img src={xIcon} height={20} width={20} />
+        </InputAdornment>
+      }
+      aria-describedby="outlined-weight-helper-text"
+      inputProps={{
+        "aria-label": "weight",
+      }}
+    />
+  ) : null;
+
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
@@ -144,111 +184,185 @@ function Navbar() {
       </MenuItem>
     </Menu>
   );
+  const renderMobileNavbar = (
+    <>
+      <Box sx={{ top: 0, zIndex: 2, width: "100%" }} position="sticky">
+        <AppBar position="static">
+          <Stack flexDirection="row" justifyContent="space-between">
+            <Box flex={2} sx={{ display: { xs: "none", md: "flex" } }}></Box>
 
-  return (
-    <Box sx={{ top: 0, zIndex: 2, width: "100%" }} position="sticky">
-      <AppBar position="static">
-        <Stack flexDirection="row" justifyContent="space-between">
-          <Box flex={2} sx={{ display: { xs: "none", md: "flex" } }}></Box>
+            <Box flex={12}>
+              <Toolbar sx={{ justifyContent: "space-around" }}>
+                {searchOpen ? (
+                  <IconButton
+                    onClick={() => setsearchOpen(false)}
+                    to="/"
+                    sx={{
+                      display: { xs: "block", sm: "none" },
+                      marginRight: 0,
+                    }}
+                    size="large"
+                    color="inherit"
+                  >
+                    <img src={backIcon} height={25} width={25} />
+                  </IconButton>
+                ) : (
+                  <IconButton
+                    component={Link}
+                    to="/"
+                    sx={{
+                      display: { xs: "block", sm: "none" },
+                      marginRight: 0,
+                    }}
+                    size="large"
+                    color="inherit"
+                  >
+                    <img src={group169} height={25} width={75} />
+                  </IconButton>
+                )}
+                <Box>{renderMobileSearchInput}</Box>
 
-          <Box flex={12}>
-            <Toolbar sx={{ justifyContent: "space-around" }}>
-              <Box
-                sx={{
-                  display: { xs: "none", sm: "block", textDecoration: "none" },
-                }}
-              >
-                <Typography
-                  variant="h6"
-                  noWrap
-                  component={Link}
-                  to="/"
-                  color={"inherit"}
+                <Box
+                  sx={{
+                    display: { xs: "flex", md: "none" },
+                    alignItems: "center",
+                    marginLeft: { sm: 2 },
+                  }}
                 >
-                  SPORT
-                </Typography>
-              </Box>
-
-              <IconButton
-                component={Link}
-                to="/"
-                sx={{ display: { xs: "block", sm: "none" }, marginRight: 0 }}
-                size="large"
-                color="inherit"
-              >
-                <img src={group169} height={25} width={75} />
-              </IconButton>
-              <Box>
-                <Search>
-                  <SearchIconWrapper>
-                    <SearchIcon />
-                  </SearchIconWrapper>
-                  <StyledInputBase
-                    onClick={console.log("asdsadsadsadsadasd")}
-                    placeholder="Search…"
-                    inputProps={{ "aria-label": "search" }}
-                  />
-                </Search>
-              </Box>
-
-              <Box sx={{ display: { xs: "none", md: "flex" } }}>
-                <IconButton
-                  size="large"
-                  aria-label="show 4 new mails"
-                  color="inherit"
-                >
-                  <Badge badgeContent={4} color="error">
-                    <MailIcon />
-                  </Badge>
-                </IconButton>
-
-                <IconButton
-                  component={Link}
-                  to={`/UserProfile/${currentUserId}`}
-                  size="large"
-                  edge="end"
-                  aria-label="account of current user"
-                  aria-controls={menuId}
-                  aria-haspopup="true"
-                  onClick={addUser()}
-                  color="inherit"
-                >
-                  <AccountCircle />
-                </IconButton>
-                <LogoutIcon
-                  onClick={signOut}
-                  style={{ float: "right", margin: "10px" }}
-                ></LogoutIcon>
-              </Box>
-              <Box
-                sx={{
-                  display: { xs: "flex", md: "none" },
-                  marginLeft: { sm: 2 },
-                }}
-              >
-                <IconButton
-                  size="large"
-                  aria-label="show more"
-                  aria-controls={mobileMenuId}
-                  aria-haspopup="true"
-                  onClick={handleMobileMenuOpen}
-                  color="inherit"
-                >
-                  <MoreIcon />
-                </IconButton>
-                <LogoutIcon
-                  onClick={signOut}
-                  style={{ float: "right", margin: "10px" }}
-                ></LogoutIcon>
-              </Box>
-            </Toolbar>
-          </Box>
-          <Box flex={2} sx={{ display: { xs: "none", md: "flex" } }}></Box>
-        </Stack>
-      </AppBar>
-      {renderMobileMenu}
-    </Box>
+                  {searchOpen ? null : (
+                    <>
+                      <IconButton
+                        size="large"
+                        aria-label="show more"
+                        aria-controls={mobileMenuId}
+                        aria-haspopup="true"
+                        onClick={() => setsearchOpen(true)}
+                        color="inherit"
+                      >
+                        <img src={searchIcon} height={20} width={20} />
+                      </IconButton>
+                      <img src={userProfileIcon} height={25} width={25} />
+                    </>
+                  )}
+                </Box>
+              </Toolbar>
+            </Box>
+            <Box flex={2} sx={{ display: { xs: "none", md: "flex" } }}></Box>
+          </Stack>
+        </AppBar>
+        {renderMobileMenu}
+      </Box>
+    </>
   );
+
+  const renderDesktopNavbar = (
+    <>
+      <Box sx={{ top: 0, zIndex: 2, width: "100%" }} position="sticky">
+        <AppBar position="static">
+          <Stack flexDirection="row" justifyContent="space-between">
+            <Box flex={2} sx={{ display: { xs: "none", sm: "flex" } }}></Box>
+
+            <Box flex={12}>
+              <Toolbar sx={{ justifyContent: "space-around" }}>
+                <Box
+                  sx={{
+                    display: {
+                      xs: "none",
+                      sm: "block",
+                      textDecoration: "none",
+                    },
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    noWrap
+                    component={Link}
+                    to="/"
+                    color={"inherit"}
+                  >
+                    SPORT
+                  </Typography>
+                </Box>
+
+                <Box sx={{ display: { xs: "none", sm: "flex" } }}>
+                  <IconButton
+                    size="large"
+                    aria-label="show 4 new mails"
+                    color="inherit"
+                  >
+                    <Badge badgeContent={4} color="error">
+                      <MailIcon />
+                    </Badge>
+                  </IconButton>
+
+                  <IconButton
+                    component={Link}
+                    to={`/UserProfile/${currentUserId}`}
+                    size="large"
+                    edge="end"
+                    aria-label="account of current user"
+                    aria-controls={menuId}
+                    aria-haspopup="true"
+                    onClick={addUser()}
+                    color="inherit"
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                  <LogoutIcon
+                    onClick={signOut}
+                    style={{ float: "right", margin: "10px" }}
+                  ></LogoutIcon>
+                </Box>
+              </Toolbar>
+            </Box>
+            <Box flex={2} sx={{ display: { xs: "none", sm: "flex" } }}></Box>
+          </Stack>
+        </AppBar>
+      </Box>
+    </>
+  );
+
+  const renderUserProfileNavbar = (
+    <>
+      <Box sx={{ top: 0, zIndex: 2, width: "100%" }} position="sticky">
+        <AppBar position="static">
+          <Stack flexDirection="row" justifyContent="space-between">
+            <Box flex={2} sx={{ display: { xs: "none", md: "flex" } }}></Box>
+
+            <Box flex={12}>
+              <Toolbar sx={{ justifyContent: "space-between" }}>
+                <IconButton
+                  onClick={() => setsearchOpen(false)}
+                  to="/"
+                  sx={{
+                    display: { xs: "block", sm: "none" },
+                    marginRight: 0,
+                  }}
+                  size="large"
+                  color="inherit"
+                >
+                  <img src={backIcon} height={25} width={25} />
+                </IconButton>
+
+                <Box
+                  sx={{
+                    display: { xs: "flex", md: "none" },
+                    alignItems: "center",
+                    marginLeft: { sm: 2 },
+                  }}
+                ></Box>
+              </Toolbar>
+            </Box>
+            <Box flex={2} sx={{ display: { xs: "none", md: "flex" } }}></Box>
+          </Stack>
+        </AppBar>
+        {renderMobileMenu}
+      </Box>
+    </>
+  );
+  const mainNavbar = matchesDesktop ? renderDesktopNavbar : renderMobileNavbar;
+
+  return <> {called == "main" ? mainNavbar : renderUserProfileNavbar} </>;
 }
 
 export default React.memo(Navbar);

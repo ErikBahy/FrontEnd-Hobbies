@@ -10,6 +10,7 @@ import {
   getCurrentUserId,
   getMongoIdFromCognitoId,
 } from "../apiCalls";
+import Navbar from "../Components/Navbar";
 
 function UserProfile() {
   const { cognitoId } = useParams();
@@ -39,25 +40,30 @@ function UserProfile() {
 
   return (
     <>
-      <Stack mt={2} flexDirection="row" justifyContent="space-between">
-        <Box flex={1} sx={{ display: { xs: "none", md: "block" } }}></Box>
-        <Stack
-          flex={4}
-          flexDirection="row"
-          sx={{ backgroundColor: "", flexWrap: "wrap", alignItems: "center" }}
-        >
-          <UserDetails userId={cognitoId} />
-          <Divider sx={{ width: 1, marginTop: 3, fontWeight: 200 }}>
-            {" "}
-            <Chip label={posts?.length + " " + " POSTS"} />
-          </Divider>
-          <Stack>
-            {" "}
-            <Feed called="UserProfile" cognitoId={cognitoId} />
+      <div>
+        <Navbar called="userProfile" />
+      </div>
+      <div>
+        <Stack mt={2} flexDirection="row" justifyContent="space-between">
+          <Box flex={1} sx={{ display: { xs: "none", md: "block" } }}></Box>
+          <Stack
+            flex={4}
+            flexDirection="row"
+            sx={{ backgroundColor: "", flexWrap: "wrap", alignItems: "center" }}
+          >
+            <UserDetails userId={cognitoId} />
+            <Divider sx={{ width: 1, marginTop: 3, fontWeight: 200 }}>
+              {" "}
+              <Chip label={posts?.length + " " + " POSTS"} />
+            </Divider>
+            <Stack>
+              {" "}
+              <Feed called="UserProfile" cognitoId={cognitoId} />
+            </Stack>
           </Stack>
+          <Box flex={1} sx={{ display: { xs: "none", md: "block" } }}></Box>
         </Stack>
-        <Box flex={1} sx={{ display: { xs: "none", md: "block" } }}></Box>
-      </Stack>
+      </div>
     </>
   );
 }

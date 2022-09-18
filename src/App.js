@@ -31,7 +31,6 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navbar />
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/userprofile/:cognitoId" element={<UserProfile />} />
