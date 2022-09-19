@@ -222,11 +222,7 @@ function Post({
                 {username}
               </Avatar>
             }
-            action={
-              <Stack direction="row">
-                {called === "userProfile" ? renderDeleteButton : null}
-              </Stack>
-            }
+            action={<Stack direction="row">{renderDeleteButton}</Stack>}
             subheader={date}
           />
         </Stack>
