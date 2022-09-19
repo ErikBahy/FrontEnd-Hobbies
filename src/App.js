@@ -9,11 +9,13 @@ import { withAuthenticator } from "@aws-amplify/ui-react";
 
 import { useContext, useEffect } from "react";
 import { UserContext } from "./contexts/UserContext";
+import { getMongoIdFromCognitoId } from "./apiCalls";
 
 function App() {
   async function callApi() {
     const user = await Auth.currentAuthenticatedUser();
     const token = user.signInUserSession.idToken.jwtToken;
+
     console.log({ token });
 
     const requestInfo = {
@@ -26,7 +28,13 @@ function App() {
   }
   const userContext = useContext(UserContext);
   useEffect(() => {
-    userContext.getCurrentUserId();
+    userContext
+      .getCurrentUserId()
+      .then((cognitoId) =>
+        getMongoIdFromCognitoId(cognitoId).then((id) =>
+          userContext.setcurrentUserMongoId(id)
+        )
+      );
   }, []);
 
   return (

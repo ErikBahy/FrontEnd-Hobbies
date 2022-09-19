@@ -47,7 +47,11 @@ function Post({ post, called }) {
   const [comments, setComments] = useState([]);
   const [like, setLike] = useState([]);
   const [commentsText, setCommentsText] = useState("");
+  const [shouldEffectRun, setshouldEffectRun] = useState(false);
+  const [postLikes, setpostLikes] = useState();
+  console.log(currentUserMongoId, "currentusermongoId");
   const [liked, setLiked] = useState("");
+
   const {
     username,
     likes,
@@ -59,16 +63,6 @@ function Post({ post, called }) {
     postCognitoId,
     _id,
   } = post;
-  console.log(commentsText, "state commentttt");
-  console.log(_id, "post id for comments bahy");
-  console.log(postCognitoId, "<---postcognitoid");
-  console.log(
-    currentUserMongoId,
-    "currentUsermongo",
-    currentUserId,
-    "current user id"
-  );
-  // console.log(_commentCognitoId,"comments cognito id ::::");
 
   const clear = () => {
     setCommentsText("");
@@ -82,32 +76,17 @@ function Post({ post, called }) {
     );
   };
 
-  // useEffect(() => {
-  //   getCurrentUserId().then((id) => {
-  //     setcognitoId(id);
-  //   });
-  // }, []);
-  useEffect(() => {
-    getMongoIdFromCognitoId(postCognitoId).then((id) => addLikeAtPost(id));
-  }, []);
-
   useEffect(() => {
     allComments();
-  }, []);
+  }, [shouldEffectRun]);
 
   const allComments = async () => {
-    /* const user = await Auth.currentAuthenticatedUser()
-       const token = user.signInUserSession.idToken.jwtToken
-       const requestInfo = {
-           headers: {
-               Authorization: token
-           }
-         }*/
     try {
       const res = await axios.get(
         `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comments/post/${_id}`
       );
       setComments(res.data);
+
       return res.data;
     } catch (err) {
       console.log(err);
@@ -125,40 +104,43 @@ function Post({ post, called }) {
       ) : null}
     </>
   );
-
-  //  allComments();
+  const getLikes = async () => {
+    try {
+      const res = await axios.get(
+        ` https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/getLike/users/${_id}`
+      );
+      setpostLikes(res.data.length);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getLikes();
+  }, [shouldEffectRun]);
 
   const postComment = async () => {
-    // const user = await Auth.currentAuthenticatedUser()
-    // const token = user.signInUserSession.idToken.jwtToken
-    // const requestInfo = {
-    //     headers: {
-    //         Authorization: token
-    //     }
-    //   }
     try {
       await axios.post(
         `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comment/post/${_id}`,
         {
+          commentCognitoId: currentUserId,
           text: commentsText,
         }
       );
-
+      shouldEffectRun ? setshouldEffectRun(false) : setshouldEffectRun(true);
       clear();
     } catch (err) {
       console.log(err);
     }
   };
 
-  const addLikeAtPost = async (mongoId) => {
+  const addLikeAtPost = async () => {
     try {
       await axios.get(
-        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/addLike/users/${mongoId}/${_id}`,
-        {
-          likes: like,
-        }
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/addLike/users/${currentUserMongoId}/${_id}`
       );
-      console.log(mongoId, "mongoid");
+
+      shouldEffectRun ? setshouldEffectRun(false) : setshouldEffectRun(true);
     } catch (error) {
       console.log(error);
     }
@@ -208,24 +190,16 @@ function Post({ post, called }) {
             alignItems="center"
             width="100%"
           >
-            <Box display="flex" direction="row">
-              <Tooltip title="Like">
-                <IconButton
-                  aria-label="add to favorites"
-                  onClick={
-                    like.length > 0
-                      ? like.map((data) => {
-                          return <Likes data={data} />;
-                        })
-                      : null
-                  }
-                >
+            <Box display="flex" alignItems="center" direction="row">
+              <Stack flexDirection="row" spacing={0} alignItems="center">
+                <Typography>{postLikes}</Typography>
+                <Tooltip onClick={(e) => addLikeAtPost()} title="Like">
                   <Checkbox
-                    icon={<FavoriteBorder onClick={addLikeAtPost()} />}
+                    icon={<FavoriteBorder />}
                     checkedIcon={<Favorite sx={{ color: "red" }} />}
                   />
-                </IconButton>
-              </Tooltip>
+                </Tooltip>
+              </Stack>
 
               <Tooltip
                 title="Comment"
@@ -252,13 +226,14 @@ function Post({ post, called }) {
               />
 
               <Tooltip title="Join room" sx={{ marginRight: 4 }}>
-                <IconButton aria-label="join-room">
-                  <MeetingRoomIcon
-                    onClick={() =>
-                      (window.location.href =
-                        "https://d3rr23y8wyk3tl.cloudfront.net/")
-                    }
-                  />
+                <IconButton
+                  onClick={() =>
+                    (window.location.href =
+                      "https://d3rr23y8wyk3tl.cloudfront.net/")
+                  }
+                  aria-label="join-room"
+                >
+                  <MeetingRoomIcon />
                 </IconButton>
               </Tooltip>
             </Box>
@@ -282,12 +257,12 @@ function Post({ post, called }) {
                   onChange={(e) => setCommentsText(e.target.value)}
                 />
               </FormControl>
-              <IconButton>
-                <AddIcon
-                  onClick={() => {
-                    postComment();
-                  }}
-                />
+              <IconButton
+                onClick={() => {
+                  postComment();
+                }}
+              >
+                <AddIcon />
               </IconButton>
             </Box>
             <Accordion>

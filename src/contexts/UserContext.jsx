@@ -17,6 +17,7 @@ function UserProvider(props) {
     const userId = currentUser.attributes.sub;
     setCurrentUserId(userId);
     setloggedUser(currentUser);
+    return userId;
   };
 
   const [user, setUser] = useState([]);
