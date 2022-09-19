@@ -8,8 +8,9 @@ import { getMongoIdFromCognitoId } from "../apiCalls";
 
 const url = "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com";
 
-function Feed({ cognitoId }) {
+function Feed({ cognitoId, seteffectRun, effectRun }) {
   const userContext = useContext(UserContext);
+  const { posts } = userContext.user;
 
   const [userPosts, setUserPosts] = useState([]);
   const getUserPosts = async (mongoId) => {
@@ -20,12 +21,19 @@ function Feed({ cognitoId }) {
   };
   useEffect(() => {
     getMongoIdFromCognitoId(cognitoId).then((id) => getUserPosts(id));
-  }, []);
+  }, [effectRun]);
 
   return (
     <Stack flex={8}>
       {userPosts.map((el) => {
-        return <Post called="userProfile" post={el} />;
+        return (
+          <Post
+            seteffectRun={seteffectRun}
+            effectRun={effectRun}
+            called="userProfile"
+            post={el}
+          />
+        );
       })}
     </Stack>
   );

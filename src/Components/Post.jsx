@@ -39,7 +39,7 @@ import Comment from "./Comment";
 import Likes from "./likes";
 import { UserContext } from "../contexts/UserContext";
 
-function Post({ post, called }) {
+function Post({ post, called, seteffectRun, effectRun }) {
   const userContext = useContext(UserContext);
   const { currentUserMongoId, currentUserId } = userContext;
   const [isExpanded, setIsExpanded] = useState(false);
@@ -48,6 +48,7 @@ function Post({ post, called }) {
   const [like, setLike] = useState([]);
   const [commentsText, setCommentsText] = useState("");
   const [shouldEffectRun, setshouldEffectRun] = useState(false);
+  const [checked, setchecked] = useState(false);
   const [postLikes, setpostLikes] = useState();
   console.log(currentUserMongoId, "currentusermongoId");
   const [liked, setLiked] = useState("");
@@ -74,6 +75,8 @@ function Post({ post, called }) {
     await axios.delete(
       `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/delete/post/${currentUserMongoId}/${_id}`
     );
+
+    effectRun ? seteffectRun(false) : seteffectRun(true);
   };
 
   useEffect(() => {
@@ -131,6 +134,17 @@ function Post({ post, called }) {
       clear();
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  const removeLikeAtPost = async () => {
+    try {
+      await axios.get(
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/unLike/${currentUserMongoId}/${_id}`
+      );
+      shouldEffectRun ? setshouldEffectRun(false) : setshouldEffectRun(true);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -193,8 +207,15 @@ function Post({ post, called }) {
             <Box display="flex" alignItems="center" direction="row">
               <Stack flexDirection="row" spacing={0} alignItems="center">
                 <Typography>{postLikes}</Typography>
-                <Tooltip onClick={(e) => addLikeAtPost()} title="Like">
+                <Tooltip title="Like">
                   <Checkbox
+                    checked={checked}
+                    onClick={
+                      checked ? () => setchecked(false) : () => setchecked(true)
+                    }
+                    onChange={
+                      checked ? () => removeLikeAtPost() : () => addLikeAtPost()
+                    }
                     icon={<FavoriteBorder />}
                     checkedIcon={<Favorite sx={{ color: "red" }} />}
                   />

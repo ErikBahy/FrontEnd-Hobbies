@@ -1,5 +1,5 @@
 import { Stack } from "@mui/system";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Feed from "../Components/UserProfileFeed";
 import UserDetails from "../Components/UserDetails";
 import { Box, Divider, Chip } from "@mui/material";
@@ -16,6 +16,7 @@ function UserProfile() {
   const { cognitoId } = useParams();
   const userContext = useContext(UserContext);
   const { posts, bio, location } = userContext.user;
+  const [effectRun, seteffectRun] = useState(false);
 
   return (
     <>
@@ -30,14 +31,25 @@ function UserProfile() {
             flexDirection="row"
             sx={{ backgroundColor: "", flexWrap: "wrap", alignItems: "center" }}
           >
-            <UserDetails userId={cognitoId} bio={bio} location={location} />
+            <UserDetails
+              seteffectRun={seteffectRun}
+              effectRun={effectRun}
+              userId={cognitoId}
+              bio={bio}
+              location={location}
+            />
             <Divider sx={{ width: 1, marginTop: 3, fontWeight: 200 }}>
               {" "}
               <Chip label={posts?.length + " " + " POSTS"} />
             </Divider>
             <Stack>
               {" "}
-              <Feed called="UserProfile" cognitoId={cognitoId} />
+              <Feed
+                seteffectRun={seteffectRun}
+                effectRun={effectRun}
+                called="UserProfile"
+                cognitoId={cognitoId}
+              />
             </Stack>
           </Stack>
           <Box flex={1} sx={{ display: { xs: "none", md: "block" } }}></Box>
