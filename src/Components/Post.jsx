@@ -42,7 +42,14 @@ import Comment from "./Comment";
 import Likes from "./likes";
 import { UserContext } from "../contexts/UserContext";
 
-function Post({ post, called, seteffectRun, effectRun }) {
+function Post({
+  post,
+  called,
+  seteffectRun,
+  effectRun,
+  feedEffectRun,
+  setfeedEffectRun,
+}) {
   const userContext = useContext(UserContext);
   const { currentUserMongoId, currentUserId } = userContext;
   const [isExpanded, setIsExpanded] = useState(false);
@@ -87,11 +94,15 @@ function Post({ post, called, seteffectRun, effectRun }) {
     await axios.get(
       `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/joinPost/${currentUserMongoId}/${_id}`
     );
+    shouldEffectRun ? setshouldEffectRun(false) : setshouldEffectRun(true);
+    feedEffectRun ? setfeedEffectRun(false) : setfeedEffectRun(true);
   };
   const unjoinPost = async () => {
     await axios.get(
       `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/unjoinPost/${currentUserMongoId}/${_id}`
     );
+    feedEffectRun ? setfeedEffectRun(false) : setfeedEffectRun(true);
+    shouldEffectRun ? setshouldEffectRun(false) : setshouldEffectRun(true);
   };
 
   const deletePost = async (e, _id) => {

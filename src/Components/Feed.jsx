@@ -18,6 +18,7 @@ function Feed({ called, setTag, tag }) {
   const [pageNumber, setPageNumber] = useState();
   const [totalPages, setTotalPages] = useState();
   const [multipleTags, setMultipleTags] = useState([]);
+  const [feedEffectRun, setfeedEffectRun] = useState(false);
 
   const theme = useTheme();
   const matchesDesktop = useMediaQuery(theme.breakpoints.up("sm"));
@@ -78,16 +79,16 @@ function Feed({ called, setTag, tag }) {
   useEffect(() => {
     getPostsByMultipleTag();
     console.log("++++++++++++");
-  }, [tag]);
+  }, [tag, feedEffectRun]);
 
   useEffect(() => {
     getPostsByTag();
     console.log("===============");
-  }, [tag]);
+  }, [tag, feedEffectRun]);
 
   useEffect(() => {
     getAllPosts();
-  }, [pageNumber]);
+  }, [pageNumber, feedEffectRun]);
 
   // let a = [];
   // for (let i = 0; i < 100; i++) {
@@ -101,7 +102,14 @@ function Feed({ called, setTag, tag }) {
         ) : null}
         <Box sx={{ flex: { xs: 1, sm: 4 } }}>
           {posts.map((el) => {
-            return <Post called="feed" post={el} />;
+            return (
+              <Post
+                feedEffectRun={feedEffectRun}
+                setfeedEffectRun={setfeedEffectRun}
+                called="feed"
+                post={el}
+              />
+            );
           })}
         </Box>
         {matchesDesktop ? (
