@@ -12,7 +12,7 @@ function MainPage() {
       <Navbar called="main" />
 
       <Tags called="main" tag={tag} setTag={setTag} />
-      <Feed called="main" />
+      <Feed called="main"  tag={tag} setTag={setTag} />
       <NewPostModal />
     </>
   );

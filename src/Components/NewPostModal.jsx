@@ -56,12 +56,12 @@ function NewPostModal() {
   const userContext = useContext(UserContext);
   const { loggedUser } = userContext;
 
-  console.log(cognitoId, "and currentuser ", mongoId, "hopefully");
+  // console.log(cognitoId, "and currentuser ", mongoId, "hopefully");
 
-  console.log(text, "     console logging text ");
-  console.log(value.$d, " console logging date ");
-  console.log(limit, "     console logging limit ");
-  console.log(tag, "     console logging tag from newpostmodal ");
+  // console.log(text, "     console logging text ");
+  // console.log(value.$d, " console logging date ");
+  // console.log(limit, "     console logging limit ");
+  // console.log(tag, "     console logging tag from newpostmodal ");
 
   const clear = () => {
     setLimit("");
