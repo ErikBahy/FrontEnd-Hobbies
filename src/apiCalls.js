@@ -57,3 +57,10 @@ export const checkFollow = async (currentUserMongoId, userMongoId) => {
   console.log(res.data, "res.data is followed or no");
   return await res.data;
 };
+export const checkLike = async (currentUserMongoId, postId) => {
+  const res = await axios.get(
+    `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/boolIfLikes/${currentUserMongoId}/${postId}`
+  );
+  console.log(res.data, "res.data is followed or no");
+  return await res.data;
+};

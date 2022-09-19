@@ -31,6 +31,7 @@ import { DeleteOutline } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import {
+  checkLike,
   getCurrentUserId,
   getMongoIdFromCognitoId,
   getUserFromCognitoId,
@@ -51,7 +52,8 @@ function Post({ post, called, seteffectRun, effectRun }) {
   const [checked, setchecked] = useState(false);
   const [postLikes, setpostLikes] = useState();
   console.log(currentUserMongoId, "currentusermongoId");
-  const [liked, setLiked] = useState("");
+  const [liked, setLiked] = useState();
+  console.log(checked);
 
   const {
     username,
@@ -82,6 +84,10 @@ function Post({ post, called, seteffectRun, effectRun }) {
   useEffect(() => {
     allComments();
   }, [shouldEffectRun]);
+
+  useEffect(() => {
+    checkLike(currentUserMongoId, _id).then((bool) => setchecked(bool));
+  }, [shouldEffectRun, currentUserMongoId, _id]);
 
   const allComments = async () => {
     try {
