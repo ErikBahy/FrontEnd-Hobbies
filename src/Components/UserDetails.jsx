@@ -35,7 +35,7 @@ const style = {
   p: 4,
 };
 
-function UserDetails({ userId, bio, location }) {
+function UserDetails({ userId, bio, effectRun }) {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const userContext = useContext(UserContext);
@@ -134,7 +134,7 @@ function UserDetails({ userId, bio, location }) {
         setcurrentUserMongoId(mongoId)
       )
     );
-  }, [open, isFollowed]);
+  }, [open, isFollowed, effectRun]);
 
   useEffect(() => {
     checkFollow(currentUserMongoId, userMongoId).then((bool) =>
