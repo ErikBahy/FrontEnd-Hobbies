@@ -203,7 +203,7 @@ function Navbar({ called, userId }) {
         >
           <Logout />
         </IconButton>
-        <p>Log Out</p>
+        <p onClick={signOut}>Log Out</p>
       </MenuItem>
     </Menu>
   );
