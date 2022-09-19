@@ -64,3 +64,10 @@ export const checkLike = async (currentUserMongoId, postId) => {
   console.log(res.data, "res.data is followed or no");
   return await res.data;
 };
+export const checkJoin = async (currentUserMongoId, postId) => {
+  const res = await axios.get(
+    `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/boolIfJoined/${currentUserMongoId}/${postId}`
+  );
+  console.log(res.data, "res.data is followed or no");
+  return await res.data;
+};

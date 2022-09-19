@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Button,
   Card,
   CardActions,
   CardContent,
@@ -31,6 +32,7 @@ import { DeleteOutline } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import {
+  checkJoin,
   checkLike,
   getCurrentUserId,
   getMongoIdFromCognitoId,
@@ -51,9 +53,9 @@ function Post({ post, called, seteffectRun, effectRun }) {
   const [shouldEffectRun, setshouldEffectRun] = useState(false);
   const [checked, setchecked] = useState(false);
   const [postLikes, setpostLikes] = useState();
-  console.log(currentUserMongoId, "currentusermongoId");
   const [liked, setLiked] = useState();
-  console.log(checked);
+  const [isJoined, setisJoined] = useState(false);
+  console.log(checked, isJoined);
 
   const {
     username,
@@ -65,11 +67,31 @@ function Post({ post, called, seteffectRun, effectRun }) {
     limit,
     postCognitoId,
     _id,
+    joined,
   } = post;
 
+  console.log(
+    currentUserMongoId,
+    "currentusermongoId",
+    _id,
+    "postId",
+    joined,
+    "joined"
+  );
   const clear = () => {
     setCommentsText("");
     setLiked("");
+  };
+
+  const joinPost = async () => {
+    await axios.get(
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/joinPost/${currentUserMongoId}/${_id}`
+    );
+  };
+  const unjoinPost = async () => {
+    await axios.get(
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/unjoinPost/${currentUserMongoId}/${_id}`
+    );
   };
 
   const deletePost = async (e, _id) => {
@@ -87,6 +109,7 @@ function Post({ post, called, seteffectRun, effectRun }) {
 
   useEffect(() => {
     checkLike(currentUserMongoId, _id).then((bool) => setchecked(bool));
+    checkJoin(currentUserMongoId, _id).then((bool) => setisJoined(bool));
   }, [shouldEffectRun, currentUserMongoId, _id]);
 
   const allComments = async () => {
@@ -251,6 +274,25 @@ function Post({ post, called, seteffectRun, effectRun }) {
                 color="primary"
                 sx={{ marginRight: 3 }}
               />
+              <Typography>
+                {" "}
+                {joined?.length}/{limit}
+              </Typography>
+              {currentUserId == postCognitoId ? (
+                <Button variant="text">Check </Button>
+              ) : isJoined === true ? (
+                <Button onClick={() => unjoinPost()} variant="text">
+                  Unjoin
+                </Button>
+              ) : joined?.length == limit ? (
+                <Button disabled color="secondary" variant="text">
+                  Completed
+                </Button>
+              ) : (
+                <Button onClick={() => joinPost()} variant="text">
+                  Join
+                </Button>
+              )}
 
               <Tooltip title="Join room" sx={{ marginRight: 4 }}>
                 <IconButton
