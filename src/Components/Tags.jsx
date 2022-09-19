@@ -10,7 +10,7 @@ function Tags({ called, setTag, tag }) {
   //   { title: "Fier", category: "City" },
   // ];
   const [tags, setTags] = useState([]);
-  console.log(tags, " state hereeee");
+  // console.log(tags, " state hereeee");
   const getTags = async () => {
     const res = await axios.get(
       "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/locations"
@@ -23,7 +23,7 @@ function Tags({ called, setTag, tag }) {
     );
     // setTags(data.map((el)=>[...tags , { title: el.text, _id: el._id, category: "location" }]))
 
-    console.log(i, "tags heree");
+    // console.log(i, "tags heree");
 
     const response = await axios.get(
       "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/sports"
@@ -32,6 +32,7 @@ function Tags({ called, setTag, tag }) {
     sportTags.map((el) =>
       i.push({ title: el.text, _id: el._id, category: "sport" })
     );
+    console.log(i,' from tags')
     setTags(i);
   };
 
@@ -78,7 +79,7 @@ function Tags({ called, setTag, tag }) {
           multiple
           limitTags={2}
           renderInput={(params) => (
-            <TextField {...params} label="Choose Tags" placeholder="Tags" />
+            <TextField {...params} label="Choose Tags" placeholder="Location/Sport" />
           )}
           sx={{ width: called === "modal" ? "100%" : "88%" }}
         />
