@@ -368,7 +368,7 @@ function Navbar({ called, userId }) {
                 size="large"
                 color="inherit"
               >
-                <img src={backIcon} height={25} width={25} />
+                <img src={backIcon} height={20} width={20} />
               </IconButton>
 
               <Typography> {username} </Typography>

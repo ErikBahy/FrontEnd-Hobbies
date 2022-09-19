@@ -41,6 +41,7 @@ import {
 import Comment from "./Comment";
 import Likes from "./likes";
 import { UserContext } from "../contexts/UserContext";
+import ShowTags from "./ShowTags";
 
 function Post({
   post,
@@ -226,6 +227,9 @@ function Post({
             subheader={date}
           />
         </Stack>
+        {tags.map((el) => (
+          <ShowTags tags={el} />
+        ))}
 
         <CardContent>
           <Typography variant="body2" color="text.secondary">
