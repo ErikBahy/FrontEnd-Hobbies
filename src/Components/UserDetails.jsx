@@ -109,6 +109,11 @@ function UserDetails({ userId, bio, effectRun }) {
     <>
       {checkId === false && isFollowed === false ? (
         <Button
+          size="medium"
+          sx={{
+            width: 0.95,
+          }}
+          variant="outlined"
           onClick={(e) => {
             follow(e, currentUserMongoId, userMongoId);
           }}
@@ -117,6 +122,11 @@ function UserDetails({ userId, bio, effectRun }) {
         </Button>
       ) : checkId === false && isFollowed === true ? (
         <Button
+          size="medium"
+          sx={{
+            width: 0.95,
+          }}
+          variant="outlined"
           onClick={(e) => {
             unfollow(e, currentUserMongoId, userMongoId);
           }}
