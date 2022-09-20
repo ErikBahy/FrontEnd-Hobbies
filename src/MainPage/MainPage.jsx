@@ -7,14 +7,19 @@ import { Box } from "@mui/material";
 
 function MainPage() {
   const [tag, setTag] = useState([]);
-  const [navbarsearch, setnavbarsearch] = useState(second);
+  const [navbarsearch, setnavbarsearch] = useState();
   console.log(tag, "from main page");
   return (
     <>
       <Box sx={{ backgroundColor: "background.myBackground" }}>
-        <Navbar called="main" />
+        <Navbar called="main" setnavbarsearch={setnavbarsearch} />
         <Tags called="main" tag={tag} setTag={setTag} />
-        <Feed called="main" tag={tag} setTag={setTag} />
+        <Feed
+          called="main"
+          navbarsearch={navbarsearch}
+          tag={tag}
+          setTag={setTag}
+        />
         <NewPostModal />
       </Box>
     </>
