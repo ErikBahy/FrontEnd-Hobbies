@@ -165,6 +165,8 @@ function UserDetails({ userId, bio, effectRun }) {
 
         <Stack flex={4} flexDirection="row">
           <Stack flex={1} flexDirection="column" alignItems="center">
+            {" "}
+            {/*ky esh stacku Followers*/}
             <Typography
               sx={{
                 color: "text.primary",
@@ -190,6 +192,8 @@ function UserDetails({ userId, bio, effectRun }) {
           </Stack>
           <Stack flex={1}></Stack>
           <Stack flex={1} flexDirection="column" alignItems="center">
+            {" "}
+            {/*ky esh stacku Following*/}
             <Typography
               sx={{
                 color: "text.primary",
