@@ -146,119 +146,93 @@ function UserDetails({ userId, bio, effectRun }) {
     <>
       <Stack
         alignItems="center"
-        justifyContent="center"
-        flex={1}
+        justifyContent="space-between"
+        flexDirection="row"
         sx={{ backgroundColor: "" }}
+        marginX={2}
       >
-        <Avatar
-          alt="Remy Sharp"
-          src="https://wallpaperaccess.com/full/1890591.jpg"
-          sx={{
-            width: { xs: "100px", sm: "150px" },
-            height: { xs: "100px", sm: "150px" },
-          }}
-        />
+        <Stack flex={2}>
+          <Avatar
+            alt="Remy Sharp"
+            src="https://wallpaperaccess.com/full/1890591.jpg"
+            sx={{
+              width: { xs: "75px", sm: "150px" },
+              height: { xs: "75px", sm: "150px" },
+            }}
+          />
+        </Stack>
+        <Stack flex={1}></Stack>
+
+        <Stack flex={4} flexDirection="row">
+          <Stack flex={1} flexDirection="column" alignItems="center">
+            <Typography
+              sx={{
+                color: "text.primary",
+                fontWeight: 600,
+                padding: 0,
+              }}
+              variant="p"
+              component="span"
+              fontWeight={100}
+            >
+              {followers?.length}
+            </Typography>
+            <Typography
+              sx={{
+                padding: 0,
+              }}
+              variant="p"
+              component="span"
+              fontWeight={100}
+            >
+              {followers?.length == 1 ? `Follower` : ` Followers `}
+            </Typography>
+          </Stack>
+          <Stack flex={1}></Stack>
+          <Stack flex={1} flexDirection="column" alignItems="center">
+            <Typography
+              sx={{
+                color: "text.primary",
+                fontWeight: 600,
+                padding: 0,
+              }}
+              variant="p"
+              component="span"
+              fontWeight={100}
+            >
+              {followers?.length}
+            </Typography>
+            <Typography
+              sx={{
+                padding: 0,
+              }}
+              variant="p"
+              component="span"
+              fontWeight={100}
+            >
+              {followers?.length == 1 ? `  Following` : `  Following `}
+            </Typography>
+          </Stack>
+        </Stack>
+
+        <Stack flex={1}></Stack>
       </Stack>
       <Stack flex={4} flexDirection="column" sx={{ backgroundColor: "" }}>
         <Stack
           flexDirection="row"
-          justifyContent="space-around"
           sx={{ backgroundColor: "", paddingY: { xs: 1, sm: 3 } }}
         >
           <Typography
             sx={{
-              padding: 1,
+              paddingLeft: "8px",
+              fontSize: "14px",
             }}
             variant="p"
             component="span"
-            fontWeight={100}
+            fontWeight={300}
           >
-            {username}
+            {bio}
           </Typography>
-          <Typography
-            sx={{
-              padding: 1,
-            }}
-            variant="p"
-            component="span"
-            fontWeight={100}
-          >
-            {followers?.length == 1
-              ? `${followers?.length}  Follower`
-              : `${followers?.length}  Followers `}
-          </Typography>
-          {checkId === true ? (
-            <Button onClick={handleOpen}>Edit</Button>
-          ) : (
-            renderFollowButton
-          )}
-
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Stack
-              spacing={0}
-              sx={style}
-              flexDirection="row"
-              justifyContent="space-around"
-              alignContent="center"
-            >
-              <Stack
-                display="flex"
-                flexdirection="column"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <TextField
-                  sx={{ mb: 2, mr: 1 }}
-                  id="input-with-icon-textfield"
-                  label="Change your bio"
-                  value={bioUpdate}
-                  onChange={(e) => setbioUpdate(e.target.value)}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <DescriptionIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                  variant="standard"
-                />
-                <TextField
-                  sx={{ mr: 1 }}
-                  id="input-with-icon-textfield"
-                  label="Change your location"
-                  onChange={(e) => setlocationUpdate(e.target.value)}
-                  value={locationUpdate}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <EditLocationIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                  variant="standard"
-                />
-              </Stack>
-              <Stack
-                display="flex"
-                flexDirection="column"
-                justifyContent="center"
-              >
-                <Button
-                  variant="outlined"
-                  onClick={(e) => updateUserInfo(e)}
-                  sx={{ borderRadius: 2, height: 40 }}
-                  startIcon={<CheckCircleOutlineIcon />}
-                >
-                  Done
-                </Button>
-              </Stack>
-            </Stack>
-          </Modal>
         </Stack>
         <Stack
           justifyContent="space-around"
@@ -267,32 +241,13 @@ function UserDetails({ userId, bio, effectRun }) {
             backgroundColor: "",
             paddingY: 0,
             paddingX: 1,
+            fontSize: "12px",
             flexDirection: { xs: "column", sm: "row" },
-            paddingTop: { xs: 3 },
           }}
         >
-          <Tooltip title="Users Description" placement="top-start">
-            <TextField
-              id="standard-multiline-static"
-              maxLength={5}
-              label=""
-              disabled
-              defaultValue={bio}
-              maxRows={matches === true ? 4 : 2}
-              multiline
-              flex={1}
-              sx={{
-                width: { xs: "100%", sm: "60%" },
-                "& .MuiInputBase-root": { padding: 1, borderTop: 0 },
-              }}
-            />
-          </Tooltip>
-
           <Typography
             sx={{
               alignSelf: { xs: "flex-start", sm: "center" },
-              padding: 1,
-              marginTop: { xs: 1 },
             }}
             variant="p"
             component="span"
@@ -301,6 +256,90 @@ function UserDetails({ userId, bio, effectRun }) {
             JOINED SINCE 1997
           </Typography>
         </Stack>
+      </Stack>
+      <Stack flexDirection="row" justifyContent="center" marginTop={1}>
+        {checkId === true ? (
+          <Button
+            size="medium"
+            sx={{
+              color: "text.primary",
+              borderColor: "text.primary",
+              width: 0.95,
+            }}
+            variant="outlined"
+            onClick={handleOpen}
+          >
+            Edit Profile
+          </Button>
+        ) : (
+          renderFollowButton
+        )}{" "}
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Stack
+            spacing={0}
+            sx={style}
+            flexDirection="row"
+            justifyContent="space-around"
+            alignContent="center"
+          >
+            <Stack
+              display="flex"
+              flexdirection="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <TextField
+                sx={{ mb: 2, mr: 1 }}
+                id="input-with-icon-textfield"
+                label="Change your bio"
+                value={bioUpdate}
+                onChange={(e) => setbioUpdate(e.target.value)}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <DescriptionIcon />
+                    </InputAdornment>
+                  ),
+                }}
+                variant="standard"
+              />
+              <TextField
+                sx={{ mr: 1 }}
+                id="input-with-icon-textfield"
+                label="Change your location"
+                onChange={(e) => setlocationUpdate(e.target.value)}
+                value={locationUpdate}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <EditLocationIcon />
+                    </InputAdornment>
+                  ),
+                }}
+                variant="standard"
+              />
+            </Stack>
+            <Stack
+              display="flex"
+              flexDirection="column"
+              justifyContent="center"
+            >
+              <Button
+                variant="outlined"
+                onClick={(e) => updateUserInfo(e)}
+                sx={{ borderRadius: 2, height: 40 }}
+                startIcon={<CheckCircleOutlineIcon />}
+              >
+                Done
+              </Button>
+            </Stack>
+          </Stack>
+        </Modal>
       </Stack>
     </>
   );
