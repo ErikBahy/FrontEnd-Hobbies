@@ -17,7 +17,6 @@ function Feed({ called, setTag, tag }) {
   const [posts, setPosts] = useState([]);
   const [pageNumber, setPageNumber] = useState();
   const [totalPages, setTotalPages] = useState();
-  const [multipleTags, setMultipleTags] = useState([]);
   const [feedEffectRun, setfeedEffectRun] = useState(false);
   const [shouldEffectRun, setshouldEffectRun] = useState(false);
 
@@ -43,8 +42,10 @@ function Feed({ called, setTag, tag }) {
 
   const getPostsByTag = async () => {
     if (tag.length === 1) {
+      const page = await axios.get(`https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/allPagesforLS?tags=${tag}`)
+      setTotalPages(parseInt(page.data));
       const res = await axios.get(
-        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/bylocationsport?tags=${tag}`
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/bylocationsport?page=${pageNumber}&tags=${tag}`
       );
       const data = res.data;
       console.log(data);
@@ -53,12 +54,13 @@ function Feed({ called, setTag, tag }) {
 
       setPosts(i);
     } else if (tag.length > 1) {
-      // setMultipleTags([...tag]);
+      const page = await axios.get(`https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/allPagesforTags?tags=${tag}`)
+      setTotalPages(parseInt(page.data));
       let str = tag.join();
       console.log(str);
 
       const res = await axios.get(
-        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/bytag?tags=${str}`
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/bytag?page=${pageNumber}&tags=${str}`
       );
       const data = res.data;
       console.log(data);
@@ -74,11 +76,11 @@ function Feed({ called, setTag, tag }) {
   useEffect(() => {
     getPostsByTag();
     console.log("===============");
-  }, [tag, feedEffectRun]);
+  }, [tag, feedEffectRun,pageNumber]);
 
   useEffect(() => {
     getAllPosts();
-  }, [pageNumber, shouldEffectRun]);
+  }, [ shouldEffectRun]);
 
   return (
     <>
