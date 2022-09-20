@@ -312,7 +312,7 @@ function Post({
               </Typography>
             </Stack>
             <Stack flexDirection="row" alignItems="center">
-              {tags.map((el) => (
+              {tags?.map((el) => (
                 <ShowTags tags={el} />
               ))}
             </Stack>
