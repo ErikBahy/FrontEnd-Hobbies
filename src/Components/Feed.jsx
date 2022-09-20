@@ -73,43 +73,15 @@ function Feed({ called, setTag, tag }) {
     }
   };
 
-  // const getPostsByMultipleTag = async () => {
-  //   if (tag.length > 1) {
-  //     setTag(tag);
-  //   }
-  //   setMultipleTags([...tag]);
-  //   let str = multipleTags.join();
-  //   console.log(str);
-
-  //   const res = await axios.get(
-  //     `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/bytag?tags=${str}`
-  //   );
-  //   const data = res.data;
-  //   console.log(data);
-  //   let i = [];
-  //   data.map((el) => i.push(el));
-
-  //   setPosts(i);
-  // };
-
-  // useEffect(() => {
-  //   getPostsByMultipleTag();
-  //   console.log("++++++++++++");
-  // }, [tag, feedEffectRun]);
-
   useEffect(() => {
     getPostsByTag();
     console.log("===============");
-  }, [tag]);
+  }, [tag,feedEffectRun]);
 
   useEffect(() => {
     getAllPosts();
   }, [pageNumber, shouldEffectRun]);
 
-  // let a = [];
-  // for (let i = 0; i < 100; i++) {
-  //   a.push(i);
-  // }
   return (
     <>
       <Stack flexDirection={matchesDesktop ? "row" : "column"}>
