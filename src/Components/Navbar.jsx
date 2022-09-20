@@ -140,7 +140,11 @@ function Navbar({ called, userId }) {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Log Out</MenuItem>
+      <MenuItem onClick={()=>{
+        handleMenuClose()
+        signOut()
+      }
+      }>Log Out</MenuItem>
     </Menu>
   );
 
@@ -327,7 +331,7 @@ function Navbar({ called, userId }) {
                     variant="h6"
                     noWrap
                     component={Link}
-                    to="/"
+                    to="/mainpage"
                     color={"inherit"}
                   >
                     SPORT
