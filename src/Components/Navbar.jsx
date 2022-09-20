@@ -39,6 +39,7 @@ import { useEffect } from "react";
 
 async function signOut() {
   try {
+    
     await Auth.signOut();
   } catch (error) {
     console.log("error signing out: ", error);
@@ -214,7 +215,7 @@ function Navbar({ called, userId }) {
           {searchOpen ? (
             <IconButton
               onClick={() => setsearchOpen(false)}
-              to="/"
+              to="/mainpage"
               sx={{
                 display: { xs: "block", sm: "none" },
                 marginRight: 0,
