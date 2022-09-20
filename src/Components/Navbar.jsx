@@ -29,7 +29,7 @@ import { Auth } from "aws-amplify";
 import { UserContext } from "../contexts/UserContext";
 import { useContext } from "react";
 import { addUser, getUserFromCognitoId } from "../apiCalls";
-import sportLogo from "../logos/sportLogo.png";
+import group169 from "../logos/Group 169.png";
 import userProfileIcon from "../logos/Group 172.png";
 import searchIcon from "../logos/Group 173.png";
 import xIcon from "../logos/Group 182.png";
@@ -140,14 +140,11 @@ function Navbar({ called, userId }) {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
-      <MenuItem
-        onClick={() => {
-          handleMenuClose();
-          signOut();
-        }}
-      >
-        Log Out
-      </MenuItem>
+      <MenuItem onClick={()=>{
+        handleMenuClose()
+        signOut()
+      }
+      }>Log Out</MenuItem>
     </Menu>
   );
 
@@ -257,7 +254,7 @@ function Navbar({ called, userId }) {
               size="large"
               color="inherit"
             >
-              <img src={sportLogo} height={25} width={75} />
+              <img src={group169} height={25} width={75} />
             </IconButton>
           )}
           {renderMobileSearchInput}
@@ -334,7 +331,7 @@ function Navbar({ called, userId }) {
                     to="/mainpage"
                     color={"inherit"}
                   >
-                    <img src={sportLogo} height={30} width={85} />
+                    SPORT
                   </Typography>
                 </Box>
 
