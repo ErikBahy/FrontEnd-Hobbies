@@ -95,6 +95,7 @@ function Navbar({ called, userId }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [searchOpen, setsearchOpen] = useState(false);
+  const [searchvalue, setsearchvalue] = useState("");
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -161,7 +162,8 @@ function Navbar({ called, userId }) {
       }}
       id="outlined-adornment-weight"
       placeholder="Search"
-      value=""
+      value={searchvalue}
+      onChange={(e) => setsearchvalue(e.target.value)}
       startAdornment={
         <InputAdornment position="start">
           <img src={searchIcon} height={20} width={20} />
