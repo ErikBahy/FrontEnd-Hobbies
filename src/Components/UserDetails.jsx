@@ -113,7 +113,7 @@ function UserDetails({ userId, bio, effectRun }) {
           sx={{
             width: 0.95,
           }}
-          variant="outlined"
+          variant="contained"
           onClick={(e) => {
             follow(e, currentUserMongoId, userMongoId);
           }}
@@ -126,7 +126,7 @@ function UserDetails({ userId, bio, effectRun }) {
           sx={{
             width: 0.95,
           }}
-          variant="outlined"
+          variant="contained"
           onClick={(e) => {
             unfollow(e, currentUserMongoId, userMongoId);
           }}
