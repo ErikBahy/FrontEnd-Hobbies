@@ -215,6 +215,7 @@ function Login() {
                   sx={{ mt: 3, mb: 2 }}
                   onClick={signIn}
                 >
+                   
                   Sign In
                 </Button>
                 <Grid container>
@@ -238,56 +239,15 @@ function Login() {
         </ThemeProvider>
       )}
 
-      {formType === "signedIn" && <MainPage />}
+      {
+      formType === "signedIn" && 
+      
+        <MainPage  component={Link}
+        to={'/mainpage'}/>
+      
+      }
     </>
   );
-
-  //         formType === 'signUp' && (
-  //             <div>
-  //                     <input name="username" onChange={onChange} placeholder="username" />
-  //                     <input name="password" type="password" onChange={onChange} placeholder="password" />
-  //                     <input name="email" onChange={onChange} placeholder="email" />
-  //                     <button onClick={signUp}>Sign Up</button>
-  //                     <button onClick={() => updateFormState(() => ({
-  //                           ...formState ,formType: "signIn"
-  //                     }))}
-  //                     >Sign In</button>
-  //             </div>
-  //         )
-  // }
-
-  //         {
-  //         formType === 'confirmSignUp' && (
-  //             <div>
-  //                     <input name="authCode" onChange={onChange} placeholder="Confirmation code" />
-  //                     <button onClick={confirmSignUp}>Confirm Sign Up</button>
-  //             </div>
-  //         )
-
-  // }
-  // {
-  //         formType === 'signIn' && (
-  //             <div>
-  //                     <input name="username" onChange={onChange} placeholder="username" />
-  //                     <input name="password" type="password" onChange={onChange} placeholder="password" />
-  //                     <button onClick={signIn}>Sign In</button>
-  //             </div>
-  //         )
-  //         }
-  //   {
-  //         formType === 'signedIn' && (
-  //            <MainPage />
-  //         )
-  //         }
-
-  // {
-  //         formType === 'signedOut' && (
-  //           <Navigate to="/"/>
-  //           )
-  //         }
-
-  //     </div>
-  //   )
 }
 
 export default Login;

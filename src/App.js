@@ -29,7 +29,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />}/>
         <Route path="/mainpage" element={<MainPage />}/>
-        <Route path="/userprofile/:cognitoId" element={<UserProfile />} />
+        <Route path="/useprofile/:cognitoId" element={<UserProfile />} />
       </Routes>
     </BrowserRouter>
   );
