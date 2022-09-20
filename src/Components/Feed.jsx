@@ -29,8 +29,6 @@ function Feed({ called, setTag, tag }) {
       `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/allpostsPages`
     );
     setTotalPages(parseInt(page.data));
-    // console.log(totalPages);
-    //const res = await axios.get(`${url}/dev/allposts`);
     const res = await axios.get(
       `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/allposts?page=${pageNumber}`
     );
