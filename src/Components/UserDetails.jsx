@@ -61,6 +61,8 @@ function UserDetails({ userId, bio, effectRun }) {
   const [runEffect, setrunEffect] = useState(false);
   console.log(bioUpdate, locationUpdate);
 
+  const [followersName, setFollowersName] = useState([]);
+
   console.log(
     userMongoId,
     " userMongo",
@@ -152,6 +154,22 @@ function UserDetails({ userId, bio, effectRun }) {
     );
   }, [isFollowed, currentUserMongoId, userMongoId, runEffect]);
 
+
+  const followersInfo = async (e, userMongoId) => {
+    e.preventDefault();
+
+    const followersU = await axios.get(`https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/yourfollowers/${userMongoId}`)
+    console.log(followersU.data);
+
+  }
+
+  const followedInfo = async (e, userMongoId) => {
+    e.preventDefault();
+
+    const followedU = await axios.get(`https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/yourfollowed/  ${userMongoId}`);
+    console.log(followedU.data);
+  }
+
   return (
     <>
       <Stack
@@ -174,59 +192,73 @@ function UserDetails({ userId, bio, effectRun }) {
         <Stack flex={1}></Stack>
 
         <Stack flex={4} flexDirection="row">
-          <Stack flex={1} flexDirection="column" alignItems="center">
-            {" "}
-            {/*ky esh stacku Followers*/}
-            <Typography
-              sx={{
-                color: "text.primary",
-                fontWeight: 600,
-                padding: 0,
-              }}
-              variant="p"
-              component="span"
-              fontWeight={100}
-            >
-              {followers?.length}
-            </Typography>
-            <Typography
-              sx={{
-                padding: 0,
-              }}
-              variant="p"
-              component="span"
-              fontWeight={100}
-            >
-              {followers?.length == 1 ? `Follower` : ` Followers `}
-            </Typography>
-          </Stack>
+          <Button
+            onClick={(e) => {
+              followersInfo(e, userMongoId);
+              <Modal>
+              </Modal>
+            }}>
+            <Stack flex={1} flexDirection="column" alignItems="center">
+              {" "}
+              {/*ky esh stacku Followers*/}
+              <Typography
+                sx={{
+                  color: "text.primary",
+                  fontWeight: 600,
+                  padding: 0,
+                }}
+                variant="p"
+                component="span"
+                fontWeight={100}
+              >
+                {followers?.length}
+              </Typography>
+              <Typography
+                sx={{
+                  padding: 0,
+                }}
+                variant="p"
+                component="span"
+                fontWeight={100}
+              >
+                {followers?.length == 1 ? `Follower` : ` Followers `}
+              </Typography>
+            </Stack>
+          </Button>
           <Stack flex={1}></Stack>
-          <Stack flex={1} flexDirection="column" alignItems="center">
-            {" "}
-            {/*ky esh stacku Following*/}
-            <Typography
-              sx={{
-                color: "text.primary",
-                fontWeight: 600,
-                padding: 0,
-              }}
-              variant="p"
-              component="span"
-              fontWeight={100}
-            >
-              {followers?.length}
-            </Typography>
-            <Typography
-              sx={{
-                padding: 0,
-              }}
-              variant="p"
-              component="span"
-              fontWeight={100}
-            >
-              {followers?.length == 1 ? `  Following` : `  Following `}
-            </Typography>
-          </Stack>
+          <Button
+          onClick={(e) => {
+            followedInfo(e, userMongoId);
+            <Modal>
+            </Modal>
+          }}>
+            <Stack flex={1} flexDirection="column" alignItems="center">
+              {" "}
+              {/*ky esh stacku Following*/}
+              <Typography
+                sx={{
+                  color: "text.primary",
+                  fontWeight: 600,
+                  padding: 0,
+                }}
+                variant="p"
+                component="span"
+                fontWeight={100}
+              >
+                {followers?.length}
+              </Typography>
+              <Typography
+                sx={{
+                  padding: 0,
+                }}
+                variant="p"
+                component="span"
+                fontWeight={100}
+              >
+                {followers?.length == 1 ? `  Following` : `  Following `}
+              </Typography>
+            </Stack>
+          </Button>
         </Stack>
 
         <Stack flex={1}></Stack>

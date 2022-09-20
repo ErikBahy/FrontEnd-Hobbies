@@ -7,6 +7,7 @@ import { Box } from "@mui/material";
 
 function MainPage() {
   const [tag, setTag] = useState([]);
+  //const [navbarsearch, setnavbarsearch] = useState(second);
   console.log(tag, "from main page");
   return (
     <>
