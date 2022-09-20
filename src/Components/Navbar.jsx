@@ -285,7 +285,7 @@ function Navbar({ called, userId }) {
                   aria-controls={mobileMenuId}
                   aria-haspopup="true"
                   component={Link}
-                  to={`userProfile/${currentUserId}`}
+                  to={`/userprofile/${currentUserId}`}
                   color="inherit"
                 >
                   <img src={userProfileIcon} height={25} width={25} />
