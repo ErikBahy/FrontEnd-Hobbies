@@ -428,6 +428,7 @@ function Post({
                           <StyledButton
                             onClick={() => {
                               postComment();
+                              setcommentsOpen(!commentsOpen);
                               setShowComment(!showComment);
                             }}
                             sx={{ color: "white" }}
