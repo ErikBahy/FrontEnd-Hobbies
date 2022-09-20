@@ -14,17 +14,6 @@ import { myTheme } from "./theme";
 Amplify.configure(config);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-const theme = {
-  name: "Test",
-  tokens: {
-    colors: {
-      background: {
-        primary: { value: "hotpink" },
-      },
-    },
-  },
-};
-
 root.render(
   <AmplifyProvider theme={theme}>
     <UserProvider>
