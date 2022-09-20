@@ -25,7 +25,7 @@ function ShowTags({ tags }) {
   useEffect(() => {
     getLocationTag();
     getSportTag();
-  }, []);
+  }, [tags]);
 
   return (
     <>
