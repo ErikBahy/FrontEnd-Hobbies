@@ -86,7 +86,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function Navbar({ called, userId }) {
+function Navbar({ called, userId, navbarsearch, setnavbarsearch }) {
   const [username, setusername] = useState("");
   const theme = useTheme();
   const matchesDesktop = useMediaQuery(theme.breakpoints.up("sm"));
@@ -140,11 +140,14 @@ function Navbar({ called, userId }) {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
-      <MenuItem onClick={()=>{
-        handleMenuClose()
-        signOut()
-      }
-      }>Log Out</MenuItem>
+      <MenuItem
+        onClick={() => {
+          handleMenuClose();
+          signOut();
+        }}
+      >
+        Log Out
+      </MenuItem>
     </Menu>
   );
 
@@ -159,8 +162,8 @@ function Navbar({ called, userId }) {
       }}
       id="outlined-adornment-weight"
       placeholder="Search"
-      value={searchvalue}
-      onChange={(e) => setsearchvalue(e.target.value)}
+      value={navbarsearch}
+      onChange={(e) => setnavbarsearch(e.target.value)}
       startAdornment={
         <InputAdornment position="start">
           <img src={searchIcon} height={20} width={20} />

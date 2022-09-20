@@ -8,15 +8,18 @@ import { Box } from "@mui/material";
 function MainPage() {
   const [tag, setTag] = useState([]);
 
-  const [navbarsearch, setnavbarsearch] = useState();
-
-  //const [navbarsearch, setnavbarsearch] = useState(second);
+  const [navbarsearch, setnavbarsearch] = useState("");
+  console.log(navbarsearch);
 
   console.log(tag, "from main page");
   return (
     <>
       <Box sx={{ backgroundColor: "background.myBackground" }}>
-        <Navbar called="main" setnavbarsearch={setnavbarsearch} />
+        <Navbar
+          called="main"
+          navbarsearch={navbarsearch}
+          setnavbarsearch={setnavbarsearch}
+        />
         <Tags called="main" tag={tag} setTag={setTag} />
         <Feed
           called="main"
