@@ -393,7 +393,7 @@ function Navbar({ called, userId }) {
               <IconButton
                 onClick={() => setsearchOpen(false)}
                 component={Link}
-                to="/"
+                to="/mainpage"
                 sx={{
                   display: { xs: "block", sm: "block" },
                   marginRight: 0,
