@@ -39,7 +39,6 @@ import { useEffect } from "react";
 
 async function signOut() {
   try {
-    
     await Auth.signOut();
   } catch (error) {
     console.log("error signing out: ", error);
@@ -203,7 +202,10 @@ function Navbar({ called, userId }) {
       <MenuItem
         component={Link}
         to="/UserProfile"
-        onClick={handleProfileMenuOpen}
+        onClick={() => {
+          handleProfileMenuOpen();
+          signOut();
+        }}
       >
         <IconButton
           size="large"
@@ -214,7 +216,7 @@ function Navbar({ called, userId }) {
         >
           <Logout />
         </IconButton>
-        <p onClick={signOut}>Log Out</p>
+        <p>Log Out</p>
       </MenuItem>
     </Menu>
   );
