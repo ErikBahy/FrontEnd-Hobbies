@@ -29,7 +29,10 @@ function ShowTags({ tags }) {
 
   return (
     <>
-      <Chip label={locationTag ? locationTag?.text : sportTag?.text} />
+      <Chip
+        sx={{ fontSize: "12px", height: 25, marginRight: "5px", my: "3px" }}
+        label={locationTag ? locationTag?.text : sportTag?.text}
+      />
     </>
   );
 }

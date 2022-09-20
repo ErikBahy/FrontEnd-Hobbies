@@ -6,8 +6,11 @@ import {
   CardActions,
   CardContent,
   CardHeader,
+  Divider,
   IconButton,
+  InputAdornment,
   Stack,
+  styled,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -42,6 +45,16 @@ import Comment from "./Comment";
 import Likes from "./likes";
 import { UserContext } from "../contexts/UserContext";
 import ShowTags from "./ShowTags";
+import peopleIcon from "../logos/Group 180.png";
+import calendarIcon from "../logos/Group 179.png";
+import commentIcon from "../logos/Group 175.png";
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  backgroundColor: "#118C94",
+  fontSize: "10px",
+  padding: "0px 0px ",
+  height: "25px",
+}));
 
 function Post({
   post,
@@ -53,7 +66,7 @@ function Post({
 }) {
   const userContext = useContext(UserContext);
   const { currentUserMongoId, currentUserId } = userContext;
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [commentsOpen, setcommentsOpen] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const [comments, setComments] = useState([]);
   const [like, setLike] = useState([]);
@@ -63,7 +76,6 @@ function Post({
   const [postLikes, setpostLikes] = useState();
   const [liked, setLiked] = useState();
   const [isJoined, setisJoined] = useState(false);
-  console.log(checked, isJoined);
 
   const {
     username,
@@ -78,14 +90,7 @@ function Post({
     joined,
   } = post;
 
-  console.log(
-    currentUserMongoId,
-    "currentusermongoId",
-    _id,
-    "postId",
-    joined,
-    "joined"
-  );
+  console.log(commentsOpen, showComment, "comments open");
   const clear = () => {
     setCommentsText("");
     setLiked("");
@@ -188,6 +193,12 @@ function Post({
       console.log(error);
     }
   };
+  const renderComments =
+    comments.length > 0
+      ? comments.map((data) => {
+          return <Comment data={data} />;
+        })
+      : null;
 
   const addLikeAtPost = async () => {
     try {
@@ -201,10 +212,11 @@ function Post({
     }
   };
   return (
-    <Box>
-      <Card sx={{ margin: 5, borderRadius: "30px" }}>
+    <>
+      <Card sx={{ margin: 2 }}>
         <Stack flexdirection="row" width="100%">
           <CardHeader
+            sx={{ padding: "10px" }}
             title={
               <Typography
                 sx={{ fontSize: 14, fontWeight: 150, textDecoration: "none" }}
@@ -217,156 +229,235 @@ function Post({
             }
             avatar={
               <Avatar
-                sx={{ bgcolor: "red", textDecoration: "none" }}
+                sx={{
+                  bgcolor: "red",
+                  textDecoration: "none",
+                  width: "40px",
+                  height: "40px",
+                }}
                 aria-label="recipe"
               >
                 {username}
               </Avatar>
             }
-            action={<Stack direction="row">{renderDeleteButton}</Stack>}
-            subheader={date}
+            action={
+              <Stack flexDirection="row" alignItems="center">
+                {currentUserId == postCognitoId ? (
+                  <StyledButton
+                    sx={{
+                      fontSize: "10px",
+                    }}
+                    size="small"
+                    variant="contained"
+                  >
+                    Check{" "}
+                  </StyledButton>
+                ) : isJoined === true ? (
+                  <StyledButton
+                    onClick={() => unjoinPost()}
+                    size="small"
+                    variant="contained"
+                  >
+                    Unjoin
+                  </StyledButton>
+                ) : joined?.length == limit ? (
+                  <StyledButton
+                    disabled
+                    color="secondary"
+                    size="small"
+                    variant="contained"
+                  >
+                    Completed
+                  </StyledButton>
+                ) : (
+                  <StyledButton
+                    onClick={() => joinPost()}
+                    size="small"
+                    variant="contained"
+                  >
+                    Join
+                  </StyledButton>
+                )}
+                {renderDeleteButton}
+              </Stack>
+            }
+            subheader="1 hour ago"
           />
         </Stack>
-        {tags.map((el) => (
-          <ShowTags tags={el} />
-        ))}
 
-        <CardContent>
-          <Typography variant="body2" color="text.secondary">
+        <CardContent sx={{ padding: "10px" }}>
+          <Typography
+            sx={{ fontSize: 16 }}
+            variant="body2"
+            color="text.secondary"
+          >
             {text}
           </Typography>
         </CardContent>
 
-        <CardActions>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-            width="100%"
-          >
-            <Box display="flex" alignItems="center" direction="row">
-              <Stack flexDirection="row" spacing={0} alignItems="center">
-                <Typography>{postLikes}</Typography>
-                <Tooltip title="Like">
-                  <Checkbox
-                    checked={checked}
-                    onClick={
-                      checked ? () => setchecked(false) : () => setchecked(true)
-                    }
-                    onChange={
-                      checked ? () => removeLikeAtPost() : () => addLikeAtPost()
-                    }
-                    icon={<FavoriteBorder />}
-                    checkedIcon={<Favorite sx={{ color: "red" }} />}
-                  />
-                </Tooltip>
-              </Stack>
-
-              <Tooltip
-                title="Comment"
-                onClick={() => {
-                  setShowComment(!showComment);
-                }}
-              >
-                <IconButton aria-label="add-comment">
-                  <AddCommentOutlinedIcon />
-                </IconButton>
-              </Tooltip>
-            </Box>
-
-            <Box
-              display="flex"
-              direction="row"
-              alignItems="center"
-              sx={{ justifyContent: "space-between" }}
-            >
-              <Chip
-                label={`Limit is: ${limit}`}
-                color="primary"
-                sx={{ marginRight: 3 }}
-              />
-              <Typography>
+        <CardActions sx={{ padding: "10px" }}>
+          <Stack>
+            <Stack flexDirection="row" alignItems="center">
+              <img src={calendarIcon} height={20} width={20} />
+              <Typography mx={1}>
+                {" "}
+                {startTime.substring(0, 10) + " " + startTime.slice(11, 16)}
+              </Typography>
+            </Stack>
+            <Stack my="3px" flexDirection="row" alignItems="center">
+              <img src={peopleIcon} height={20} width={20} />
+              <Typography mx={1}>
                 {" "}
                 {joined?.length}/{limit}
               </Typography>
-              {currentUserId == postCognitoId ? (
-                <Button variant="text">Check </Button>
-              ) : isJoined === true ? (
-                <Button onClick={() => unjoinPost()} variant="text">
-                  Unjoin
-                </Button>
-              ) : joined?.length == limit ? (
-                <Button disabled color="secondary" variant="text">
-                  Completed
-                </Button>
-              ) : (
-                <Button onClick={() => joinPost()} variant="text">
-                  Join
-                </Button>
-              )}
+            </Stack>
+            <Stack flexDirection="row" alignItems="center">
+              {tags.map((el) => (
+                <ShowTags tags={el} />
+              ))}
+            </Stack>
 
-              <Tooltip title="Join room" sx={{ marginRight: 4 }}>
-                <IconButton
-                  onClick={() =>
-                    (window.location.href =
-                      "https://d3rr23y8wyk3tl.cloudfront.net/")
-                  }
-                  aria-label="join-room"
-                >
-                  <MeetingRoomIcon />
-                </IconButton>
-              </Tooltip>
-            </Box>
-          </Stack>
-        </CardActions>
-        {showComment ? (
-          <>
-            <Typography sx={{ my: 1 }} marginLeft={2.5}>
-              Add Comment:
-            </Typography>
-            <Box
-              component="form"
-              noValidate
-              autoComplete="off"
-              display={"flex"}
+            <Divider
+              sx={{
+                alignSelf: "center",
+                width: 1,
+                marginTop: 1,
+                fontWeight: 200,
+              }}
+            />
+
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+              width="100%"
             >
-              <FormControl>
-                <OutlinedInput
-                  placeholder="Please enter text"
-                  value={commentsText}
-                  onChange={(e) => setCommentsText(e.target.value)}
-                />
-              </FormControl>
-              <IconButton
+              <Box display="flex" alignItems="center" direction="row">
+                <Stack flexDirection="row" spacing={0} alignItems="center">
+                  <Tooltip title="Like">
+                    <Checkbox
+                      sx={{ width: 20, height: 20 }}
+                      checked={checked}
+                      onClick={
+                        checked
+                          ? () => setchecked(false)
+                          : () => setchecked(true)
+                      }
+                      onChange={
+                        checked
+                          ? () => removeLikeAtPost()
+                          : () => addLikeAtPost()
+                      }
+                      icon={<FavoriteBorder sx={{ width: 20, height: 20 }} />}
+                      checkedIcon={
+                        <Favorite
+                          sx={{ color: "red", width: 20, height: 20 }}
+                        />
+                      }
+                    />
+                  </Tooltip>
+                </Stack>
+
+                <Tooltip
+                  title="Comment"
+                  onClick={() => {
+                    setShowComment(!showComment);
+                  }}
+                >
+                  <IconButton aria-label="add-comment">
+                    <img src={commentIcon} height={20} width={20} />
+                  </IconButton>
+                </Tooltip>
+              </Box>
+
+              <Box
+                display="flex"
+                direction="row"
+                alignItems="center"
+                sx={{ justifyContent: "space-between" }}
+              >
+                {/* <Tooltip title="Join room" sx={{ marginRight: 4 }}>
+                  <IconButton
+                    onClick={() =>
+                      (window.location.href =
+                        "https://d3rr23y8wyk3tl.cloudfront.net/")
+                    }
+                    aria-label="join-room"
+                  >
+                    <MeetingRoomIcon />
+                  </IconButton>
+                </Tooltip> */}
+              </Box>
+            </Stack>
+
+            <Stack flexDirection="row">
+              <Typography paddingRight="4px" paddingLeft="2px">
+                {postLikes}
+              </Typography>
+              <Typography>{postLikes == 1 ? "Like" : "Likes"} </Typography>
+            </Stack>
+            <Stack flexDirection="row">
+              <Typography
+                onClick={() =>
+                  comments.length > 0
+                    ? setcommentsOpen(!commentsOpen)
+                    : setcommentsOpen(commentsOpen)
+                }
+                sx={{ "& :hover": { cursor: "pointer" } }}
+                paddingRight="4px"
+                paddingLeft="2px"
+              >
+                {!commentsOpen
+                  ? comments.length > 0
+                    ? `View all ${comments?.length} comments`
+                    : "No Comments"
+                  : "Hide Comments"}
+              </Typography>
+            </Stack>
+            <Stack>
+              {showComment ? (
+                <>
+                  <FormControl>
+                    <OutlinedInput
+                      size="small"
+                      id="outlined-adornment-weight"
+                      placeholder="Type your comment"
+                      value={commentsText}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <StyledButton
+                            onClick={() => {
+                              postComment();
+                              setShowComment(!showComment);
+                            }}
+                            sx={{ color: "white" }}
+                          >
+                            Done
+                          </StyledButton>
+                        </InputAdornment>
+                      }
+                      aria-describedby="outlined-weight-helper-text"
+                      onChange={(e) => setCommentsText(e.target.value)}
+                      inputProps={{
+                        "aria-label": "weight",
+                      }}
+                    />
+                  </FormControl>
+                  {/* <IconButton
                 onClick={() => {
                   postComment();
                 }}
               >
                 <AddIcon />
-              </IconButton>
-            </Box>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-                expanded={isExpanded}
-                onClick={() => setIsExpanded(!isExpanded)}
-              >
-                <Typography>Comment</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                {comments.length > 0
-                  ? comments.map((data) => {
-                      return <Comment data={data} />;
-                    })
-                  : null}
-              </AccordionDetails>
-            </Accordion>
-          </>
-        ) : null}
+              </IconButton> */}
+                </>
+              ) : null}
+            </Stack>
+            {commentsOpen ? renderComments : null}
+          </Stack>
+        </CardActions>
       </Card>
-    </Box>
+    </>
   );
 }
 
