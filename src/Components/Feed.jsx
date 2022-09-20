@@ -19,6 +19,7 @@ function Feed({ called, setTag, tag }) {
   const [totalPages, setTotalPages] = useState();
   const [multipleTags, setMultipleTags] = useState([]);
   const [feedEffectRun, setfeedEffectRun] = useState(false);
+  const [shouldEffectRun, setshouldEffectRun] = useState(false);
 
   const theme = useTheme();
   const matchesDesktop = useMediaQuery(theme.breakpoints.up("sm"));
@@ -43,57 +44,44 @@ function Feed({ called, setTag, tag }) {
   };
 
   const getPostsByTag = async () => {
-    // if (tag.length === 1) {
-    //   setTag(tag);
-    // }
-    const res = await axios.get(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/bylocationsport?tags=${tag}`
-    );
-    const data = res.data;
-    console.log(data);
-    let i = [];
-    data.map((el) => i.push(el));
+    if (tag.length === 1) {
+      const res = await axios.get(
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/bylocationsport?tags=${tag}`
+      );
+      const data = res.data;
+      console.log(data);
+      let i = [];
+      data.map((el) => i.push(el));
 
-    setPosts(i);
-  };
+      setPosts(i);
+    } else if (tag.length > 1) {
+      // setMultipleTags([...tag]);
+      let str = tag.join();
+      console.log(str);
 
-  const getPostsByMultipleTag = async () => {
-    if (tag.length > 1) {
-      setTag(tag);
+      const res = await axios.get(
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/bytag?tags=${str}`
+      );
+      const data = res.data;
+      console.log(data);
+      let i = [];
+      data.map((el) => i.push(el));
+
+      setPosts(i);
+    } else {
+      shouldEffectRun ? setshouldEffectRun(false) : setshouldEffectRun(true);
     }
-    setMultipleTags([...tag]);
-    let str = multipleTags.join();
-    console.log(str);
-
-    const res = await axios.get(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/bytag?tags=${str}`
-    );
-    const data = res.data;
-    console.log(data);
-    let i = [];
-    data.map((el) => i.push(el));
-
-    setPosts(i);
   };
-
-  useEffect(() => {
-    getPostsByMultipleTag();
-    console.log("++++++++++++");
-  }, [tag, feedEffectRun]);
 
   useEffect(() => {
     getPostsByTag();
     console.log("===============");
-  }, [tag, feedEffectRun]);
+  }, [tag,feedEffectRun]);
 
   useEffect(() => {
     getAllPosts();
-  }, [pageNumber, feedEffectRun]);
+  }, [pageNumber, shouldEffectRun]);
 
-  // let a = [];
-  // for (let i = 0; i < 100; i++) {
-  //   a.push(i);
-  // }
   return (
     <>
       <Stack flexDirection={matchesDesktop ? "row" : "column"}>

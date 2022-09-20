@@ -32,7 +32,7 @@ function Tags({ called, setTag, tag }) {
     sportTags.map((el) =>
       i.push({ title: el.text, _id: el._id, category: "sport" })
     );
-    console.log(i,' from tags')
+    console.log(i, " from tags");
     setTags(i);
   };
 
@@ -58,7 +58,6 @@ function Tags({ called, setTag, tag }) {
       <Box
         flex={4}
         sx={{
-          backgroundColor: "",
           display: "flex",
           justifyContent: "center",
         }}
@@ -66,6 +65,7 @@ function Tags({ called, setTag, tag }) {
         <Autocomplete
           id="grouped-demo"
           options={tags}
+          size="small"
           groupBy={(option) => option.category}
           getOptionLabel={(option) => option.title}
           isOptionEqualToValue={(option, value) => option._id === value._id}
@@ -79,9 +79,16 @@ function Tags({ called, setTag, tag }) {
           multiple
           limitTags={2}
           renderInput={(params) => (
-            <TextField {...params} label="Choose Tags" placeholder="Location/Sport" />
+            <TextField
+              {...params}
+              label="Choose Tags"
+              placeholder="Location/Sport"
+            />
           )}
-          sx={{ width: called === "modal" ? "100%" : "88%" }}
+          sx={{
+            width: called === "modal" ? "100%" : { xs: "92%", sm: "95%" },
+            backgroundColor: "background.paper",
+          }}
         />
       </Box>
       <Box

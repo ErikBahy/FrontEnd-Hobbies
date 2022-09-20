@@ -146,7 +146,13 @@ function Navbar({ called, userId }) {
 
   const renderMobileSearchInput = searchOpen ? (
     <OutlinedInput
-      sx={{ backgroundColor: "gray", height: "40px" }}
+      sx={{
+        padding: 1,
+        color: "background.paper",
+        backgroundColor: "navbarColor.dark",
+        height: "40px",
+        width: 1,
+      }}
       id="outlined-adornment-weight"
       placeholder="Search"
       value=""
@@ -157,7 +163,11 @@ function Navbar({ called, userId }) {
       }
       endAdornment={
         <InputAdornment onClick={() => setsearchOpen(false)} position="end">
-          <img src={xIcon} height={20} width={20} />
+          <IconButton
+            sx={{ backgroundColor: "navbarColor.light", height: 25, width: 25 }}
+          >
+            <img src={xIcon} height={20} width={20} />
+          </IconButton>
         </InputAdornment>
       }
       aria-describedby="outlined-weight-helper-text"
@@ -210,7 +220,15 @@ function Navbar({ called, userId }) {
   );
   const renderMobileNavbar = (
     <>
-      <AppBar sx={{ top: 0, zIndex: 2, width: "100%" }} position="sticky">
+      <AppBar
+        sx={{
+          backgroundColor: "navbarColor.main",
+          top: 0,
+          zIndex: 2,
+          width: "100%",
+        }}
+        position="sticky"
+      >
         <Toolbar sx={{ justifyContent: "space-between" }}>
           {searchOpen ? (
             <IconButton
@@ -228,6 +246,7 @@ function Navbar({ called, userId }) {
           ) : (
             <IconButton
               sx={{
+                color: "white",
                 display: { xs: "block", sm: "none" },
                 marginRight: 0,
               }}
@@ -281,8 +300,15 @@ function Navbar({ called, userId }) {
 
   const renderDesktopNavbar = (
     <>
-      <Box sx={{ top: 0, zIndex: 2, width: "100%" }} position="sticky">
-        <AppBar position="static">
+      <Box
+        sx={{
+          top: 0,
+          zIndex: 2,
+          width: "100%",
+        }}
+        position="sticky"
+      >
+        <AppBar sx={{ backgroundColor: "navbarColor.main" }} position="static">
           <Stack flexDirection="row" justifyContent="space-between">
             <Box flex={2} sx={{ display: { xs: "none", sm: "flex" } }}></Box>
 
@@ -349,7 +375,7 @@ function Navbar({ called, userId }) {
   const renderUserProfileNavbar = (
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+        <AppBar sx={{ backgroundColor: "navbarColor.main" }} position="static">
           <Toolbar
             sx={{
               display: "flex",

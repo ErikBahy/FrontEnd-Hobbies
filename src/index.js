@@ -4,31 +4,34 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { UserProvider } from "./contexts/UserContext";
-import { Amplify } from 'aws-amplify';
-import config from './aws-exports';
-import { AmplifyProvider } from "@aws-amplify/ui-react"
-import "@aws-amplify/ui-react/styles.css"
+import { Amplify } from "aws-amplify";
+import config from "./aws-exports";
+import { AmplifyProvider } from "@aws-amplify/ui-react";
+import "@aws-amplify/ui-react/styles.css";
+import { ThemeProvider } from "@mui/material/styles";
+import { myTheme } from "./theme";
 
 Amplify.configure(config);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 const theme = {
-  name: 'Test',
-  tokens:  {
+  name: "Test",
+  tokens: {
     colors: {
       background: {
-        primary: { value: "hotpink"}
-      }
-    }
-  }
-}
-
+        primary: { value: "hotpink" },
+      },
+    },
+  },
+};
 
 root.render(
-  <AmplifyProvider  theme={theme}>
-  <UserProvider>
-      <App />
-  </UserProvider>
+  <AmplifyProvider theme={theme}>
+    <UserProvider>
+      <ThemeProvider theme={myTheme}>
+        <App />
+      </ThemeProvider>
+    </UserProvider>
   </AmplifyProvider>
 );
 
