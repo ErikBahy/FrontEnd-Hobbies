@@ -31,7 +31,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import AddIcon from "@mui/icons-material/Add";
 import "../stlyles.css";
 import { Chip } from "@mui/material";
-import { DeleteOutline } from "@mui/icons-material";
+import { DeleteOutline, MoreVert } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import {
@@ -150,7 +150,11 @@ function Post({
         >
           <DeleteOutline />
         </IconButton>
-      ) : null}
+      ) : (
+        <IconButton aria-label="settings">
+          <MoreVert />
+        </IconButton>
+      )}
     </>
   );
   const getLikes = async () => {
@@ -222,7 +226,7 @@ function Post({
                 sx={{ fontSize: 16, fontWeight: 500, textDecoration: "none" }}
                 color="text.primary"
                 component={Link}
-                to={`userprofile/${postCognitoId}`}
+                to={`/userprofile/${postCognitoId}`}
               >
                 {username}
               </Typography>

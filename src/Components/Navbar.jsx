@@ -206,13 +206,7 @@ function Navbar({ called, userId }) {
         <p>Settings</p>
       </MenuItem>
 
-      <MenuItem
-        component={Link}
-        to="/"
-        onClick={
-          handleProfileMenuOpen
-        }
-      >
+      <MenuItem component={Link} to="/" onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
           aria-label="account of current user"
@@ -220,7 +214,7 @@ function Navbar({ called, userId }) {
           aria-haspopup="true"
           color="inherit"
         >
-          <Logout  onClick={signOut}/>
+          <Logout onClick={signOut} />
         </IconButton>
         <p>Log Out</p>
       </MenuItem>
@@ -355,7 +349,7 @@ function Navbar({ called, userId }) {
 
                   <IconButton
                     component={Link}
-                    to={`/UserProfile/${currentUserId}`}
+                    to={`/userprofile/${currentUserId}`}
                     size="large"
                     edge="end"
                     aria-label="account of current user"
