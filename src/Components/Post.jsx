@@ -219,8 +219,8 @@ function Post({
             sx={{ padding: "10px" }}
             title={
               <Typography
-                sx={{ fontSize: 14, fontWeight: 150, textDecoration: "none" }}
-                color="text.secondary"
+                sx={{ fontSize: 16, fontWeight: 500, textDecoration: "none" }}
+                color="text.primary"
                 component={Link}
                 to={`userprofile/${postCognitoId}`}
               >
@@ -289,7 +289,7 @@ function Post({
           <Typography
             sx={{ fontSize: 16 }}
             variant="body2"
-            color="text.secondary"
+            color="text.primary"
           >
             {text}
           </Typography>
@@ -301,7 +301,7 @@ function Post({
               <img src={calendarIcon} height={20} width={20} />
               <Typography mx={1}>
                 {" "}
-                {startTime.substring(0, 10) + " " + startTime.slice(11, 16)}
+                {startTime?.substring(0, 10) + " " + startTime?.slice(11, 16)}
               </Typography>
             </Stack>
             <Stack my="3px" flexDirection="row" alignItems="center">
@@ -403,7 +403,7 @@ function Post({
                     ? setcommentsOpen(!commentsOpen)
                     : setcommentsOpen(commentsOpen)
                 }
-                sx={{ "& :hover": { cursor: "pointer" } }}
+                sx={{ color: "text.secondary" }}
                 paddingRight="4px"
                 paddingLeft="2px"
               >
