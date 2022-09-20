@@ -76,7 +76,7 @@ function Feed({ called, setTag, tag }) {
   useEffect(() => {
     getPostsByTag();
     console.log("===============");
-  }, [tag,feedEffectRun]);
+  }, [tag, feedEffectRun]);
 
   useEffect(() => {
     getAllPosts();
@@ -104,20 +104,24 @@ function Feed({ called, setTag, tag }) {
           <Box flex={2} sx={{ display: { xs: "none", sm: "block" } }}></Box>
         ) : null}
       </Stack>
-      <footer>
-        <Box py={{ xs: 2 }} bgcolor="text.secondary" color="white">
-          <Container maxWidth="lg">
-            <Box textAlign="center">
-              <Stack spacing={1} direction="row" justifyContent="center">
-                <Pagination
-                  count={totalPages}
-                  onChange={(e, value) => setPageNumber(value)}
-                />
-              </Stack>
-            </Box>
-          </Container>
-        </Box>
-      </footer>
+
+      <Box
+        alignSelf="flex-end"
+        py={{ xs: 2 }}
+        bgcolor="text.secondary"
+        color="white"
+      >
+        <Container maxWidth="lg">
+          <Box textAlign="center">
+            <Stack spacing={1} direction="row" justifyContent="center">
+              <Pagination
+                count={totalPages}
+                onChange={(e, value) => setPageNumber(value)}
+              />
+            </Stack>
+          </Box>
+        </Container>
+      </Box>
     </>
   );
 }

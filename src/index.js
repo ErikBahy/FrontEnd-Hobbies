@@ -14,25 +14,12 @@ import { myTheme } from "./theme";
 Amplify.configure(config);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-const theme = {
-  name: "Test",
-  tokens: {
-    colors: {
-      background: {
-        primary: { value: "hotpink" },
-      },
-    },
-  },
-};
-
 root.render(
-  <AmplifyProvider theme={theme}>
-    <UserProvider>
-      <ThemeProvider theme={myTheme}>
-        <App />
-      </ThemeProvider>
-    </UserProvider>
-  </AmplifyProvider>
+  <UserProvider>
+    <ThemeProvider theme={myTheme}>
+      <App />
+    </ThemeProvider>
+  </UserProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

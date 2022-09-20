@@ -109,6 +109,11 @@ function UserDetails({ userId, bio, effectRun }) {
     <>
       {checkId === false && isFollowed === false ? (
         <Button
+          size="medium"
+          sx={{
+            width: 0.95,
+          }}
+          variant="outlined"
           onClick={(e) => {
             follow(e, currentUserMongoId, userMongoId);
           }}
@@ -117,6 +122,11 @@ function UserDetails({ userId, bio, effectRun }) {
         </Button>
       ) : checkId === false && isFollowed === true ? (
         <Button
+          size="medium"
+          sx={{
+            width: 0.95,
+          }}
+          variant="outlined"
           onClick={(e) => {
             unfollow(e, currentUserMongoId, userMongoId);
           }}
@@ -165,6 +175,8 @@ function UserDetails({ userId, bio, effectRun }) {
 
         <Stack flex={4} flexDirection="row">
           <Stack flex={1} flexDirection="column" alignItems="center">
+            {" "}
+            {/*ky esh stacku Followers*/}
             <Typography
               sx={{
                 color: "text.primary",
@@ -190,6 +202,8 @@ function UserDetails({ userId, bio, effectRun }) {
           </Stack>
           <Stack flex={1}></Stack>
           <Stack flex={1} flexDirection="column" alignItems="center">
+            {" "}
+            {/*ky esh stacku Following*/}
             <Typography
               sx={{
                 color: "text.primary",
