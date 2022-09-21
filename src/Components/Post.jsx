@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Modal,
   Box,
   Button,
   Card,
@@ -49,6 +50,10 @@ import peopleIcon from "../logos/Group 180.png";
 import calendarIcon from "../logos/Group 179.png";
 import commentIcon from "../logos/Group 175.png";
 
+//////////////////////////////////////////////
+import JoinedUsersData from "./JoinedUsersData";   
+/////////////////////////////////////////////
+
 const StyledButton = styled(Button)(({ theme }) => ({
   backgroundColor: "#118C94",
   fontSize: "10px",
@@ -92,14 +97,18 @@ function Post({
   const randomColor = Math.floor(Math.random() * 16777215).toString(16);
 
   ///////////////////////////////////////////////////////////////
-  const getJoinedUsers = async (_id) => {
+  const getJoinedUsers = async () => {
     const joinedU = await axios.get(
       `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/joined/users/${_id}`
       );
       console.log(joinedU.data);
       return await joinedU.data;
   };
+
+  const [joinedUsers, setJoinedUsers] = useState(false);
 ///////////////////////////////////////////////////////////////
+
+
 
   console.log(commentsOpen, showComment, "comments open");
   const clear = () => {
@@ -259,6 +268,10 @@ function Post({
               <Stack flexDirection="row" alignItems="center">
                 {currentUserId == postCognitoId ? (
                   <StyledButton
+                  onClick={() => joined?.length > 0
+                    ? setJoinedUsers(true)
+                    : setJoinedUsers(false)
+                  }
                     sx={{
                       fontSize: "10px",
                     }}
@@ -267,6 +280,7 @@ function Post({
                   >
                     Check{" "}
                   </StyledButton>
+                  
                 ) : isJoined === true ? (
                   <StyledButton
                     onClick={() => unjoinPost()}
@@ -471,6 +485,19 @@ function Post({
               ) : null}
             </Stack>
             {commentsOpen ? renderComments : null}
+            <Modal
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                open={joinedUsers}
+                // onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <JoinedUsersData _id={_id} getJoinedUsers={getJoinedUsers} />
+              </Modal>
           </Stack>
         </CardActions>
       </Card>
