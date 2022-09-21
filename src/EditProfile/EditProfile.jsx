@@ -9,19 +9,49 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  getCurrentUserId,
+  getMongoIdFromCognitoId,
+  updateUserInfo,
+} from "../apiCalls";
 import { UserContext } from "../contexts/UserContext";
 import xIcon from "../logos/Group 182.png";
 
-function EditProfile() {
+function EditProfile({ called, setOpen }) {
+  console.log(called, "called");
   const userContext = useContext(UserContext);
   const myUser = userContext.user;
-  const [newUsername, setUsername] = useState(myUser.username);
-  const [newBio, setBio] = useState(myUser.bio);
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const [cognitoId, setcognitoId] = useState();
+  const [newLocation, setnewLocation] = useState("");
+  const [newBio, setnewBio] = useState("");
+  const navigate = useNavigate();
+  const handleNavigateClick = () => {
+    console.log("navigate ran");
+    navigate(`/userprofile/${cognitoId}`);
   };
+  console.log(myUser, "myUser here");
+  console.log(newBio, newLocation);
+  const handleSave = (e) => {
+    try {
+      e.preventDefault();
+      updateUserInfo(myUser._id, newBio, newLocation);
+      handleNavigateClick();
+      if (called === "userdetails") {
+        setOpen(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getCurrentUserId().then((userId) => {
+      setcognitoId(userId);
+      userContext.getUserFromDatabase(userId);
+    });
+  }, []);
 
   return (
     <Stack
@@ -36,7 +66,13 @@ function EditProfile() {
         alignItems="center"
         justifyContent="space-between"
       >
-        <IconButton component={Link} to="/mainPage">
+        <IconButton
+          onClick={
+            called === "userdetails"
+              ? () => setOpen(false)
+              : () => handleNavigateClick()
+          }
+        >
           <img src={xIcon} height={20} width={20} />
         </IconButton>
 
@@ -77,7 +113,9 @@ function EditProfile() {
         id="outlined-number"
         sx={{ marginY: 2 }}
         size="small"
-        type="number"
+        placeholder={myUser?.bio}
+        onChange={(e) => setnewBio(e.target.value)}
+        value={newBio}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
@@ -93,7 +131,9 @@ function EditProfile() {
       <TextField
         id="outlined-number"
         size="small"
-        type="number"
+        value={newLocation}
+        placeholder={myUser?.location}
+        onChange={(e) => setnewLocation(e.target.value)}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
@@ -108,6 +148,7 @@ function EditProfile() {
       />
       <Button
         variant="contained"
+        onClick={(e) => handleSave(e)}
         size="large"
         color="primary"
         sx={{ width: "100%", marginY: 3 }}
