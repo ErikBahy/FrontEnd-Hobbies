@@ -39,7 +39,7 @@ function UserDetails({ userId, bio, effectRun }) {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const userContext = useContext(UserContext);
-  const { username, followers } = userContext.user;
+  const { username, followers, followed } = userContext.user;
   const {
     isFollowed,
     setisFollowed,
@@ -154,21 +154,23 @@ function UserDetails({ userId, bio, effectRun }) {
     );
   }, [isFollowed, currentUserMongoId, userMongoId, runEffect]);
 
-
   const followersInfo = async (e, userMongoId) => {
     e.preventDefault();
 
-    const followersU = await axios.get(`https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/yourfollowers/${userMongoId}`)
+    const followersU = await axios.get(
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/yourfollowers/${userMongoId}`
+    );
     console.log(followersU.data);
-
-  }
+  };
 
   const followedInfo = async (e, userMongoId) => {
     e.preventDefault();
 
-    const followedU = await axios.get(`https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/yourfollowed/  ${userMongoId}`);
+    const followedU = await axios.get(
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/yourfollowed/  ${userMongoId}`
+    );
     console.log(followedU.data);
-  }
+  };
 
   return (
     <>
@@ -195,9 +197,9 @@ function UserDetails({ userId, bio, effectRun }) {
           <Button
             onClick={(e) => {
               followersInfo(e, userMongoId);
-              <Modal>
-              </Modal>
-            }}>
+              <Modal></Modal>;
+            }}
+          >
             <Stack flex={1} flexDirection="column" alignItems="center">
               {" "}
               {/*ky esh stacku Followers*/}
@@ -227,11 +229,11 @@ function UserDetails({ userId, bio, effectRun }) {
           </Button>
           <Stack flex={1}></Stack>
           <Button
-          onClick={(e) => {
-            followedInfo(e, userMongoId);
-            <Modal>
-            </Modal>
-          }}>
+            onClick={(e) => {
+              followedInfo(e, userMongoId);
+              <Modal></Modal>;
+            }}
+          >
             <Stack flex={1} flexDirection="column" alignItems="center">
               {" "}
               {/*ky esh stacku Following*/}
@@ -245,7 +247,7 @@ function UserDetails({ userId, bio, effectRun }) {
                 component="span"
                 fontWeight={100}
               >
-                {followers?.length}
+                {followed?.length}
               </Typography>
               <Typography
                 sx={{
