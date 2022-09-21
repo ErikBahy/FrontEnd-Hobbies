@@ -162,10 +162,13 @@ function Navbar({ called, userId, navbarsearch, setnavbarsearch }) {
       }}
       id="outlined-adornment-weight"
       placeholder="Search"
-      value={navbarsearch}
-      onChange={(e) => setnavbarsearch(e.target.value)}
+      value={searchvalue}
+      onChange={(e) => setsearchvalue(e.target.value)}
       startAdornment={
-        <InputAdornment position="start">
+        <InputAdornment
+          onClick={() => setnavbarsearch(searchvalue)}
+          position="start"
+        >
           <img src={searchIcon} height={20} width={20} />
         </InputAdornment>
       }
