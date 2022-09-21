@@ -29,6 +29,8 @@ import FollowedData from "./FollowedData";
 ///////////////////////
 
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import EditProfileModal from "../EditProfile/EditProfileModal";
 
 const style = {
   position: "absolute",
@@ -57,13 +59,19 @@ function UserDetails({ userId, bio, effectRun }) {
     currentUserMongoId,
     userMongoId,
   } = userContext;
-
+  const navigate = useNavigate();
+  const handleNavigateClick = () => {
+    console.log("navigate ran");
+    navigate(`/editprofile`);
+  };
   const [followState, setfollowState] = useState(isFollowed);
   const [bioUpdate, setbioUpdate] = useState("");
   const [locationUpdate, setlocationUpdate] = useState("");
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const handleFollowedUModalClose = () => setFollowedU(false);
+  const handleFollowersUModalClose = () => setFollowersU(false);
   const checkId = userId === userContext.currentUserId;
   const [runEffect, setrunEffect] = useState(false);
   console.log(bioUpdate, locationUpdate);
@@ -74,7 +82,6 @@ function UserDetails({ userId, bio, effectRun }) {
   const [followersU, setFollowersU] = useState(false);
   const [followedU, setFollowedU] = useState(false);
   //////////////////////////////////
-
 
   console.log(
     userMongoId,
@@ -167,7 +174,6 @@ function UserDetails({ userId, bio, effectRun }) {
     );
   }, [isFollowed, currentUserMongoId, userMongoId, runEffect]);
 
-
   return (
     <>
       <Stack
@@ -191,27 +197,13 @@ function UserDetails({ userId, bio, effectRun }) {
 
         <Stack flex={4} flexDirection="row">
           <Button
-            onClick={() => followers?.length > 0
-              ? setFollowersU(true)
-              : setFollowersU(false)
+            onClick={() =>
+              followers?.length > 0 ? setFollowersU(true) : setFollowersU(false)
             }
           >
             <Stack flex={1} flexDirection="column" alignItems="center">
               {" "}
               {/*ky esh stacku Followers*/}
-              <Modal
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                open={followersU}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                <FollowersData userId={currentUserMongoId} />
-              </Modal>
               <Typography
                 sx={{
                   color: "text.primary",
@@ -235,31 +227,16 @@ function UserDetails({ userId, bio, effectRun }) {
                 {followers?.length == 1 ? `Follower` : ` Followers `}
               </Typography>
             </Stack>
-          </Button >
+          </Button>
           <Stack flex={1}></Stack>
 
-
           <Button
-            onClick={() => followed?.length > 0
-              ? setFollowedU(true)
-              : setFollowedU(false)
+            onClick={() =>
+              followed?.length > 0 ? setFollowedU(true) : setFollowedU(false)
             }
           >
             <Stack flex={1} flexDirection="column" alignItems="center">
               {" "}
-              <Modal
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                open={followedU}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                <FollowedData userId={currentUserMongoId} />
-              </Modal>
               <Typography
                 sx={{
                   color: "text.primary",
@@ -332,90 +309,60 @@ function UserDetails({ userId, bio, effectRun }) {
         {checkId === true ? (
           <Button
             size="medium"
+            onClick={
+              matches ? () => setOpen(true) : () => handleNavigateClick()
+            }
             sx={{
               color: "text.primary",
               borderColor: "text.primary",
               width: 0.95,
             }}
             variant="outlined"
-            onClick={handleOpen}
           >
             Edit Profile
           </Button>
         ) : (
           renderFollowButton
         )}{" "}
-        {/* <Modal
+        <Modal
           sx={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
           }}
-          open={followersU}                  ///////////// ----> Fix
+          open={followersU}
+          onClose={handleFollowersUModalClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <FollowersData userId={currentUserMongoId} />
+        </Modal>
+        <Modal
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          open={followedU}
+          onClose={handleFollowedUModalClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <FollowedData userId={currentUserMongoId} />
+        </Modal>
+        <Modal
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          open={open} ///////////// ----> Fix
           onClose={handleClose}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Stack
-            spacing={0}
-            sx={style}
-            flexDirection="row"
-            justifyContent="space-around"
-            alignContent="center"
-          >
-            <Stack
-              display="flex"
-              flexdirection="column"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <TextField
-                sx={{ mb: 2, mr: 1 }}
-                id="input-with-icon-textfield"
-                label="Change your bio"
-                value={bioUpdate}
-                onChange={(e) => setbioUpdate(e.target.value)}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <DescriptionIcon />
-                    </InputAdornment>
-                  ),
-                }}
-                variant="standard"
-              />
-              <TextField
-                sx={{ mr: 1 }}
-                id="input-with-icon-textfield"
-                label="Change your location"
-                onChange={(e) => setlocationUpdate(e.target.value)}
-                value={locationUpdate}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <EditLocationIcon />
-                    </InputAdornment>
-                  ),
-                }}
-                variant="standard"
-              />
-            </Stack>
-            <Stack
-              display="flex"
-              flexDirection="column"
-              justifyContent="center"
-            >
-              <Button
-                variant="outlined"
-                onClick={(e) => updateUserInfo(e)}
-                sx={{ borderRadius: 2, height: 40 }}
-                startIcon={<CheckCircleOutlineIcon />}
-              >
-                Done
-              </Button>
-            </Stack>
-          </Stack>
-        </Modal> */}
+          <EditProfileModal />
+        </Modal>
       </Stack>
     </>
   );

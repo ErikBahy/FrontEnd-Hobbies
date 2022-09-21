@@ -72,13 +72,12 @@ export const checkJoin = async (currentUserMongoId, postId) => {
   return await res.data;
 };
 
-
 export const getUserFollowers = async (userMongoId) => {
   const followers = await axios.get(
     `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/yourfollowers/${userMongoId}`
-    );
-    console.log(followers.data)
-    return await followers.data;
+  );
+  console.log(followers.data);
+  return await followers.data;
 };
 
 export const getUserFollowed = async (userMongoId) => {
@@ -87,4 +86,11 @@ export const getUserFollowed = async (userMongoId) => {
   );
   console.log(followed.data);
   return await followed.data;
+};
+
+export const updateUserInfo = async (mongoId, newBio, newLocation) => {
+  await axios.patch(
+    ` https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/user/put/${mongoId}`,
+    { bio: newBio, location: newLocation }
+  );
 };

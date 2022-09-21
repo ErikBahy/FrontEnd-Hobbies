@@ -21,24 +21,8 @@ function EditProfileModal() {
 
   return (
     <>
-      <Tooltip
-        title="POST"
-        sx={{
-          position: "fixed",
-          bottom: 20,
-
-          right: { xs: "calc(0% + 30px)", md: 30 },
-        }}
-        onClick={(e) => {
-          setOpen(true);
-        }}
-      >
-        <Fab color="primary" aria-label="add">
-          <Add />
-        </Fab>
-      </Tooltip>
       <StyledModal
-        open={open}
+        open={true}
         onClose={(e) => setOpen(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
