@@ -91,6 +91,16 @@ function Post({
   } = post;
   const randomColor = Math.floor(Math.random() * 16777215).toString(16);
 
+  ///////////////////////////////////////////////////////////////
+  const getJoinedUsers = async (_id) => {
+    const joinedU = await axios.get(
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/joined/users/${_id}`
+      );
+      console.log(joinedU.data);
+      return await joinedU.data;
+  };
+///////////////////////////////////////////////////////////////
+
   console.log(commentsOpen, showComment, "comments open");
   const clear = () => {
     setCommentsText("");
