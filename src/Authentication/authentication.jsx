@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import MainPage from "../MainPage/MainPage";
-import { Navigate } from "react-router-dom";
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,10 +12,11 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Divider } from "@mui/material";
+import {  ThemeProvider } from "@mui/material/styles";
+import { Divider, IconButton } from "@mui/material";
 import { myTheme } from "../theme";
-
+import group169 from "../logos/Group 169.png";
+import Football from "../logos/Football.png"
 function Login() {
   const initalFormState = {
     username: "",
@@ -27,10 +27,14 @@ function Login() {
   };
   const [formState, updateFormState] = useState(initalFormState);
   const [user, updateUser] = useState(null);
+
   useEffect(() => {
     checkUser();
     setAuthListener();
   }, []);
+
+
+ 
   async function setAuthListener() {
     Hub.listen("auth", (data) => {
       switch (data.payload.event) {
@@ -42,6 +46,7 @@ function Login() {
       }
     });
   }
+
   async function checkUser() {
     try {
       const user = await Auth.currentAuthenticatedUser();
@@ -53,15 +58,29 @@ function Login() {
     e.persist();
     updateFormState(() => ({ ...formState, [e.target.name]: e.target.value }));
   }
-
+  async function forgotPassword(){
+    try {
+      const { username } = formState;
+      await Auth.forgotPassword(username)
+       updateFormState(() => ({ ...formState, formType: "forgotPasswordd" }));
+       console.log(username, "data");
+    } catch (error) {
+      console.log(error);
+    }
+}
+  async function forgotPasswordd(){
+  const {username, authCode ,new_password } = formState;
+  Auth.forgotPasswordSubmit(username, authCode, new_password)
+  updateFormState(() => ({ ...formState, formType: "signedIn" }));
+}
   async function signUp() {
     const { username, email, password } = formState;
     await Auth.signUp({ username, password, attributes: { email } });
     updateFormState(() => ({ ...formState, formType: "confirmSignUp" }));
   }
   async function confirmSignUp() {
-    const { username, authCode } = formState;
-    await Auth.confirmSignUp(username, authCode);
+    const {  authCode } = formState;
+    await Auth.confirmSignUp( authCode );
     updateFormState(() => ({ ...formState, formType: "signIn" }));
   }
   async function signIn() {
@@ -74,7 +93,10 @@ function Login() {
 
   return (
     <>
-      {formType === "signUp" && (
+      {
+      formType === "signUp" && (
+         
+      
         <ThemeProvider theme={myTheme}>
           <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -86,9 +108,13 @@ function Login() {
                 alignItems: "center",
               }}
             >
-              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                <LockOutlinedIcon />
-              </Avatar>
+              <Box marginBottom={2}>
+             <img src={Football}  height={75} width={75}/>
+             </Box>
+             <Box marginBottom={2}>
+             <img src={group169} height={25} width={75} />
+             </Box>
+           
               <Typography component="h1" variant="h5">
                 Sign up
               </Typography>
@@ -137,9 +163,147 @@ function Login() {
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
-                  onClick={signUp}
+                  onClick={() => {
+                    signUp();
+                    updateFormState(() => ({
+                      ...formState,
+                      formType: "confirmSignUp",
+                    }))}}
                 >
                   Sign Up
+                </Button>
+                <Divider
+                  sx={{ width: 1, marginTop: 3, fontWeight: 200 }}
+                ></Divider>
+                <Grid container alignItems={"right"} justifyContent={"center"}>
+                  <Grid item>
+                    <Button
+                      variant="body2"
+                      onClick={() =>
+                        updateFormState(() => ({
+                          ...formState,
+                          formType: "signIn",
+                        }))
+                      }
+                    >
+                      <Typography variant="body2">I have an account.</Typography>
+                      <Link>Sign in</Link>
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Box>
+          </Container>
+        </ThemeProvider>
+      )}
+{
+  formType === "confirmSignUp" && (
+ 
+    <ThemeProvider theme={myTheme}>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign up
+        </Typography>
+        <Box component="form" sx={{ mt: 3 }}>
+            <Grid item xs={12}>
+            <TextField
+                   margin="normal"
+                   fullWidth
+                   required
+                  label="Authentication Code"
+                  name="authCode"
+                  onChange={onChange}
+                  autoFocus
+                  placeholder="Confirmation Code"
+                />
+            </Grid>
+
+          <Button
+         
+              type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+             
+              onClick={() =>{
+                confirmSignUp();
+                updateFormState(() => ({
+                  ...formState,
+                  formType: "signedIn",
+}))}}> Confirm Sign up </Button>
+        </Box>
+      </Box>
+    </Container>
+  </ThemeProvider>
+)}
+      {
+      formType === "forgotPassword" && (
+        
+        <ThemeProvider theme={myTheme}>
+          <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <Box
+              sx={{
+                marginTop: 8,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Sports Arena
+              </Typography>
+              <Box component="form" sx={{ mt: 3 }}>
+                <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <TextField
+                      required
+                      fullWidth
+                      label="Username"
+                      autoFocus
+                      name="username"
+                      onChange={onChange}
+                      placeholder="username"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                  
+                  </Grid>
+                  
+                  <Grid item xs={12}>
+                    
+                  </Grid>
+                  <Grid item xs={12}></Grid>
+                </Grid>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  onClick={() =>{ forgotPassword()
+                    updateFormState(() => ({
+                      ...formState,
+                      formType: "forgotPasswordd",
+                    }))
+                  }
+                  }
+                >
+                  Get authentication code
                 </Button>
                 <Divider
                   sx={{ width: 1, marginTop: 3, fontWeight: 200 }}
@@ -164,7 +328,9 @@ function Login() {
           </Container>
         </ThemeProvider>
       )}
-      {formType === "signIn" && (
+      {
+      formType === "forgotPasswordd" && (
+        
         <ThemeProvider theme={myTheme}>
           <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -179,6 +345,105 @@ function Login() {
               <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
                 <LockOutlinedIcon />
               </Avatar>
+              <Typography component="h1" variant="h5">
+                Sports Arena
+              </Typography>
+              <Box component="form" sx={{ mt: 3 }}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      fullWidth
+                      label="Username"
+                      autoFocus
+                      name="username"
+                      onChange={onChange}
+                      placeholder="username"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                       margin="normal"
+                       fullWidth
+                       required
+                      label="Authentication Code"
+                      name="authCode"
+                      onChange={onChange}
+                      autoFocus
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      fullWidth
+                      name="new_password"
+                      label="New Password"
+                      type="password"
+                      id="password"
+                      onChange={onChange}
+                    />
+                  </Grid>
+                  <Grid item xs={12}></Grid>
+                </Grid>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  onClick={() =>{forgotPasswordd()
+                    updateFormState(() => ({
+                      ...formState,
+                      formType: "signIn",
+                    }))
+                  }
+                  }>
+                  Sign In
+                </Button>
+                <Divider
+                  sx={{ width: 1, marginTop: 3, fontWeight: 200 }}
+                ></Divider>
+                <Grid container justifyContent="center">
+                  <Grid item>
+                    <Button
+                      variant="body2"
+                      onClick={() =>
+                        updateFormState(() => ({
+                          ...formState,
+                          formType: "signIn",
+                        }))
+                      }
+                    >
+                      <Link>I have an account. Sign in</Link>
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Box>
+          </Container>
+        </ThemeProvider>
+      )}
+       {
+      formType === "signIn" && 
+      (
+        <ThemeProvider theme={myTheme}>
+          <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <Box
+              sx={{
+                marginTop: 8,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+             
+              <Box marginBottom={2}>
+             <img src={Football}  height={75} width={75}/>
+             </Box>
+             <Box marginBottom={2}>
+             <img src={group169} height={25} width={75} />
+             </Box>
+             
               <Typography component="h1" variant="h5">
                 Sign in
               </Typography>
@@ -205,7 +470,11 @@ function Login() {
                   autoComplete="current-password"
                 />
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  <Link variant="body2"  onClick={() =>
+                    updateFormState(() => ({
+                      ...formState,
+                      formType: "forgotPassword",
+    }))}>
                     Forgot password?
                   </Link>
                 </Grid>
@@ -218,7 +487,7 @@ function Login() {
                    
                   Sign In
                 </Button>
-                <Grid container>
+                <Grid container alignItems={"right"} justifyContent={"right"}>
                   <Grid item>
                     <Button
                       variant="body2"
@@ -228,8 +497,8 @@ function Login() {
                           formType: "signUp",
                         }))
                       }
-                    >
-                      <Link>{"Don't have an account? Sign Up"}</Link>
+                    ><Typography variant="body2" paddingRight={1}>Don't have an account? </Typography>
+                      <Link>{"Create Account"}</Link>
                     </Button>
                   </Grid>
                 </Grid>
@@ -237,7 +506,10 @@ function Login() {
             </Box>
           </Container>
         </ThemeProvider>
-      )}
+      )
+      
+      }
+      
 
       {
       formType === "signedIn" && 

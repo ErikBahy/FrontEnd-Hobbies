@@ -162,10 +162,13 @@ function Navbar({ called, userId, navbarsearch, setnavbarsearch }) {
       }}
       id="outlined-adornment-weight"
       placeholder="Search"
-      value={navbarsearch}
-      onChange={(e) => setnavbarsearch(e.target.value)}
+      value={searchvalue}
+      onChange={(e) => setsearchvalue(e.target.value)}
       startAdornment={
-        <InputAdornment position="start">
+        <InputAdornment
+          onClick={() => setnavbarsearch(searchvalue)}
+          position="start"
+        >
           <img src={searchIcon} height={20} width={20} />
         </InputAdornment>
       }
@@ -362,10 +365,7 @@ function Navbar({ called, userId, navbarsearch, setnavbarsearch }) {
                   >
                     <AccountCircle />
                   </IconButton>
-                  <LogoutIcon
-                    onClick={signOut}
-                    style={{ float: "right", margin: "10px" }}
-                  ></LogoutIcon>
+                
                 </Box>
               </Toolbar>
             </Box>
@@ -379,6 +379,7 @@ function Navbar({ called, userId, navbarsearch, setnavbarsearch }) {
   const renderUserProfileNavbar = (
     <>
       <Box sx={{ flexGrow: 1 }}>
+      <Box flex={12}>
         <AppBar sx={{ backgroundColor: "navbarColor.main" }} position="static">
           <Toolbar
             sx={{
@@ -387,7 +388,7 @@ function Navbar({ called, userId, navbarsearch, setnavbarsearch }) {
               justifyContent: "space-between",
             }}
           >
-            <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box sx={{ display: "flex", alignItems: "center"}}>
               <IconButton
                 onClick={() => setsearchOpen(false)}
                 component={Link}
@@ -403,6 +404,14 @@ function Navbar({ called, userId, navbarsearch, setnavbarsearch }) {
               </IconButton>
 
               <Typography> {username} </Typography>
+              <Box
+              sx={{display: "flex-end",justifyContent: "flex-end",alignItems: "flex-end"}} 
+              >
+              <LogoutIcon
+                    onClick={signOut}
+                    style={{ margin: "10px" }}
+                  ></LogoutIcon>
+                  </Box>
             </Box>
 
             <Box sx={{ display: { xs: "flex", md: "none" } }}>
@@ -421,6 +430,7 @@ function Navbar({ called, userId, navbarsearch, setnavbarsearch }) {
         </AppBar>
         {renderMobileMenu}
         {renderMenu}
+      </Box>
       </Box>
     </>
   );
