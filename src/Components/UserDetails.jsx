@@ -21,6 +21,12 @@ import {
   getCurrentUserId,
   getMongoIdFromCognitoId,
 } from "../apiCalls";
+
+////////////////////////
+
+import FollowersData from "./FollowersData";
+///////////////////////
+
 import axios from "axios";
 
 const style = {
@@ -61,7 +67,12 @@ function UserDetails({ userId, bio, effectRun }) {
   const [runEffect, setrunEffect] = useState(false);
   console.log(bioUpdate, locationUpdate);
 
-  const [followersName, setFollowersName] = useState([]);
+  //////////////////////////////
+  const [followersOpen, setFollowersOpen] = useState(false);
+  const [showFollowers, setShowFollowers] = useState(false);
+  const [followersU, setFollowersU] = useState(false);
+  //////////////////////////////////
+
 
   console.log(
     userMongoId,
@@ -154,23 +165,39 @@ function UserDetails({ userId, bio, effectRun }) {
     );
   }, [isFollowed, currentUserMongoId, userMongoId, runEffect]);
 
-  const followersInfo = async (e, userMongoId) => {
-    e.preventDefault();
+  /////////////////////////////////////////////////
+  // const followersInfo = async (userMongoId) => {
+  //   try {
+  //     const followersUser = await axios.get(
+  //       `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/yourfollowers/${userMongoId}`
+  //     );
+  //     setFollowersU(followersUser.data);
 
-    const followersU = await axios.get(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/yourfollowers/${userMongoId}`
-    );
-    console.log(followersU.data);
-  };
+  //     return followersU.data;
 
-  const followedInfo = async (e, userMongoId) => {
-    e.preventDefault();
+  //   } catch (error) {
+  //     console.log(error);
 
-    const followedU = await axios.get(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/yourfollowed/  ${userMongoId}`
-    );
-    console.log(followedU.data);
-  };
+  //   }
+  // };
+/////////////////////////////////////////////////////
+
+
+  /*
+    const followedInfo = async (e, userMongoId) => {
+      e.preventDefault();
+  
+      const followedU = await axios.get(
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/yourfollowed/${userMongoId}`
+      )
+      console.log(followedU.data);
+    };*/
+
+  const renderFollowers = followersU.length > 0
+    ? followersU.map((data) => {
+      return <FollowersData data={data} />;
+    }) : null;
+
 
   return (
     <>
@@ -195,10 +222,10 @@ function UserDetails({ userId, bio, effectRun }) {
 
         <Stack flex={4} flexDirection="row">
           <Button
-            onClick={(e) => {
-              followersInfo(e, userMongoId);
-              <Modal></Modal>;
-            }}
+            onClick={() => followers?.length > 0
+              ? setFollowersU(true)
+              : setFollowersU(false)
+            }
           >
             <Stack flex={1} flexDirection="column" alignItems="center">
               {" "}
@@ -225,14 +252,13 @@ function UserDetails({ userId, bio, effectRun }) {
               >
                 {followers?.length == 1 ? `Follower` : ` Followers `}
               </Typography>
+              
             </Stack>
           </Button>
           <Stack flex={1}></Stack>
+
+
           <Button
-            onClick={(e) => {
-              followedInfo(e, userMongoId);
-              <Modal></Modal>;
-            }}
           >
             <Stack flex={1} flexDirection="column" alignItems="center">
               {" "}
@@ -323,12 +349,16 @@ function UserDetails({ userId, bio, effectRun }) {
           renderFollowButton
         )}{" "}
         <Modal
-          open={open}
+        sx={{ display: "flex",
+        justifyContent: "center",
+        alignItems: "center",}}
+          open={followersU}
           onClose={handleClose}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Stack
+          <FollowersData userId={currentUserMongoId} />
+          {/* <Stack
             spacing={0}
             sx={style}
             flexDirection="row"
@@ -386,7 +416,7 @@ function UserDetails({ userId, bio, effectRun }) {
                 Done
               </Button>
             </Stack>
-          </Stack>
+          </Stack> */}
         </Modal>
       </Stack>
     </>

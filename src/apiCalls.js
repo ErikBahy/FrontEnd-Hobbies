@@ -71,3 +71,12 @@ export const checkJoin = async (currentUserMongoId, postId) => {
   console.log(res.data, "res.data is followed or no");
   return await res.data;
 };
+
+
+export const getUserFollowers = async (userMongoId) => {
+  const followers = await axios.get(
+    `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/yourfollowers/${userMongoId}`
+    );
+    console.log(followers.data)
+    return await followers.data;
+};
