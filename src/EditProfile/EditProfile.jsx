@@ -55,11 +55,11 @@ function EditProfile({ called, setOpen }) {
 
   return (
     <Stack
-      bgcolor="background.default"
-      color="text.primary"
-      borderRadius={5}
-      p={3}
-      sx={{ paddingTop: 2 }}
+    color="text.primary"
+    borderRadius={5}
+    p={3}
+    sx={{backgroundColor:"background.myBackground",  paddingTop: 2}}
+      
     >
       <Stack
         flexDirection="row"

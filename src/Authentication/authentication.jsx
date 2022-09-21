@@ -17,6 +17,9 @@ import { Divider, IconButton } from "@mui/material";
 import { myTheme } from "../theme";
 import group169 from "../logos/Group 169.png";
 import Football from "../logos/Football.png"
+import { Stack } from "@mui/system";
+import "../authenticationStyle.css"
+import { useNavigate } from "react-router-dom";
 function Login() {
   const initalFormState = {
     username: "",
@@ -27,6 +30,7 @@ function Login() {
   };
   const [formState, updateFormState] = useState(initalFormState);
   const [user, updateUser] = useState(null);
+  console.log(user,"user :::");
 
   useEffect(() => {
     checkUser();
@@ -51,6 +55,7 @@ function Login() {
     try {
       const user = await Auth.currentAuthenticatedUser();
       updateUser(user);
+     
       updateFormState(() => ({ ...formState, formType: "signIn" }));
     } catch (error) {}
   }
@@ -83,33 +88,35 @@ function Login() {
     await Auth.confirmSignUp( authCode );
     updateFormState(() => ({ ...formState, formType: "signIn" }));
   }
+  const navigate = useNavigate()
   async function signIn() {
     const { username, password } = formState;
     const user = await Auth.signIn(username, password);
-    console.log(user, "user::::");
+    navigate('/mainpage')
     updateFormState(() => ({ ...formState, formType: "signedIn" }));
   }
   const { formType } = formState;
 
   return (
     <>
-      {
-      formType === "signUp" && (
-         
-      
+   <div className="backgroundasd">
+    {
+      formType === "signUp" &&(
+        
         <ThemeProvider theme={myTheme}>
-          <Container component="main" maxWidth="xs">
+          
+          <Container component="main"   maxWidth="xs" className="main-container" >
             <CssBaseline />
             <Box
               sx={{
-                marginTop: 8,
+             
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
               }}
             >
-              <Box marginBottom={2}>
-             <img src={Football}  height={75} width={75}/>
+              <Box marginBottom={4}>
+             <img className="top" src={Football}  height={75} width={75}/>
              </Box>
              <Box marginBottom={2}>
              <img src={group169} height={25} width={75} />
@@ -194,25 +201,30 @@ function Login() {
               </Box>
             </Box>
           </Container>
+          
         </ThemeProvider>
-      )}
-{
+      ) }
+     
+ {
   formType === "confirmSignUp" && (
  
     <ThemeProvider theme={myTheme}>
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" className="main-container" >
       <CssBaseline />
       <Box
         sx={{
-          marginTop: 8,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar>
+      > 
+      <Box marginBottom={4}>
+      <img className="top" src={Football}  height={75} width={75}/>
+      </Box>
+      <Box marginBottom={2}>
+      <img src={group169} height={25} width={75} />
+      </Box>
+    
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
@@ -252,19 +264,22 @@ function Login() {
       formType === "forgotPassword" && (
         
         <ThemeProvider theme={myTheme}>
-          <Container component="main" maxWidth="xs">
+          <Container component="main" maxWidth="xs" className="main-container" >
             <CssBaseline />
             <Box
               sx={{
-                marginTop: 8,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
               }}
             >
-              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                <LockOutlinedIcon />
-              </Avatar>
+               <Box marginBottom={4}>
+             <img className="top" src={Football}  height={75} width={75}/>
+             </Box>
+             <Box marginBottom={2}>
+             <img src={group169} height={25} width={75} />
+             </Box>
+           
               <Typography component="h1" variant="h5">
                 Sports Arena
               </Typography>
@@ -318,8 +333,8 @@ function Login() {
                           formType: "signIn",
                         }))
                       }
-                    >
-                      <Link>I have an account. Sign in</Link>
+                    ><Typography variant="body2"> I have an account. </Typography>
+                      <Link>Sign in</Link>
                     </Button>
                   </Grid>
                 </Grid>
@@ -332,19 +347,23 @@ function Login() {
       formType === "forgotPasswordd" && (
         
         <ThemeProvider theme={myTheme}>
-          <Container component="main" maxWidth="xs">
+          <Container component="main" maxWidth="xs" className="main-container" >
             <CssBaseline />
             <Box
               sx={{
-                marginTop: 8,
+               
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
               }}
             >
-              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                <LockOutlinedIcon />
-              </Avatar>
+               <Box marginBottom={4}>
+             <img className="top" src={Football}  height={75} width={75}/>
+             </Box>
+             <Box marginBottom={2}>
+             <img src={group169} height={25} width={75} />
+             </Box>
+           
               <Typography component="h1" variant="h5">
                 Sports Arena
               </Typography>
@@ -412,8 +431,8 @@ function Login() {
                           formType: "signIn",
                         }))
                       }
-                    >
-                      <Link>I have an account. Sign in</Link>
+                    > <Typography variant="body2">I have an account. </Typography>
+                      <Link>Sign in</Link>
                     </Button>
                   </Grid>
                 </Grid>
@@ -426,19 +445,18 @@ function Login() {
       formType === "signIn" && 
       (
         <ThemeProvider theme={myTheme}>
-          <Container component="main" maxWidth="xs">
+          <Container component="main" maxWidth="xs" className="main-container" >
             <CssBaseline />
             <Box
               sx={{
-                marginTop: 8,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
               }}
             >
              
-              <Box marginBottom={2}>
-             <img src={Football}  height={75} width={75}/>
+              <Box marginBottom={4}>
+             <img className="topi" src={Football}  height={75} width={75}/>
              </Box>
              <Box marginBottom={2}>
              <img src={group169} height={25} width={75} />
@@ -487,7 +505,7 @@ function Login() {
                    
                   Sign In
                 </Button>
-                <Grid container alignItems={"right"} justifyContent={"right"}>
+                <Grid  container >
                   <Grid item>
                     <Button
                       variant="body2"
@@ -497,7 +515,7 @@ function Login() {
                           formType: "signUp",
                         }))
                       }
-                    ><Typography variant="body2" paddingRight={1}>Don't have an account? </Typography>
+                    ><Typography variant="body2"  >Don't have an account? </Typography>
                       <Link>{"Create Account"}</Link>
                     </Button>
                   </Grid>
@@ -517,7 +535,8 @@ function Login() {
         <MainPage  component={Link}
         to={'/mainpage'}/>
       
-      }
+      } 
+      </div>
     </>
   );
 }

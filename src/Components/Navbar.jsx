@@ -40,6 +40,7 @@ import axios from "axios";
 
 async function signOut() {
   try {
+   localStorage.removeItem("userLogged")
     await Auth.signOut();
   } catch (error) {
     console.log("error signing out: ", error);
