@@ -10,6 +10,7 @@ import {
 import React, { useEffect, useState } from "react";
 import Post from "./Post";
 import axios from "axios";
+import { DotLoader } from "react-spinners";
 
 const url = "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com";
 
@@ -19,6 +20,7 @@ function Feed({ called, setTag, tag }) {
   const [totalPages, setTotalPages] = useState();
   const [feedEffectRun, setfeedEffectRun] = useState(false);
   const [shouldEffectRun, setshouldEffectRun] = useState(false);
+  const [loading, setloading] = useState(true);
 
   const theme = useTheme();
   const matchesDesktop = useMediaQuery(theme.breakpoints.up("sm"));
@@ -42,7 +44,9 @@ function Feed({ called, setTag, tag }) {
 
   const getPostsByTag = async () => {
     if (tag.length === 1) {
-      const page = await axios.get(`https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/allPagesforLS?tags=${tag}`)
+      const page = await axios.get(
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/allPagesforLS?tags=${tag}`
+      );
       setTotalPages(parseInt(page.data));
       const res = await axios.get(
         `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/bylocationsport?page=${pageNumber}&tags=${tag}`
@@ -54,7 +58,9 @@ function Feed({ called, setTag, tag }) {
 
       setPosts(i);
     } else if (tag.length > 1) {
-      const page = await axios.get(`https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/allPagesforTags?tags=${tag}`)
+      const page = await axios.get(
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/allPagesforTags?tags=${tag}`
+      );
       setTotalPages(parseInt(page.data));
       let str = tag.join();
       console.log(str);
@@ -76,11 +82,11 @@ function Feed({ called, setTag, tag }) {
   useEffect(() => {
     getPostsByTag();
     console.log("===============");
-  }, [tag, feedEffectRun,pageNumber]);
+  }, [tag, feedEffectRun, pageNumber]);
 
   useEffect(() => {
     getAllPosts();
-  }, [ shouldEffectRun]);
+  }, [shouldEffectRun]);
 
   return (
     <>

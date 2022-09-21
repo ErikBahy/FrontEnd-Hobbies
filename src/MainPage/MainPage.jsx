@@ -7,6 +7,7 @@ import { Box } from "@mui/material";
 
 function MainPage() {
   const [tag, setTag] = useState([]);
+  const [loading, setloading] = useState(true);
 
   const [navbarsearch, setnavbarsearch] = useState("");
   console.log(navbarsearch);
