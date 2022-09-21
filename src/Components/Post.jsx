@@ -89,6 +89,7 @@ function Post({
     _id,
     joined,
   } = post;
+  const randomColor = Math.floor(Math.random() * 16777215).toString(16);
 
   console.log(commentsOpen, showComment, "comments open");
   const clear = () => {
@@ -234,14 +235,14 @@ function Post({
             avatar={
               <Avatar
                 sx={{
-                  bgcolor: "red",
+                  bgcolor: `#${randomColor}`,
                   textDecoration: "none",
                   width: "40px",
                   height: "40px",
                 }}
                 aria-label="recipe"
               >
-                {username}
+                {username.substring(0, 1)}
               </Avatar>
             }
             action={
@@ -267,6 +268,7 @@ function Post({
                 ) : joined?.length == limit ? (
                   <StyledButton
                     disabled
+                    sx={{ paddingX: 1 }}
                     color="secondary"
                     size="small"
                     variant="contained"
