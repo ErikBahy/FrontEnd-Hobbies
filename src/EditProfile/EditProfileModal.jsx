@@ -16,14 +16,11 @@ const UserBox = styled(Box)({
   marginBottom: "20px",
 });
 
-function EditProfileModal() {
-  const [open, setOpen] = useState(false);
-
+function EditProfileModal({ open }) {
   return (
     <>
       <StyledModal
-        open={true}
-        onClose={(e) => setOpen(false)}
+        open={open}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >

@@ -19,7 +19,8 @@ import {
 import { UserContext } from "../contexts/UserContext";
 import xIcon from "../logos/Group 182.png";
 
-function EditProfile() {
+function EditProfile({ called, setOpen }) {
+  console.log(called, "called");
   const userContext = useContext(UserContext);
   const myUser = userContext.user;
   const [cognitoId, setcognitoId] = useState();
@@ -37,6 +38,9 @@ function EditProfile() {
       e.preventDefault();
       updateUserInfo(myUser._id, newBio, newLocation);
       handleNavigateClick();
+      if (called === "userdetails") {
+        setOpen(false);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -62,7 +66,13 @@ function EditProfile() {
         alignItems="center"
         justifyContent="space-between"
       >
-        <IconButton component={Link} to={`/userprofile/${cognitoId}`}>
+        <IconButton
+          onClick={
+            called === "userdetails"
+              ? () => setOpen(false)
+              : () => handleNavigateClick()
+          }
+        >
           <img src={xIcon} height={20} width={20} />
         </IconButton>
 

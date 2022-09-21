@@ -25,7 +25,11 @@ function UserProfile() {
         <Navbar called="userProfile" userId={cognitoId} />
       </div>
 
-      <Stack mt={2} flexDirection="row">
+      <Stack
+        sx={{ backgroundColor: "background.myBackground" }}
+        pt={2}
+        flexDirection="row"
+      >
         <Box flex={1} sx={{ display: { xs: "none", md: "block" } }}></Box>
         <Stack flex={4} flexDirection="column" sx={{ backgroundColor: "" }}>
           <UserDetails

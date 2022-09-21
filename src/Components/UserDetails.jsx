@@ -31,6 +31,7 @@ import FollowedData from "./FollowedData";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import EditProfileModal from "../EditProfile/EditProfileModal";
+import EditProfile from "../EditProfile/EditProfile";
 
 const style = {
   position: "absolute",
@@ -361,7 +362,7 @@ function UserDetails({ userId, bio, effectRun }) {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <EditProfileModal />
+          <EditProfile setOpen={setOpen} called="userdetails" />
         </Modal>
       </Stack>
     </>
