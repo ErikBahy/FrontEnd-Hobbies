@@ -287,7 +287,7 @@ function NewPostModal() {
             </Stack>
           </Box>
         ) : (
-          <NewPostModalNewPage setOpen={setOpen} />
+          <NewPostModalNewPage called="modal" setOpen={setOpen} />
         )}
       </StyledModal>
     </>

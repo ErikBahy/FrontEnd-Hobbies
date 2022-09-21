@@ -34,7 +34,7 @@ import { UserContext } from "../contexts/UserContext";
 import xIcon from "../logos/Group 182.png";
 import peopleIcon from "../logos/Group 180.png";
 import calendarIcon from "../logos/Group 179.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const StyledModal = styled(Modal)({
   display: "flex",
@@ -49,7 +49,7 @@ const UserBox = styled(Box)({
   marginBottom: "20px",
 });
 
-function NewPostModalNewPage({ setOpen }) {
+function NewPostModalNewPage({ setOpen, called }) {
   const [value, setValue] = useState(dayjs());
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
@@ -61,6 +61,11 @@ function NewPostModalNewPage({ setOpen }) {
   const [mongoId, setmongoId] = useState();
   const userContext = useContext(UserContext);
   const { loggedUser } = userContext;
+  const navigate = useNavigate();
+  const handleNavigateClick = () => {
+    console.log("navigate ran");
+    navigate("/mainPage");
+  };
 
   // console.log(cognitoId, "and currentuser ", mongoId, "hopefully");
 
@@ -96,9 +101,10 @@ function NewPostModalNewPage({ setOpen }) {
           tags: tag,
         }
       );
+      handleNavigateClick();
       console.log("postPostRan when clicked");
       clear();
-      setOpen(false);
+
       //  fetchPost()
     } catch (err) {
       console.log(err);
@@ -241,7 +247,6 @@ function NewPostModalNewPage({ setOpen }) {
           flex={1}
           onClick={(e) => {
             postPost(e);
-            setOpen(false);
           }}
         >
           Post
