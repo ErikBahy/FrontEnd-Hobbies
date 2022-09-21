@@ -36,6 +36,7 @@ import xIcon from "../logos/Group 182.png";
 import backIcon from "../logos/Group 181.png";
 import { useState } from "react";
 import { useEffect } from "react";
+import axios from "axios";
 
 async function signOut() {
   try {
@@ -86,7 +87,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function Navbar({ called, userId, navbarsearch, setnavbarsearch }) {
+function Navbar({ called, userId }) {
   const [username, setusername] = useState("");
   const theme = useTheme();
   const matchesDesktop = useMediaQuery(theme.breakpoints.up("sm"));
@@ -96,6 +97,15 @@ function Navbar({ called, userId, navbarsearch, setnavbarsearch }) {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [searchOpen, setsearchOpen] = useState(false);
   const [searchvalue, setsearchvalue] = useState("");
+  const [navbarsearch, setnavbarsearch] = useState("");
+
+  const SearchResults = async () => {
+    const res = await axios.get(
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/searchParams?searchQuery=${navbarsearch}`
+    );
+    const data = res.data;
+    console.log(data);
+  };
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
