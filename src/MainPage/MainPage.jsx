@@ -10,7 +10,6 @@ function MainPage() {
   const [loading, setloading] = useState(true);
 
   const [navbarsearch, setnavbarsearch] = useState("");
-  console.log(navbarsearch);
 
   console.log(tag, "from main page");
   return (
@@ -18,13 +17,10 @@ function MainPage() {
       <Box sx={{ backgroundColor: "background.myBackground" }}>
         <Navbar
           called="main"
-          navbarsearch={navbarsearch}
-          setnavbarsearch={setnavbarsearch}
         />
         <Tags called="main" tag={tag} setTag={setTag} />
         <Feed
           called="main"
-          navbarsearch={navbarsearch}
           tag={tag}
           setTag={setTag}
         />

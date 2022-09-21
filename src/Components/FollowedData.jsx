@@ -17,9 +17,6 @@ function FollowedData({userId}){
         });
     }, []);
 
-    
-
-
     return (
         <Stack flexDirection="row" sx={{width:400 , height : 700 , backgroundColor:"blue"}} alignItems="center">
           {followed?.map(aFollower=><Typography
