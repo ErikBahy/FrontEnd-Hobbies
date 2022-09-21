@@ -25,6 +25,7 @@ import {
 ////////////////////////
 
 import FollowersData from "./FollowersData";
+import FollowedData from "./FollowedData";
 ///////////////////////
 
 import axios from "axios";
@@ -71,6 +72,7 @@ function UserDetails({ userId, bio, effectRun }) {
   const [followersOpen, setFollowersOpen] = useState(false);
   const [showFollowers, setShowFollowers] = useState(false);
   const [followersU, setFollowersU] = useState(false);
+  const [followedU, setFollowedU] = useState(false);
   //////////////////////////////////
 
 
@@ -165,39 +167,6 @@ function UserDetails({ userId, bio, effectRun }) {
     );
   }, [isFollowed, currentUserMongoId, userMongoId, runEffect]);
 
-  /////////////////////////////////////////////////
-  // const followersInfo = async (userMongoId) => {
-  //   try {
-  //     const followersUser = await axios.get(
-  //       `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/yourfollowers/${userMongoId}`
-  //     );
-  //     setFollowersU(followersUser.data);
-
-  //     return followersU.data;
-
-  //   } catch (error) {
-  //     console.log(error);
-
-  //   }
-  // };
-/////////////////////////////////////////////////////
-
-
-  /*
-    const followedInfo = async (e, userMongoId) => {
-      e.preventDefault();
-  
-      const followedU = await axios.get(
-        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/yourfollowed/${userMongoId}`
-      )
-      console.log(followedU.data);
-    };*/
-
-  const renderFollowers = followersU.length > 0
-    ? followersU.map((data) => {
-      return <FollowersData data={data} />;
-    }) : null;
-
 
   return (
     <>
@@ -230,6 +199,19 @@ function UserDetails({ userId, bio, effectRun }) {
             <Stack flex={1} flexDirection="column" alignItems="center">
               {" "}
               {/*ky esh stacku Followers*/}
+              <Modal
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                open={followersU}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <FollowersData userId={currentUserMongoId} />
+              </Modal>
               <Typography
                 sx={{
                   color: "text.primary",
@@ -252,17 +234,32 @@ function UserDetails({ userId, bio, effectRun }) {
               >
                 {followers?.length == 1 ? `Follower` : ` Followers `}
               </Typography>
-              
             </Stack>
-          </Button>
+          </Button >
           <Stack flex={1}></Stack>
 
 
           <Button
+            onClick={() => followed?.length > 0
+              ? setFollowedU(true)
+              : setFollowedU(false)
+            }
           >
             <Stack flex={1} flexDirection="column" alignItems="center">
               {" "}
-              {/*ky esh stacku Following*/}
+              <Modal
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                open={followedU}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <FollowedData userId={currentUserMongoId} />
+              </Modal>
               <Typography
                 sx={{
                   color: "text.primary",
@@ -348,17 +345,18 @@ function UserDetails({ userId, bio, effectRun }) {
         ) : (
           renderFollowButton
         )}{" "}
-        <Modal
-        sx={{ display: "flex",
-        justifyContent: "center",
-        alignItems: "center",}}
-          open={followersU}
+        {/* <Modal
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          open={followersU}                  ///////////// ----> Fix
           onClose={handleClose}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <FollowersData userId={currentUserMongoId} />
-          {/* <Stack
+          <Stack
             spacing={0}
             sx={style}
             flexDirection="row"
@@ -416,8 +414,8 @@ function UserDetails({ userId, bio, effectRun }) {
                 Done
               </Button>
             </Stack>
-          </Stack> */}
-        </Modal>
+          </Stack>
+        </Modal> */}
       </Stack>
     </>
   );

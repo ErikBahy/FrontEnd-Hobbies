@@ -80,3 +80,11 @@ export const getUserFollowers = async (userMongoId) => {
     console.log(followers.data)
     return await followers.data;
 };
+
+export const getUserFollowed = async (userMongoId) => {
+  const followed = await axios.get(
+    `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/yourfollowed/${userMongoId}`
+  );
+  console.log(followed.data);
+  return await followed.data;
+};

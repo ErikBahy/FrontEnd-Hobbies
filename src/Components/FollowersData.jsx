@@ -31,10 +31,6 @@ function FollowersData({userId}){
            {aFollower?.username}
           
          </Typography>)}
-          {/*<Typography fontWeight={100}>{data?.data?.text} </Typography>
-          <Typography sx={{ marginLeft: "auto" }} fontWeight={100}>
-    {data?.data?.date.substring(0, 10)}{" "}
-          </Typography>*/}
         </Stack>
       );
 }
