@@ -287,7 +287,7 @@ function Post({
                     size="small"
                     variant="contained"
                   >
-                    Unjoin
+                    Leave
                   </StyledButton>
                 ) : joined?.length == limit ? (
                   <StyledButton
