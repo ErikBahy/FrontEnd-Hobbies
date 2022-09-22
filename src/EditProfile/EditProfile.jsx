@@ -18,6 +18,7 @@ import {
 } from "../apiCalls";
 import { UserContext } from "../contexts/UserContext";
 import xIcon from "../logos/Group 182.png";
+import FileBase from 'react-file-base64';
 
 
 function EditProfile({ called, setOpen }) {
@@ -27,6 +28,7 @@ function EditProfile({ called, setOpen }) {
   const [cognitoId, setcognitoId] = useState();
   const [newLocation, setnewLocation] = useState("");
   const [newBio, setnewBio] = useState("");
+  const [newProfilePicture, setNewProfilePicture]= useState("");
   const navigate = useNavigate();
   const handleNavigateClick = () => {
     console.log("navigate ran");
@@ -34,10 +36,11 @@ function EditProfile({ called, setOpen }) {
   };
   console.log(myUser, "myUser here");
   console.log(newBio, newLocation);
+  console.log(newProfilePicture,"+++++++++++++++")
   const handleSave = (e) => {
     try {
       e.preventDefault();
-      updateUserInfo(myUser._id, newBio, newLocation);
+      updateUserInfo(myUser._id, newBio, newLocation,newProfilePicture);
       handleNavigateClick();
       if (called === "userdetails") {
         setOpen(false);
@@ -98,8 +101,14 @@ function EditProfile({ called, setOpen }) {
       <Stack gap={2} my={1} alignItems="center">
         <Avatar
           sx={{ width: 90, height: 90 }}
-          alt="Erik"
-          src="https://images.unsplash.com/photo-1517348573020-98fb6f1ccc80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"
+          // alt="Erik"
+          // src="https://images.unsplash.com/photo-1517348573020-98fb6f1ccc80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"
+
+        />
+        <FileBase 
+        type= "file"
+        multiple={false}
+        onDone={({base64})=>setNewProfilePicture({newProfilePicture:base64})}
         />
         <Typography
           fontWeight={500}
