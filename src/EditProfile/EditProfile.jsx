@@ -105,18 +105,18 @@ function EditProfile({ called, setOpen }) {
           // src="https://images.unsplash.com/photo-1517348573020-98fb6f1ccc80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"
 
         />
-        <FileBase 
-        type= "file"
-        multiple={false}
-        onDone={({base64})=>setNewProfilePicture({newProfilePicture:base64})}
-        />
+        
         <Typography
           fontWeight={500}
           color="primary"
           fontSize="16px"
           variant="span"
         >
-          Change Profile Photo
+        <FileBase 
+        type= "file"
+        multiple={false}
+        onDone={({base64})=>setNewProfilePicture(base64)}
+        />
         </Typography>
       </Stack>
       <TextField

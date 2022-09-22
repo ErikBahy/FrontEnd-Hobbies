@@ -50,7 +50,7 @@ function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const userContext = useContext(UserContext);
-  const { username, followers, followed } = userContext.user;
+  const { username, prfilePicture  , followers, followed } = userContext.user;
   const {
     isFollowed,
     setisFollowed,
@@ -200,7 +200,7 @@ function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
           ) : (
             <Avatar
               alt="Remy Sharp"
-              src="https://wallpaperaccess.com/full/1890591.jpg"
+              src={prfilePicture}
               sx={{
                 width: { xs: "75px", sm: "150px" },
                 height: { xs: "75px", sm: "150px" },
