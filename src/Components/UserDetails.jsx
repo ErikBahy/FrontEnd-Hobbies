@@ -182,7 +182,7 @@ function UserDetails({ userId, bio, effectRun }) {
         justifyContent="space-between"
         flexDirection="row"
         sx={{ backgroundColor: "" }}
-        marginX={2}
+        marginX={1}
       >
         <Stack flex={2}>
           <Avatar
@@ -198,6 +198,7 @@ function UserDetails({ userId, bio, effectRun }) {
 
         <Stack flex={4} flexDirection="row">
           <Button
+            sx={{ color: "text.primary" }}
             onClick={() =>
               followers?.length > 0 ? setFollowersU(true) : setFollowersU(false)
             }
@@ -232,6 +233,7 @@ function UserDetails({ userId, bio, effectRun }) {
           <Stack flex={1}></Stack>
 
           <Button
+            sx={{ color: "text.primary" }}
             onClick={() =>
               followed?.length > 0 ? setFollowedU(true) : setFollowedU(false)
             }
@@ -309,7 +311,7 @@ function UserDetails({ userId, bio, effectRun }) {
       <Stack flexDirection="row" justifyContent="center" marginTop={1}>
         {checkId === true ? (
           <Button
-            size="medium"
+            size="small"
             onClick={
               matches ? () => setOpen(true) : () => handleNavigateClick()
             }
@@ -336,7 +338,7 @@ function UserDetails({ userId, bio, effectRun }) {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <FollowersData userId={currentUserMongoId} />
+          <FollowersData userId={checkId ? currentUserMongoId : userMongoId} />
         </Modal>
         <Modal
           sx={{
@@ -349,7 +351,7 @@ function UserDetails({ userId, bio, effectRun }) {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <FollowedData userId={currentUserMongoId} />
+          <FollowedData userId={checkId ? currentUserMongoId : userMongoId} />
         </Modal>
         <Modal
           sx={{
