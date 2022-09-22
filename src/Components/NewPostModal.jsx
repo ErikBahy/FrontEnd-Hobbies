@@ -120,7 +120,7 @@ function NewPostModal({ effectRunFromModal, seteffectRunFromModal }) {
         title="POST"
         sx={{
           position: "fixed",
-          bottom: 20,
+          bottom: 50,
 
           right: { xs: "calc(0% + 30px)", md: 30 },
         }}
