@@ -8,6 +8,7 @@ import { Box } from "@mui/material";
 function MainPage() {
   const [tag, setTag] = useState([]);
   const [loading, setloading] = useState(true);
+  const [effectRunFromModal, seteffectRunFromModal] = useState(false);
 
   const [navbarsearch, setnavbarsearch] = useState("");
 
@@ -15,16 +16,19 @@ function MainPage() {
   return (
     <>
       <Box sx={{ backgroundColor: "background.myBackground" }}>
-        <Navbar
-          called="main"
-        />
+        <Navbar called="main" />
         <Tags called="main" tag={tag} setTag={setTag} />
         <Feed
           called="main"
+          effectRunFromModal={effectRunFromModal}
+          seteffectRunFromModal={seteffectRunFromModal}
           tag={tag}
           setTag={setTag}
         />
-        <NewPostModal />
+        <NewPostModal
+          effectRunFromModal={effectRunFromModal}
+          seteffectRunFromModal={seteffectRunFromModal}
+        />
       </Box>
     </>
   );

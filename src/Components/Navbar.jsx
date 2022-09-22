@@ -16,9 +16,12 @@ import MailIcon from "@mui/icons-material/Mail";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Home, Logout, MoreVert, Settings } from "@mui/icons-material";
 import {
+  Button,
   FormControl,
   InputAdornment,
+  Modal,
   OutlinedInput,
+  Popover,
   Stack,
   TextField,
   useMediaQuery,
@@ -37,10 +40,12 @@ import backIcon from "../logos/Group 181.png";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import FollowersData from "./FollowersData";
+import UserSearchModal from "./UserSearchModal";
 
 async function signOut() {
   try {
-   localStorage.removeItem("userLogged")
+    localStorage.removeItem("userLogged");
     await Auth.signOut();
   } catch (error) {
     console.log("error signing out: ", error);
@@ -99,12 +104,16 @@ function Navbar({ called, userId }) {
   const [searchOpen, setsearchOpen] = useState(false);
   const [searchvalue, setsearchvalue] = useState("");
   const [navbarsearch, setnavbarsearch] = useState("");
+  const [usersFound, setusersFound] = useState();
+  const [modal, setmodal] = useState(false);
+  console.log(usersFound, "users found");
 
   const SearchResults = async () => {
     const res = await axios.get(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/searchParams?searchQuery=${navbarsearch}`
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/searchParams?searchQuery=${searchvalue}`
     );
     const data = res.data;
+    setusersFound(data);
     console.log(data);
   };
 
@@ -177,14 +186,18 @@ function Navbar({ called, userId }) {
       onChange={(e) => setsearchvalue(e.target.value)}
       startAdornment={
         <InputAdornment
-          onClick={() => setnavbarsearch(searchvalue)}
+          onClick={() => {
+            setnavbarsearch(searchvalue);
+            SearchResults();
+            setmodal(true);
+          }}
           position="start"
         >
           <img src={searchIcon} height={20} width={20} />
         </InputAdornment>
       }
       endAdornment={
-        <InputAdornment onClick={() => setsearchOpen(false)} position="end">
+        <InputAdornment onClick={() => setsearchvalue("")} position="end">
           <IconButton
             sx={{ backgroundColor: "navbarColor.light", height: 25, width: 25 }}
           >
@@ -198,6 +211,46 @@ function Navbar({ called, userId }) {
       }}
     />
   ) : null;
+  const renderDesktopSearchInput = (
+    <OutlinedInput
+      sx={{
+        padding: 1,
+        color: "background.paper",
+        backgroundColor: "navbarColor.dark",
+        height: "40px",
+        width: 1,
+      }}
+      id="outlined-adornment-weight"
+      placeholder="Search"
+      value={searchvalue}
+      onChange={(e) => setsearchvalue(e.target.value)}
+      startAdornment={
+        <InputAdornment
+          onClick={() => {
+            setnavbarsearch(searchvalue);
+            SearchResults();
+            setmodal(true);
+          }}
+          position="start"
+        >
+          <img src={searchIcon} height={20} width={20} />
+        </InputAdornment>
+      }
+      endAdornment={
+        <InputAdornment onClick={() => setsearchvalue("")} position="end">
+          <IconButton
+            sx={{ backgroundColor: "navbarColor.light", height: 25, width: 25 }}
+          >
+            <img src={xIcon} height={20} width={20} />
+          </IconButton>
+        </InputAdornment>
+      }
+      aria-describedby="outlined-weight-helper-text"
+      inputProps={{
+        "aria-label": "weight",
+      }}
+    />
+  );
 
   const renderMobileMenu = (
     <Menu
@@ -276,6 +329,34 @@ function Navbar({ called, userId }) {
           )}
           {renderMobileSearchInput}
 
+          {/* <Modal
+            sx={{
+              position: "absolute",
+              top: "64px",
+            }}
+            open={modal}
+          >
+            <UserSearchModal usersFound={usersFound} />
+          </Modal> */}
+          <Popover
+            open={modal}
+            onClose={() => {
+              setsearchvalue("");
+              setmodal(false);
+            }}
+            anchorReference="anchorPosition"
+            anchorPosition={{ top: 67, left: 0 }}
+            PaperProps={{
+              style: { width: "100%" },
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "center",
+            }}
+          >
+            <UserSearchModal usersFound={usersFound} />
+          </Popover>
+
           <Box
             sx={{
               display: { xs: "flex", md: "none" },
@@ -331,7 +412,9 @@ function Navbar({ called, userId }) {
             <Box flex={2} sx={{ display: { xs: "none", sm: "flex" } }}></Box>
 
             <Box flex={12}>
-              <Toolbar sx={{ justifyContent: "space-around" }}>
+              <Toolbar
+                sx={{ alignItems: "center", justifyContent: "space-around" }}
+              >
                 <Box
                   sx={{
                     display: {
@@ -348,9 +431,10 @@ function Navbar({ called, userId }) {
                     to="/mainpage"
                     color={"inherit"}
                   >
-                    SPORT
+                    <img src={group169} height={25} width={75} />
                   </Typography>
                 </Box>
+                <Box>{renderDesktopSearchInput}</Box>
 
                 <Box sx={{ display: { xs: "none", sm: "flex" } }}>
                   <IconButton
@@ -376,7 +460,6 @@ function Navbar({ called, userId }) {
                   >
                     <AccountCircle />
                   </IconButton>
-                
                 </Box>
               </Toolbar>
             </Box>
@@ -390,58 +473,65 @@ function Navbar({ called, userId }) {
   const renderUserProfileNavbar = (
     <>
       <Box sx={{ flexGrow: 1 }}>
-      <Box flex={12}>
-        <AppBar sx={{ backgroundColor: "navbarColor.main" }} position="static">
-          <Toolbar
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
+        <Box flex={12}>
+          <AppBar
+            sx={{ backgroundColor: "navbarColor.main" }}
+            position="static"
           >
-            <Box sx={{ display: "flex", alignItems: "center"}}>
-              <IconButton
-                onClick={() => setsearchOpen(false)}
-                component={Link}
-                to="/mainpage"
-                sx={{
-                  display: { xs: "block", sm: "block" },
-                  marginRight: 0,
-                }}
-                size="large"
-                color="inherit"
-              >
-                <img src={backIcon} height={20} width={20} />
-              </IconButton>
+            <Toolbar
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <IconButton
+                  onClick={() => setsearchOpen(false)}
+                  component={Link}
+                  to="/mainpage"
+                  sx={{
+                    display: { xs: "block", sm: "block" },
+                    marginRight: 0,
+                  }}
+                  size="large"
+                  color="inherit"
+                >
+                  <img src={backIcon} height={20} width={20} />
+                </IconButton>
 
-              <Typography> {username} </Typography>
-              <Box
-              sx={{display: "flex-end",justifyContent: "flex-end",alignItems: "flex-end"}} 
-              >
-              <LogoutIcon
+                <Typography> {username} </Typography>
+                <Box
+                  sx={{
+                    display: "flex-end",
+                    justifyContent: "flex-end",
+                    alignItems: "flex-end",
+                  }}
+                >
+                  <LogoutIcon
                     onClick={signOut}
                     style={{ margin: "10px" }}
                   ></LogoutIcon>
-                  </Box>
-            </Box>
+                </Box>
+              </Box>
 
-            <Box sx={{ display: { xs: "flex", md: "none" } }}>
-              <IconButton
-                size="large"
-                aria-label="show more"
-                aria-controls={mobileMenuId}
-                aria-haspopup="true"
-                onClick={handleMobileMenuOpen}
-                color="inherit"
-              >
-                <MoreIcon />
-              </IconButton>
-            </Box>
-          </Toolbar>
-        </AppBar>
-        {renderMobileMenu}
-        {renderMenu}
-      </Box>
+              <Box sx={{ display: { xs: "flex", md: "none" } }}>
+                <IconButton
+                  size="large"
+                  aria-label="show more"
+                  aria-controls={mobileMenuId}
+                  aria-haspopup="true"
+                  onClick={handleMobileMenuOpen}
+                  color="inherit"
+                >
+                  <MoreIcon />
+                </IconButton>
+              </Box>
+            </Toolbar>
+          </AppBar>
+          {renderMobileMenu}
+          {renderMenu}
+        </Box>
       </Box>
     </>
   );

@@ -51,7 +51,7 @@ import calendarIcon from "../logos/Group 179.png";
 import commentIcon from "../logos/Group 175.png";
 
 //////////////////////////////////////////////
-import JoinedUsersData from "./JoinedUsersData";   
+import JoinedUsersData from "./JoinedUsersData";
 /////////////////////////////////////////////
 
 const StyledButton = styled(Button)(({ theme }) => ({
@@ -68,6 +68,8 @@ function Post({
   effectRun,
   feedEffectRun,
   setfeedEffectRun,
+  userProfileFeedEffect,
+  setuserProfileFeedEffect,
 }) {
   const userContext = useContext(UserContext);
   const { currentUserMongoId, currentUserId } = userContext;
@@ -100,15 +102,13 @@ function Post({
   const getJoinedUsers = async () => {
     const joinedU = await axios.get(
       `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/joined/users/${_id}`
-      );
-      console.log(joinedU.data);
-      return await joinedU.data;
+    );
+    console.log(joinedU.data);
+    return await joinedU.data;
   };
 
   const [joinedUsers, setJoinedUsers] = useState(false);
-///////////////////////////////////////////////////////////////
-
-
+  ///////////////////////////////////////////////////////////////
 
   console.log(commentsOpen, showComment, "comments open");
   const clear = () => {
@@ -132,12 +132,18 @@ function Post({
   };
 
   const deletePost = async (e, _id) => {
-    e.preventDefault();
-    await axios.delete(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/delete/post/${currentUserMongoId}/${_id}`
-    );
+    try {
+      e.preventDefault();
+      await axios.delete(
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/delete/post/${currentUserMongoId}/${_id}`
+      );
 
-    effectRun ? seteffectRun(false) : seteffectRun(true);
+      called === "userProfile"
+        ? setuserProfileFeedEffect(!userProfileFeedEffect)
+        : setfeedEffectRun(!feedEffectRun);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -268,10 +274,11 @@ function Post({
               <Stack flexDirection="row" alignItems="center">
                 {currentUserId == postCognitoId ? (
                   <StyledButton
-                  onClick={() => joined?.length > 0
-                    ? setJoinedUsers(true)
-                    : setJoinedUsers(false)
-                  }
+                    onClick={() =>
+                      joined?.length > 0
+                        ? setJoinedUsers(true)
+                        : setJoinedUsers(false)
+                    }
                     sx={{
                       fontSize: "10px",
                     }}
@@ -280,7 +287,6 @@ function Post({
                   >
                     Check{" "}
                   </StyledButton>
-                  
                 ) : isJoined === true ? (
                   <StyledButton
                     onClick={() => unjoinPost()}
@@ -364,7 +370,7 @@ function Post({
             >
               <Box display="flex" alignItems="center" direction="row">
                 <Stack flexDirection="row" spacing={0} alignItems="center">
-                  <Tooltip title="Like">
+                  <Tooltip title="">
                     <Checkbox
                       sx={{ width: 20, height: 20 }}
                       checked={checked}
@@ -389,7 +395,7 @@ function Post({
                 </Stack>
 
                 <Tooltip
-                  title="Comment"
+                  title=""
                   onClick={() => {
                     setShowComment(!showComment);
                   }}
@@ -486,18 +492,18 @@ function Post({
             </Stack>
             {commentsOpen ? renderComments : null}
             <Modal
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                open={joinedUsers}
-                // onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                <JoinedUsersData _id={_id} getJoinedUsers={getJoinedUsers} />
-              </Modal>
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              open={joinedUsers}
+              // onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <JoinedUsersData _id={_id} getJoinedUsers={getJoinedUsers} />
+            </Modal>
           </Stack>
         </CardActions>
       </Card>

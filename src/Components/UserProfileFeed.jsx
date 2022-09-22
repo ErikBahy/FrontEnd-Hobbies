@@ -11,6 +11,7 @@ const url = "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com";
 function Feed({ cognitoId, seteffectRun, effectRun }) {
   const userContext = useContext(UserContext);
   const { posts } = userContext.user;
+  const [userProfileFeedEffect, setuserProfileFeedEffect] = useState(false);
 
   const [userPosts, setUserPosts] = useState([]);
   const getUserPosts = async (mongoId) => {
@@ -21,13 +22,15 @@ function Feed({ cognitoId, seteffectRun, effectRun }) {
   };
   useEffect(() => {
     getMongoIdFromCognitoId(cognitoId).then((id) => getUserPosts(id));
-  }, [effectRun]);
+  }, [effectRun, userProfileFeedEffect]);
 
   return (
     <Stack flex={8}>
       {userPosts.map((el) => {
         return (
           <Post
+            userProfileFeedEffect={userProfileFeedEffect}
+            setuserProfileFeedEffect={setuserProfileFeedEffect}
             seteffectRun={seteffectRun}
             effectRun={effectRun}
             called="userProfile"

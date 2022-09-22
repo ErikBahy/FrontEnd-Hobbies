@@ -14,7 +14,7 @@ import { DotLoader } from "react-spinners";
 
 const url = "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com";
 
-function Feed({ called, setTag, tag }) {
+function Feed({ called, setTag, tag, effectRunFromModal }) {
   const [posts, setPosts] = useState([]);
   const [pageNumber, setPageNumber] = useState();
   const [totalPages, setTotalPages] = useState();
@@ -86,7 +86,7 @@ function Feed({ called, setTag, tag }) {
 
   useEffect(() => {
     getAllPosts();
-  }, [shouldEffectRun]);
+  }, [shouldEffectRun, effectRunFromModal, feedEffectRun]);
 
   return (
     <>

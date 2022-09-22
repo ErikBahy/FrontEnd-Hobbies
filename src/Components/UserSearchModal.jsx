@@ -4,61 +4,31 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getUserFollowers } from "../apiCalls";
 import xIcon from "../logos/Group 182.png";
-import { getUserFollowed } from "../apiCalls";
 
-function FollowedData({ userId }) {
-  const [followed, setFollowed] = useState();
-  console.log(userId, "mongoid  ", followed, "followers   ");
-  console.log("modal rannnnnnnnn FOLLOWEDs");
-
-  useEffect(() => {
-    getUserFollowed(userId).then((followersss) => {
-      setFollowed(followersss);
-    });
-  }, []);
-
+function UserSearchModal({ usersFound }) {
   return (
     <Stack
       sx={{
-        width: 400,
+        width: 1,
         height: 300,
         backgroundColor: "white",
-        borderRadius: 10,
+
         padding: 2,
         overflow: "hidden",
         overflowY: "scroll",
       }}
-      alignItems="center"
+      alignItems="flex-start"
     >
-      <Stack
-        flexDirection="row"
-        alignItems="center"
-        justifyContent="center"
-        gap={10}
+      <Typography
+        sx={{ marginRight: "10%" }}
+        fontSize="16px"
+        color="gray"
+        textAlign="center"
       >
-        <IconButton>
-          <img src={xIcon} height={20} width={20} />
-        </IconButton>
+        Results
+      </Typography>
 
-        <Typography
-          sx={{ marginRight: "10%" }}
-          fontSize="16px"
-          color="gray"
-          textAlign="center"
-        >
-          Following
-        </Typography>
-        <Box></Box>
-      </Stack>
-      <Divider
-        sx={{
-          alignSelf: "center",
-          width: 1,
-          marginY: 1,
-          fontWeight: 200,
-        }}
-      />
-      {followed?.map((aFollower) => (
+      {usersFound?.map((aUser) => (
         <Stack
           flexDirection="row"
           alignSelf="flex-start"
@@ -77,15 +47,17 @@ function FollowedData({ userId }) {
             }}
             aria-label="recipe"
           >
-            {aFollower?.username.substring(0, 1)}
+            {aUser?.username.substring(0, 1)}
           </Avatar>
 
           <Typography
             sx={{ textDecoration: "none", color: "text.primary" }}
+            component={Link}
+            to={`/userprofile/${aUser.userCognitoId}`}
             marginRight={1}
             fontWeight={600}
           >
-            {aFollower?.username}
+            {aUser?.username}
           </Typography>
         </Stack>
       ))}
@@ -93,4 +65,4 @@ function FollowedData({ userId }) {
   );
 }
 
-export default FollowedData;
+export default UserSearchModal;

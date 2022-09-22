@@ -46,7 +46,7 @@ const UserBox = styled(Box)({
   marginBottom: "20px",
 });
 
-function NewPostModal() {
+function NewPostModal({ effectRunFromModal, seteffectRunFromModal }) {
   const navigate = useNavigate();
   const [value, setValue] = useState(dayjs());
   const theme = useTheme();
@@ -100,6 +100,7 @@ function NewPostModal() {
       console.log("postPostRan when clicked");
       clear();
       setOpen(false);
+      seteffectRunFromModal(!effectRunFromModal);
       //  fetchPost()
     } catch (err) {
       console.log(err);
@@ -257,7 +258,9 @@ function NewPostModal() {
                 color="primary"
                 sx={{ width: "50%" }}
                 flex={1}
-                onClick={(e) => postPost(e)}
+                onClick={(e) => {
+                  postPost(e);
+                }}
               >
                 Post
               </Button>

@@ -15,7 +15,12 @@ function Comment(data) {
   }, []);
 
   return (
-    <Stack flexDirection="row" marginTop="10px" alignItems="center">
+    <Stack
+      sx={{ whiteSpace: "initial" }}
+      flexDirection="row"
+      marginTop="10px"
+      alignItems="center"
+    >
       <Typography
         component={Link}
         to={`userProfile/${data.data.commentCognitoId}`}
