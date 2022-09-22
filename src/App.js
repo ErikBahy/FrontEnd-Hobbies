@@ -39,11 +39,11 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={!isLogged ? <Login /> : <Navigate replace to={"/mainpage"} />} />
-        <Route path="/mainPage" element={!isLogged ? <MainPage /> : <Navigate replace to={"/"} />} />
-        <Route path="/newpost" element={isLogged ? <NewPostModalNewPage /> : <Navigate replace to={"/"} />} />
-        <Route path="/editprofile" element={isLogged ? <EditProfile /> : <Navigate replace to={"/"} />} />
-        <Route path="/editmodal" element={isLogged ? <EditProfileModal /> : <Navigate replace to={"/"} />}/>
+        <Route path="/" element={!isLogged ? <Login /> : <Navigate replace to={"/mainPage"} />} />
+        <Route path="/mainPage" element={ <MainPage />} />
+        <Route path="/newpost" element={<NewPostModalNewPage />} />
+        <Route path="/editprofile" element={<EditProfile/>} />
+        <Route path="/editmodal" element={<EditProfileModal/>}/>
         <Route path="/userprofile/:cognitoId" element={ <UserProfile />}/>
       </Routes>
     </BrowserRouter>
