@@ -92,7 +92,7 @@ function Login() {
   async function signIn() {
     const { username, password } = formState;
     const user = await Auth.signIn(username, password);
-    navigate('/mainpage')
+    // navigate('/mainpage')
     updateFormState(() => ({ ...formState, formType: "signedIn" }));
   }
   const { formType } = formState;

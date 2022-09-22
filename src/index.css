@@ -19,19 +19,3 @@ code {
 .MuiButtonBase-root {
   text-transform: capitalize !important;
 }
-.css-1801f5r {
-  margin-top: 30px !important;
-}
-
-.css-1801f5r{
-padding-top: 16px;
-padding-bottom: 16px;
-min-height: 47vh;
-display: flex;
-flex-direction: row;
-margin-top: auto;
-}
-
-.css-1oqqzyl-MuiContainer-root{
-margin-top: auto;
-}

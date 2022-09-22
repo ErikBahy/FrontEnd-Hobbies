@@ -44,7 +44,7 @@ function App() {
         <Route path="/newpost" element={isLogged ? <NewPostModalNewPage /> : <Navigate replace to={"/"} />} />
         <Route path="/editprofile" element={isLogged ? <EditProfile /> : <Navigate replace to={"/"} />} />
         <Route path="/editmodal" element={isLogged ? <EditProfileModal /> : <Navigate replace to={"/"} />}/>
-        <Route path="/userprofile/:cognitoId" element={isLogged ? <UserProfile /> : <Navigate replace to={"/"} />}/>
+        <Route path="/userprofile/:cognitoId" element={ <UserProfile />}/>
       </Routes>
     </BrowserRouter>
   );
