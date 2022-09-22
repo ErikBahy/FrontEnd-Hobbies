@@ -498,11 +498,15 @@ function Post({
                 alignItems: "center",
               }}
               open={joinedUsers}
-              // onClose={handleClose}
+              onClose={() => setJoinedUsers(false)}
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description"
             >
-              <JoinedUsersData _id={_id} getJoinedUsers={getJoinedUsers} />
+              <JoinedUsersData
+                setJoinedUsers={setJoinedUsers}
+                _id={_id}
+                getJoinedUsers={getJoinedUsers}
+              />
             </Modal>
           </Stack>
         </CardActions>
