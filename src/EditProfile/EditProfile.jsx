@@ -25,6 +25,7 @@ function EditProfile({ called, setOpen }) {
   console.log(called, "called");
   const userContext = useContext(UserContext);
   const myUser = userContext.user;
+  const { username, prfilePicture  , followers, followed } = userContext.user;
   const [cognitoId, setcognitoId] = useState();
   const [newLocation, setnewLocation] = useState("");
   const [newBio, setnewBio] = useState("");
@@ -36,7 +37,6 @@ function EditProfile({ called, setOpen }) {
   };
   console.log(myUser, "myUser here");
   console.log(newBio, newLocation);
-  console.log(newProfilePicture,"+++++++++++++++")
   const handleSave = (e) => {
     try {
       e.preventDefault();
@@ -101,9 +101,7 @@ function EditProfile({ called, setOpen }) {
       <Stack gap={2} my={1} alignItems="center">
         <Avatar
           sx={{ width: 90, height: 90 }}
-          // alt="Erik"
-          // src="https://images.unsplash.com/photo-1517348573020-98fb6f1ccc80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"
-
+          src={prfilePicture}
         />
         
         <Typography
