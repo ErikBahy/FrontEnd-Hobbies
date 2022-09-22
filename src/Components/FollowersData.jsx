@@ -67,6 +67,7 @@ function FollowersData({ userId }) {
           padding={1}
         >
           <Avatar
+            src={aFollower.prfilePicture}
             sx={{
               bgcolor: `red`,
               textDecoration: "none",

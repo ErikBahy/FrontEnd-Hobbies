@@ -62,6 +62,7 @@ function JoinedUsersData({ _id, getJoinedUsers, setJoinedUsers }) {
           padding={1}
         >
           <Avatar
+            src={joinedU.prfilePicture}
             sx={{
               bgcolor: `red`,
               textDecoration: "none",
