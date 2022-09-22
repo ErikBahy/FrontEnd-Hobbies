@@ -38,6 +38,7 @@ export const addUser = async () => {
       username: username,
       location: "",
       bio: "",
+      prfilePicture:"",
     }
   );
   console.log(userId);
@@ -88,9 +89,9 @@ export const getUserFollowed = async (userMongoId) => {
   return await followed.data;
 };
 
-export const updateUserInfo = async (mongoId, newBio, newLocation) => {
+export const updateUserInfo = async (mongoId, newBio, newLocation, newProfilePicture) => {
   await axios.patch(
     ` https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/user/put/${mongoId}`,
-    { bio: newBio, location: newLocation }
+    { bio: newBio, location: newLocation,prfilePicture: newProfilePicture }
   );
 };
