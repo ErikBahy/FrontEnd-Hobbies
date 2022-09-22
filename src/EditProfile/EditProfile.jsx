@@ -151,7 +151,6 @@ function EditProfile({ called, setOpen }) {
         variant="contained"
         onClick={(e) => {
           handleSave(e)
-          navigate(-1)
         }}
         size="large"
         color="primary"
