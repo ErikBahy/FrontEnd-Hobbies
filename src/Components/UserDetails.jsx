@@ -4,6 +4,7 @@ import {
   Button,
   InputAdornment,
   Modal,
+  Skeleton,
   Stack,
   TextField,
   Tooltip,
@@ -45,7 +46,7 @@ const style = {
   p: 4,
 };
 
-function UserDetails({ userId, bio, effectRun }) {
+function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const userContext = useContext(UserContext);
@@ -76,6 +77,7 @@ function UserDetails({ userId, bio, effectRun }) {
   const checkId = userId === userContext.currentUserId;
   const [runEffect, setrunEffect] = useState(false);
   console.log(bioUpdate, locationUpdate);
+  const [loading, setloading] = useState(true);
 
   //////////////////////////////
   const [followersOpen, setFollowersOpen] = useState(false);
@@ -160,7 +162,9 @@ function UserDetails({ userId, bio, effectRun }) {
     </>
   );
   useEffect(() => {
-    userContext.getUserFromDatabase(userId);
+    userContext
+      .getUserFromDatabase(userId, setloading)
+      .then(() => setdividerLoading(false));
     getMongoIdFromCognitoId(userId).then((id) => setuserMongoId(id));
     getCurrentUserId().then((id) =>
       getMongoIdFromCognitoId(id).then((mongoId) =>
@@ -185,85 +189,109 @@ function UserDetails({ userId, bio, effectRun }) {
         marginX={1}
       >
         <Stack flex={2}>
-          <Avatar
-            alt="Remy Sharp"
-            src="https://wallpaperaccess.com/full/1890591.jpg"
-            sx={{
-              width: { xs: "75px", sm: "150px" },
-              height: { xs: "75px", sm: "150px" },
-            }}
-          />
+          {loading ? (
+            <Skeleton
+              variant="circular"
+              sx={{
+                width: { xs: "75px", sm: "150px" },
+                height: { xs: "75px", sm: "150px" },
+              }}
+            />
+          ) : (
+            <Avatar
+              alt="Remy Sharp"
+              src="https://wallpaperaccess.com/full/1890591.jpg"
+              sx={{
+                width: { xs: "75px", sm: "150px" },
+                height: { xs: "75px", sm: "150px" },
+              }}
+            />
+          )}
         </Stack>
         <Stack flex={1}></Stack>
 
         <Stack flex={4} flexDirection="row">
-          <Button
-            sx={{ color: "text.primary" }}
-            onClick={() =>
-              followers?.length > 0 ? setFollowersU(true) : setFollowersU(false)
-            }
-          >
-            <Stack flex={1} flexDirection="column" alignItems="center">
-              {" "}
-              {/*ky esh stacku Followers*/}
-              <Typography
-                sx={{
-                  color: "text.primary",
-                  fontWeight: 600,
-                  padding: 0,
-                }}
-                variant="p"
-                component="span"
-                fontWeight={100}
+          {loading ? (
+            <Skeleton
+              variant="rectangular"
+              sx={{ width: "100%" }}
+              height={60}
+            />
+          ) : (
+            <>
+              <Button
+                sx={{ color: "text.primary" }}
+                onClick={() =>
+                  followers?.length > 0
+                    ? setFollowersU(true)
+                    : setFollowersU(false)
+                }
               >
-                {followers?.length}
-              </Typography>
-              <Typography
-                sx={{
-                  padding: 0,
-                }}
-                variant="p"
-                component="span"
-                fontWeight={100}
-              >
-                {followers?.length == 1 ? `Follower` : ` Followers `}
-              </Typography>
-            </Stack>
-          </Button>
-          <Stack flex={1}></Stack>
+                <Stack flex={1} flexDirection="column" alignItems="center">
+                  {" "}
+                  {/*ky esh stacku Followers*/}
+                  <Typography
+                    sx={{
+                      color: "text.primary",
+                      fontWeight: 600,
+                      padding: 0,
+                    }}
+                    variant="p"
+                    component="span"
+                    fontWeight={100}
+                  >
+                    {followers?.length}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      padding: 0,
+                    }}
+                    variant="p"
+                    component="span"
+                    fontWeight={100}
+                  >
+                    {followers?.length == 1 ? `Follower` : ` Followers `}
+                  </Typography>
+                </Stack>
+              </Button>
+              <Stack flex={1}></Stack>
 
-          <Button
-            sx={{ color: "text.primary" }}
-            onClick={() =>
-              followed?.length > 0 ? setFollowedU(true) : setFollowedU(false)
-            }
-          >
-            <Stack flex={1} flexDirection="column" alignItems="center">
-              {" "}
-              <Typography
-                sx={{
-                  color: "text.primary",
-                  fontWeight: 600,
-                  padding: 0,
-                }}
-                variant="p"
-                component="span"
-                fontWeight={100}
+              <Button
+                sx={{ color: "text.primary" }}
+                onClick={() =>
+                  followed?.length > 0
+                    ? setFollowedU(true)
+                    : setFollowedU(false)
+                }
               >
-                {followed?.length}
-              </Typography>
-              <Typography
-                sx={{
-                  padding: 0,
-                }}
-                variant="p"
-                component="span"
-                fontWeight={100}
-              >
-                {followers?.length == 1 ? `  Following` : `  Following `}
-              </Typography>
-            </Stack>
-          </Button>
+                <Stack flex={1} flexDirection="column" alignItems="center">
+                  {" "}
+                  <Typography
+                    sx={{
+                      color: "text.primary",
+                      fontWeight: 600,
+                      padding: 0,
+                    }}
+                    variant="p"
+                    component="span"
+                    fontWeight={100}
+                  >
+                    {followed?.length}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      padding: 0,
+                    }}
+                    variant="p"
+                    component="span"
+                    fontWeight={100}
+                  >
+                    {followers?.length == 1 ? `  Following` : `  Following `}
+                  </Typography>
+                </Stack>
+              </Button>
+            </>
+          )}
         </Stack>
 
         <Stack flex={1}></Stack>
@@ -273,17 +301,27 @@ function UserDetails({ userId, bio, effectRun }) {
           flexDirection="row"
           sx={{ backgroundColor: "", paddingY: { xs: 1, sm: 3 } }}
         >
-          <Typography
-            sx={{
-              paddingLeft: "8px",
-              fontSize: "14px",
-            }}
-            variant="p"
-            component="span"
-            fontWeight={300}
-          >
-            {bio}
-          </Typography>
+          {loading ? (
+            <Skeleton
+              my={1}
+              animation="wave"
+              sx={{ marginLeft: "8px" }}
+              height={10}
+              width="20%"
+            />
+          ) : (
+            <Typography
+              sx={{
+                paddingLeft: "8px",
+                fontSize: "14px",
+              }}
+              variant="p"
+              component="span"
+              fontWeight={300}
+            >
+              {bio}
+            </Typography>
+          )}
         </Stack>
         <Stack
           justifyContent="space-around"
@@ -296,34 +334,54 @@ function UserDetails({ userId, bio, effectRun }) {
             flexDirection: { xs: "column", sm: "row" },
           }}
         >
-          <Typography
-            sx={{
-              alignSelf: { xs: "flex-start", sm: "center" },
-            }}
-            variant="p"
-            component="span"
-            fontWeight={100}
-          >
-            JOINED SINCE 1997
-          </Typography>
+          {loading ? (
+            <Skeleton
+              my={1}
+              animation="wave"
+              height={10}
+              width="20%"
+              sx={{
+                alignSelf: { xs: "flex-start", sm: "center" },
+              }}
+            />
+          ) : (
+            <Typography
+              sx={{
+                alignSelf: { xs: "flex-start", sm: "center" },
+              }}
+              variant="p"
+              component="span"
+              fontWeight={100}
+            >
+              JOINED SINCE 1997
+            </Typography>
+          )}
         </Stack>
       </Stack>
       <Stack flexDirection="row" justifyContent="center" marginTop={1}>
         {checkId === true ? (
-          <Button
-            size="small"
-            onClick={
-              matches ? () => setOpen(true) : () => handleNavigateClick()
-            }
-            sx={{
-              color: "text.primary",
-              borderColor: "text.primary",
-              width: 0.95,
-            }}
-            variant="outlined"
-          >
-            Edit Profile
-          </Button>
+          loading ? (
+            <Skeleton
+              variant="rectangular"
+              sx={{ width: "95%", my: 1 }}
+              height={25}
+            />
+          ) : (
+            <Button
+              size="small"
+              onClick={
+                matches ? () => setOpen(true) : () => handleNavigateClick()
+              }
+              sx={{
+                color: "text.primary",
+                borderColor: "text.primary",
+                width: 0.95,
+              }}
+              variant="outlined"
+            >
+              Edit Profile
+            </Button>
+          )
         ) : (
           renderFollowButton
         )}{" "}
