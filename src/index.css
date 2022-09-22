@@ -12,6 +12,12 @@ code {
     monospace;
 }
 
+<<<<<<< HEAD
+.css-1801f5r {
+  background-color:rgb(245 242 242 / 60%) !important;
+}
+=======
 .MuiButtonBase-root {
   text-transform: capitalize !important;
 }
+>>>>>>> b0c2e6a4de505c6923093c2147fb2caee11197f9
