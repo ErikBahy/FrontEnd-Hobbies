@@ -2,7 +2,7 @@ import { Stack } from "@mui/system";
 import React, { useContext, useEffect } from "react";
 import Feed from "../Components/UserProfileFeed";
 import UserDetails from "../Components/UserDetails";
-import { Box, Divider, Chip } from "@mui/material";
+import { Box, Divider, Chip, Skeleton } from "@mui/material";
 import { UserContext } from "../contexts/UserContext";
 import { useParams } from "react-router-dom";
 import {
@@ -18,6 +18,7 @@ function UserProfile() {
   const userContext = useContext(UserContext);
   const { posts, bio, location } = userContext.user;
   const [effectRun, seteffectRun] = useState(false);
+  const [dividerLoading, setdividerLoading] = useState(true);
 
   return (
     <>
@@ -34,16 +35,25 @@ function UserProfile() {
         <Box flex={1} sx={{ display: { xs: "none", md: "block" } }}></Box>
         <Stack flex={4} flexDirection="column" sx={{ backgroundColor: "" }}>
           <UserDetails
+            setdividerLoading={setdividerLoading}
             seteffectRun={seteffectRun}
             effectRun={effectRun}
             userId={cognitoId}
             bio={bio}
             location={location}
           />
-          <Divider sx={{ width: 1, marginTop: 3, fontWeight: 200 }}>
-            {" "}
-            <Chip label={posts?.length + " " + " POSTS"} />
-          </Divider>
+
+          {dividerLoading ? (
+            <Skeleton
+              variant="text"
+              sx={{ fontSize: "1rem", width: 1, marginTop: 3 }}
+            />
+          ) : (
+            <Divider sx={{ width: 1, marginTop: 3, fontWeight: 200 }}>
+              {" "}
+              <Chip label={posts?.length + " " + " POSTS"} />
+            </Divider>
+          )}
           <Stack>
             {" "}
             <Feed
