@@ -121,7 +121,6 @@ function NewPostModal({ effectRunFromModal, seteffectRunFromModal }) {
         sx={{
           position: "fixed",
           bottom: 50,
-
           right: { xs: "calc(0% + 30px)", md: 30 },
         }}
         onClick={(e) => {
