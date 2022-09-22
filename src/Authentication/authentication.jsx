@@ -84,8 +84,8 @@ function Login() {
     updateFormState(() => ({ ...formState, formType: "confirmSignUp" }));
   }
   async function confirmSignUp() {
-    const {  authCode } = formState;
-    await Auth.confirmSignUp( authCode );
+    const { username , authCode } = formState;
+    await Auth.confirmSignUp( username , authCode );
     updateFormState(() => ({ ...formState, formType: "signIn" }));
   }
   const navigate = useNavigate()
@@ -101,7 +101,7 @@ function Login() {
     <>
    <div className="backgroundasd">
     {
-      formType === "signUp" &&(
+      formType === "signUp" && (
         
         <ThemeProvider theme={myTheme}>
           
@@ -109,7 +109,6 @@ function Login() {
             <CssBaseline />
             <Box
               sx={{
-             
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -253,7 +252,7 @@ function Login() {
                 confirmSignUp();
                 updateFormState(() => ({
                   ...formState,
-                  formType: "signedIn",
+                  formType: "signIn",
 }))}}> Confirm Sign up </Button>
         </Box>
       </Box>
@@ -515,7 +514,7 @@ function Login() {
                           formType: "signUp",
                         }))
                       }
-                    ><Typography variant="body2"  >Don't have an account? </Typography>
+                    ><Typography variant="body2" paddingRight={1} >Don't have an account? </Typography>
                       <Link>{"Create Account"}</Link>
                     </Button>
                   </Grid>

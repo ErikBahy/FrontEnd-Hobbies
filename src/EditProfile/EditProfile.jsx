@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import {
   getCurrentUserId,
   getMongoIdFromCognitoId,
@@ -18,6 +18,7 @@ import {
 } from "../apiCalls";
 import { UserContext } from "../contexts/UserContext";
 import xIcon from "../logos/Group 182.png";
+
 
 function EditProfile({ called, setOpen }) {
   console.log(called, "called");
@@ -148,10 +149,14 @@ function EditProfile({ called, setOpen }) {
       />
       <Button
         variant="contained"
-        onClick={(e) => handleSave(e)}
+        onClick={(e) => {
+          handleSave(e)
+          navigate(-1)
+        }}
         size="large"
         color="primary"
         sx={{ width: "100%", marginY: 3 }}
+        
       >
         Save
       </Button>
