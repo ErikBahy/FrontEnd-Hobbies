@@ -6,6 +6,7 @@ import {
   Pagination,
   useTheme,
   useMediaQuery,
+  Skeleton,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Post from "./Post";
@@ -78,6 +79,9 @@ function Feed({ called, setTag, tag, effectRunFromModal }) {
       shouldEffectRun ? setshouldEffectRun(false) : setshouldEffectRun(true);
     }
   };
+  setTimeout(() => {
+    setloading(false);
+  }, [3000]);
 
   useEffect(() => {
     getPostsByTag();
@@ -94,18 +98,31 @@ function Feed({ called, setTag, tag, effectRunFromModal }) {
         {matchesDesktop ? (
           <Box flex={2} sx={{ display: { xs: "none", sm: "block" } }}></Box>
         ) : null}
-        <Box sx={{ flex: { xs: 1, sm: 4 } }}>
-          {posts.map((el) => {
-            return (
-              <Post
-                feedEffectRun={feedEffectRun}
-                setfeedEffectRun={setfeedEffectRun}
-                called="feed"
-                post={el}
-              />
-            );
-          })}
-        </Box>
+        {loading ? (
+          <Stack
+            sx={{ height: "100vh", width: { xs: "100%", sm: "48%" } }}
+            spacing={1}
+          >
+            <Skeleton variant="text" height={100} />
+            <Skeleton variant="text" height={20} />
+            <Skeleton variant="text" height={20} />
+            <Skeleton variant="rectangular" height={300} />
+          </Stack>
+        ) : (
+          <Box sx={{ flex: { xs: 1, sm: 4 } }}>
+            {posts.map((el) => {
+              return (
+                <Post
+                  feedEffectRun={feedEffectRun}
+                  setfeedEffectRun={setfeedEffectRun}
+                  called="feed"
+                  post={el}
+                />
+              );
+            })}
+          </Box>
+        )}
+
         {matchesDesktop ? (
           <Box flex={2} sx={{ display: { xs: "none", sm: "block" } }}></Box>
         ) : null}

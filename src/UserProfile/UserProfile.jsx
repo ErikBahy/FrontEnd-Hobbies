@@ -29,6 +29,7 @@ function UserProfile() {
         sx={{ backgroundColor: "background.myBackground" }}
         pt={2}
         flexDirection="row"
+        alignItems="center"
       >
         <Box flex={1} sx={{ display: { xs: "none", md: "block" } }}></Box>
         <Stack flex={4} flexDirection="column" sx={{ backgroundColor: "" }}>
