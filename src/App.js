@@ -22,7 +22,7 @@ function App() {
     }
   },[userContext])
 
-
+console.log(isLogged,"is logged");
 
   useEffect(() => {
     userContext
@@ -40,7 +40,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={!isLogged ? <Login /> : <Navigate replace to={"/mainPage"} />} />
-        <Route path="/mainPage" element={ <MainPage />} />
+        <Route path="/mainPage" element={<MainPage /> }  />
         <Route path="/newpost" element={<NewPostModalNewPage />} />
         <Route path="/editprofile" element={<EditProfile/>} />
         <Route path="/editmodal" element={<EditProfileModal/>}/>

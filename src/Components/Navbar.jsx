@@ -529,7 +529,7 @@ function Navbar({ called, userId }) {
                 ></Box>
               </Box>
 
-              <Box sx={{ display: { xs: "flex", md: "none" } }}>
+              <Box sx={{ display: { xs: "flex", md: "flex" } }}>
                 <IconButton
                   size="large"
                   aria-label="show more"
