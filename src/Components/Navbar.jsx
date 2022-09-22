@@ -508,10 +508,7 @@ function Navbar({ called, userId }) {
                     alignItems: "flex-end",
                   }}
                 >
-                  <LogoutIcon
-                    onClick={signOut}
-                    style={{ margin: "10px" }}
-                  ></LogoutIcon>
+                 
                 </Box>
               </Box>
 

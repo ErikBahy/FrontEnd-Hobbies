@@ -22,15 +22,20 @@ function UserProvider(props) {
 
   const [user, setUser] = useState([]);
 
-  const getUserFromDatabase = async (cognitoId) => {
-    const currentUser = await Auth.currentAuthenticatedUser();
-    const userId = currentUser.attributes.sub;
+  const getUserFromDatabase = async (cognitoId, setloading) => {
+    try {
+      const currentUser = await Auth.currentAuthenticatedUser();
+      const userId = currentUser.attributes.sub;
 
-    const res = await axios.get(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/userCognitoForErikWithLove/${cognitoId}`
-    );
-    setUser(res.data);
-    console.log(currentUser, "cognito idfrom context");
+      const res = await axios.get(
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/userCognitoForErikWithLove/${cognitoId}`
+      );
+      setUser(res.data);
+      console.log(currentUser, "cognito idfrom context");
+      setloading(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
