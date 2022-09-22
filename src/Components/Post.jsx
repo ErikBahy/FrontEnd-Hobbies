@@ -260,7 +260,7 @@ function Post({
             avatar={
               <Avatar
                 sx={{
-                  bgcolor: `#${randomColor}`,
+                  bgcolor: `#B24D74`,
                   textDecoration: "none",
                   width: "40px",
                   height: "40px",
@@ -317,7 +317,7 @@ function Post({
                 {renderDeleteButton}
               </Stack>
             }
-            subheader="1 hour ago"
+            subheader={date?.substring(0, 10)}
           />
         </Stack>
 

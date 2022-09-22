@@ -55,6 +55,7 @@ function NewPostModalNewPage({ setOpen, called }) {
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const [text, setText] = useState("");
   const [limit, setLimit] = useState("");
+  const [isposting, setisposting] = useState(false);
 
   const [tag, setTag] = useState();
   const [cognitoId, setcognitoId] = useState();
@@ -89,6 +90,7 @@ function NewPostModalNewPage({ setOpen, called }) {
       }
     }*/
     try {
+      setisposting(true);
       e.preventDefault();
       await axios.post(
         `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/post/user/${mongoId._id}`,
@@ -104,6 +106,7 @@ function NewPostModalNewPage({ setOpen, called }) {
       handleNavigateClick();
       console.log("postPostRan when clicked");
       clear();
+      setisposting(false);
 
       //  fetchPost()
     } catch (err) {
@@ -249,7 +252,7 @@ function NewPostModalNewPage({ setOpen, called }) {
             postPost(e);
           }}
         >
-          Post
+          {isposting ? "Posting ..." : "Post"}
         </Button>
       </Stack>
     </>

@@ -22,50 +22,47 @@ function UserProfile() {
 
   return (
     <>
-      <div>
-        <Navbar called="userProfile" userId={cognitoId} />
-      </div>
+      <Box sx={{ height: "100vh", backgroundColor: "background.myBackground" }}>
+        <div>
+          <Navbar called="userProfile" userId={cognitoId} />
+        </div>
 
-      <Stack
-        sx={{ backgroundColor: "background.myBackground" }}
-        pt={2}
-        flexDirection="row"
-        alignItems="center"
-      >
-        <Box flex={1} sx={{ display: { xs: "none", md: "block" } }}></Box>
-        <Stack flex={4} flexDirection="column" sx={{ backgroundColor: "" }}>
-          <UserDetails
-            setdividerLoading={setdividerLoading}
-            seteffectRun={seteffectRun}
-            effectRun={effectRun}
-            userId={cognitoId}
-            bio={bio}
-            location={location}
-          />
-
-          {dividerLoading ? (
-            <Skeleton
-              variant="text"
-              sx={{ fontSize: "1rem", width: 1, marginTop: 3 }}
-            />
-          ) : (
-            <Divider sx={{ width: 1, marginTop: 3, fontWeight: 200 }}>
-              {" "}
-              <Chip label={posts?.length + " " + " POSTS"} />
-            </Divider>
-          )}
-          <Stack>
-            {" "}
-            <Feed
+        <Stack pt={2} flexDirection="row" alignItems="center">
+          <Box flex={1} sx={{ display: { xs: "none", md: "block" } }}></Box>
+          <Stack flex={4} flexDirection="column" sx={{ backgroundColor: "" }}>
+            <UserDetails
+              setdividerLoading={setdividerLoading}
               seteffectRun={seteffectRun}
               effectRun={effectRun}
-              called="UserProfile"
-              cognitoId={cognitoId}
+              userId={cognitoId}
+              bio={bio}
+              location={location}
             />
+
+            {dividerLoading ? (
+              <Skeleton
+                variant="text"
+                sx={{ fontSize: "1rem", width: 1, marginTop: 3 }}
+              />
+            ) : (
+              <Divider sx={{ width: 1, marginTop: 3, fontWeight: 200 }}>
+                {" "}
+                <Chip label={posts?.length + " " + " POSTS"} />
+              </Divider>
+            )}
+            <Stack>
+              {" "}
+              <Feed
+                seteffectRun={seteffectRun}
+                effectRun={effectRun}
+                called="UserProfile"
+                cognitoId={cognitoId}
+              />
+            </Stack>
           </Stack>
+          <Box flex={1} sx={{ display: { xs: "none", md: "block" } }}></Box>
         </Stack>
-        <Box flex={1} sx={{ display: { xs: "none", md: "block" } }}></Box>
-      </Stack>
+      </Box>
     </>
   );
 }

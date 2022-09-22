@@ -59,6 +59,8 @@ function NewPostModal({ effectRunFromModal, seteffectRunFromModal }) {
   const [mongoId, setmongoId] = useState();
   const userContext = useContext(UserContext);
   const { loggedUser } = userContext;
+  const [isposting, setisposting] = useState(false);
+  console.log(value, "date time");
   const handleNavigateClick = () => {
     navigate("/newpost");
   };
@@ -85,6 +87,7 @@ function NewPostModal({ effectRunFromModal, seteffectRunFromModal }) {
       }
     }*/
     try {
+      setisposting(true);
       e.preventDefault();
       await axios.post(
         `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/post/user/${mongoId._id}`,
@@ -101,6 +104,7 @@ function NewPostModal({ effectRunFromModal, seteffectRunFromModal }) {
       clear();
       setOpen(false);
       seteffectRunFromModal(!effectRunFromModal);
+      setisposting(false);
       //  fetchPost()
     } catch (err) {
       console.log(err);
@@ -261,7 +265,7 @@ function NewPostModal({ effectRunFromModal, seteffectRunFromModal }) {
                   postPost(e);
                 }}
               >
-                Post
+                {isposting ? " Posting..." : "Post"}
               </Button>
 
               <Box
