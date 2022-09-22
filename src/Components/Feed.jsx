@@ -28,6 +28,7 @@ function Feed({ called, setTag, tag, effectRunFromModal }) {
 
   const getAllPosts = async () => {
     try {
+      setloading(true);
       const page = await axios.get(
         `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/allpostsPages`
       );
