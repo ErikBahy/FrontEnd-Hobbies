@@ -38,6 +38,7 @@ function UserSearchModal({ usersFound }) {
           padding={1}
         >
           <Avatar
+            src={aUser.prfilePicture}
             sx={{
               bgcolor: `red`,
               textDecoration: "none",

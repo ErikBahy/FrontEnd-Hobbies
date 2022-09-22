@@ -42,6 +42,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import FollowersData from "./FollowersData";
 import UserSearchModal from "./UserSearchModal";
+import { calculateNewValue } from "@testing-library/user-event/dist/utils";
 
 async function signOut() {
   try {
@@ -435,6 +436,24 @@ function Navbar({ called, userId }) {
                   </Typography>
                 </Box>
                 <Box>{renderDesktopSearchInput}</Box>
+                <Popover
+                  open={modal}
+                  onClose={() => {
+                    setsearchvalue("");
+                    setmodal(false);
+                  }}
+                  anchorReference="anchorPosition"
+                  anchorPosition={{ top: 67, left: 700 }}
+                  PaperProps={{
+                    style: { width: "30%" },
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "center",
+                  }}
+                >
+                  <UserSearchModal usersFound={usersFound} />
+                </Popover>
 
                 <Box sx={{ display: { xs: "none", sm: "flex" } }}>
                   <IconButton
@@ -507,9 +526,7 @@ function Navbar({ called, userId }) {
                     justifyContent: "flex-end",
                     alignItems: "flex-end",
                   }}
-                >
-                 
-                </Box>
+                ></Box>
               </Box>
 
               <Box sx={{ display: { xs: "flex", md: "none" } }}>
