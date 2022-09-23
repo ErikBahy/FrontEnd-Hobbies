@@ -36,6 +36,9 @@ function UserSearchModal({ usersFound }) {
           justifyContent="flex-start"
           gap={2}
           padding={1}
+          sx={{ textDecoration: "none" }}
+          component={Link}
+          to={`/userprofile/${aUser.userCognitoId}`}
         >
           <Avatar
             src={aUser.prfilePicture}
@@ -53,8 +56,6 @@ function UserSearchModal({ usersFound }) {
 
           <Typography
             sx={{ textDecoration: "none", color: "text.primary" }}
-            component={Link}
-            to={`/userprofile/${aUser.userCognitoId}`}
             marginRight={1}
             fontWeight={600}
           >

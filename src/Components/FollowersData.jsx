@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { getUserFollowers } from "../apiCalls";
 import xIcon from "../logos/Group 182.png";
 
-function FollowersData({ userId }) {
+function FollowersData({ userId, setFollowersU }) {
   const [followers, setFollowers] = useState();
   console.log(userId, "mongoid  ", followers, "followers   ");
   console.log("modal rannnnnnnnn");
@@ -33,7 +33,7 @@ function FollowersData({ userId }) {
         justifyContent="center"
         gap={10}
       >
-        <IconButton>
+        <IconButton onClick={() => setFollowersU(false)}>
           <img src={xIcon} height={20} width={20} />
         </IconButton>
 
@@ -55,7 +55,7 @@ function FollowersData({ userId }) {
           fontWeight: 200,
         }}
       />
-      <Stack sx={{ overflow: "hidden", overflowY: "scroll" }}>
+      <Stack width={1} sx={{ overflow: "hidden", overflowY: "scroll" }}>
         {followers?.map((aFollower) => (
           <Stack
             flexDirection="row"

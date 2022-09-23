@@ -50,7 +50,7 @@ function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const userContext = useContext(UserContext);
-  const { username, prfilePicture  , followers, followed } = userContext.user;
+  const { username, prfilePicture, followers, followed } = userContext.user;
   const {
     isFollowed,
     setisFollowed,
@@ -396,7 +396,10 @@ function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <FollowersData userId={checkId ? currentUserMongoId : userMongoId} />
+          <FollowersData
+            setFollowersU={setFollowersU}
+            userId={checkId ? currentUserMongoId : userMongoId}
+          />
         </Modal>
         <Modal
           sx={{
@@ -409,7 +412,10 @@ function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <FollowedData userId={checkId ? currentUserMongoId : userMongoId} />
+          <FollowedData
+            setFollowedU={setFollowedU}
+            userId={checkId ? currentUserMongoId : userMongoId}
+          />
         </Modal>
         <Modal
           sx={{

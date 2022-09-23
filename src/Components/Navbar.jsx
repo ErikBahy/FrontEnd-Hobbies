@@ -44,15 +44,6 @@ import FollowersData from "./FollowersData";
 import UserSearchModal from "./UserSearchModal";
 import { calculateNewValue } from "@testing-library/user-event/dist/utils";
 
-async function signOut() {
-  try {
-    localStorage.removeItem("userLogged");
-    await Auth.signOut();
-  } catch (error) {
-    console.log("error signing out: ", error);
-  }
-}
-
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   flex: 3,
@@ -108,6 +99,17 @@ function Navbar({ called, userId }) {
   const [usersFound, setusersFound] = useState();
   const [modal, setmodal] = useState(false);
   console.log(usersFound, "users found");
+
+  async function signOut() {
+    try {
+      userContext.setUser([]);
+      userContext.setCurrentUserId();
+      localStorage.removeItem("userLogged");
+      await Auth.signOut();
+    } catch (error) {
+      console.log("error signing out: ", error);
+    }
+  }
 
   const SearchResults = async () => {
     const res = await axios.get(

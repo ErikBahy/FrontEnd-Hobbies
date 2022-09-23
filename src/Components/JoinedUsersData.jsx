@@ -1,20 +1,31 @@
-import { Avatar, Box, Divider, IconButton, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Divider,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import { Stack } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getUserFollowers } from "../apiCalls";
 import xIcon from "../logos/Group 182.png";
+import axios from "axios";
+import JoinedUsersLine from "./JoinedUsersLine";
 
 function JoinedUsersData({ _id, getJoinedUsers, setJoinedUsers }) {
   const [joinedU, setJoinedU] = useState();
-  console.log(_id, "mongoid  ", joinedU, "followers   ");
+  const [effect, seteffect] = useState(false);
+  const [userMongo, setuserMongo] = useState();
+  console.log(_id, "mongoid  ", joinedU, "joinedd   ", userMongo, "userMongo");
   console.log("modal rannnnnnnnn JOINED");
 
   useEffect(() => {
     getJoinedUsers().then((joinedUsers) => {
       setJoinedU(joinedUsers);
     });
-  }, []);
+  }, [effect]);
 
   return (
     <Stack
@@ -53,36 +64,12 @@ function JoinedUsersData({ _id, getJoinedUsers, setJoinedUsers }) {
         }}
       />
       {joinedU?.map((aFollower) => (
-        <Stack
-          flexDirection="row"
-          alignSelf="flex-start"
-          alignItems="center"
-          justifyContent="flex-start"
-          gap={2}
-          padding={1}
-        >
-          <Avatar
-            src={joinedU.prfilePicture}
-            sx={{
-              bgcolor: `red`,
-              textDecoration: "none",
-              width: "30px",
-              height: "30px",
-              marginRight: "auto",
-            }}
-            aria-label="recipe"
-          >
-            {aFollower?.username.substring(0, 1)}
-          </Avatar>
-
-          <Typography
-            sx={{ textDecoration: "none", color: "text.primary" }}
-            marginRight={1}
-            fontWeight={600}
-          >
-            {aFollower?.username}
-          </Typography>
-        </Stack>
+        <JoinedUsersLine
+          aFollower={aFollower}
+          seteffect={seteffect}
+          _id={_id}
+          effect={effect}
+        />
       ))}
     </Stack>
   );
