@@ -158,9 +158,9 @@ function NewPostModal({ effectRunFromModal, seteffectRunFromModal }) {
             <UserBox>
               <Stack flex={5} flexDirection="row" gap={2} alignItems="center">
                 <Avatar
+                  alt="photo"
                   sx={{ width: 30, height: 30 }}
-                  alt="Erik"
-                  src="https://images.unsplash.com/photo-1517348573020-98fb6f1ccc80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"
+                  src={loggedUser?.prfilePicture}
                 />
                 <Typography fontWeight={500} variant="span">
                   {loggedUser?.username}

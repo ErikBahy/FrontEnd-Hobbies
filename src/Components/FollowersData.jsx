@@ -24,8 +24,6 @@ function FollowersData({ userId }) {
         backgroundColor: "white",
         borderRadius: 10,
         padding: 2,
-        overflow: "hidden",
-        overflowY: "scroll",
       }}
       alignItems="center"
     >
@@ -57,38 +55,40 @@ function FollowersData({ userId }) {
           fontWeight: 200,
         }}
       />
-      {followers?.map((aFollower) => (
-        <Stack
-          flexDirection="row"
-          alignSelf="flex-start"
-          alignItems="center"
-          justifyContent="flex-start"
-          gap={2}
-          padding={1}
-        >
-          <Avatar
-            src={aFollower.prfilePicture}
-            sx={{
-              bgcolor: `red`,
-              textDecoration: "none",
-              width: "30px",
-              height: "30px",
-              marginRight: "auto",
-            }}
-            aria-label="recipe"
+      <Stack sx={{ overflow: "hidden", overflowY: "scroll" }}>
+        {followers?.map((aFollower) => (
+          <Stack
+            flexDirection="row"
+            alignSelf="flex-start"
+            alignItems="center"
+            justifyContent="flex-start"
+            gap={2}
+            padding={1}
           >
-            {aFollower?.username.substring(0, 1)}
-          </Avatar>
+            <Avatar
+              src={aFollower.prfilePicture}
+              sx={{
+                bgcolor: `red`,
+                textDecoration: "none",
+                width: "30px",
+                height: "30px",
+                marginRight: "auto",
+              }}
+              aria-label="recipe"
+            >
+              {aFollower?.username.substring(0, 1)}
+            </Avatar>
 
-          <Typography
-            sx={{ textDecoration: "none", color: "text.primary" }}
-            marginRight={1}
-            fontWeight={600}
-          >
-            {aFollower?.username}
-          </Typography>
-        </Stack>
-      ))}
+            <Typography
+              sx={{ textDecoration: "none", color: "text.primary" }}
+              marginRight={1}
+              fontWeight={600}
+            >
+              {aFollower?.username}
+            </Typography>
+          </Stack>
+        ))}
+      </Stack>
     </Stack>
   );
 }

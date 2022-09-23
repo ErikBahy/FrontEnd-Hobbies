@@ -160,8 +160,8 @@ function NewPostModalNewPage({ setOpen, called }) {
         <Stack flexDirection="row" gap={2} my={1} alignItems="center">
           <Avatar
             sx={{ width: 40, height: 40 }}
-            alt="Erik"
-            src="https://images.unsplash.com/photo-1517348573020-98fb6f1ccc80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"
+            alt="photo"
+            src={loggedUser?.prfilePicture}
           />
           <Typography fontWeight={500} fontSize="16px" variant="span">
             {loggedUser?.username}

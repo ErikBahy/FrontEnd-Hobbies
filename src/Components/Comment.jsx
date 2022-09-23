@@ -23,7 +23,7 @@ function Comment(data) {
     >
       <Typography
         component={Link}
-        to={`userProfile/${data.data.commentCognitoId}`}
+        to={`/userprofile/${data.data.commentCognitoId}`}
         sx={{ textDecoration: "none", color: "text.primary" }}
         marginRight={1}
         fontWeight={600}
