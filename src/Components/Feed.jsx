@@ -123,12 +123,18 @@ function Feed({ called, setTag, tag, effectRunFromModal }) {
         ) : null}
         {loading ? (
           <Stack
-            sx={{ height: "100vh", width: { xs: "100%", sm: "48%" } }}
+            sx={{
+              height: "100vh",
+              width: { xs: "100%", sm: "48%" },
+              margin: { xs: 2, sm: 1 },
+            }}
             spacing={1}
           >
             <Skeleton variant="text" height={100} />
             <Skeleton variant="text" height={20} />
             <Skeleton variant="text" height={20} />
+            <Skeleton variant="rectangular" height={300} />
+            <Skeleton variant="text" height={100} />
             <Skeleton variant="rectangular" height={300} />
           </Stack>
         ) : (

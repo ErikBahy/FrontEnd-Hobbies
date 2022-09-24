@@ -84,6 +84,8 @@ function Post({
   const [liked, setLiked] = useState();
   const [isJoined, setisJoined] = useState(false);
 
+  const [userWhoPosted, setuserWhoPosted] = useState();
+
   const {
     username,
     likes,
@@ -96,6 +98,7 @@ function Post({
     _id,
     joined,
   } = post;
+  const [numberJoined, setnumberJoined] = useState(joined.length);
   const randomColor = Math.floor(Math.random() * 16777215).toString(16);
 
   ///////////////////////////////////////////////////////////////
@@ -120,15 +123,15 @@ function Post({
     await axios.get(
       `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/joinPost/${currentUserMongoId}/${_id}`
     );
-    shouldEffectRun ? setshouldEffectRun(false) : setshouldEffectRun(true);
-    feedEffectRun ? setfeedEffectRun(false) : setfeedEffectRun(true);
+    // shouldEffectRun ? setshouldEffectRun(false) : setshouldEffectRun(true);
+    // feedEffectRun ? setfeedEffectRun(false) : setfeedEffectRun(true);
   };
   const unjoinPost = async () => {
     await axios.get(
       `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/unjoinPost/${currentUserMongoId}/${_id}`
     );
-    feedEffectRun ? setfeedEffectRun(false) : setfeedEffectRun(true);
-    shouldEffectRun ? setshouldEffectRun(false) : setshouldEffectRun(true);
+    // feedEffectRun ? setfeedEffectRun(false) : setfeedEffectRun(true);
+    // shouldEffectRun ? setshouldEffectRun(false) : setshouldEffectRun(true);
   };
 
   const deletePost = async (e, _id) => {
@@ -145,6 +148,11 @@ function Post({
       console.log(error);
     }
   };
+  useEffect(() => {
+    getUserFromCognitoId(postCognitoId).then((userWhoPostedData) =>
+      setuserWhoPosted(userWhoPostedData)
+    );
+  }, []);
 
   useEffect(() => {
     allComments();
@@ -152,7 +160,9 @@ function Post({
 
   useEffect(() => {
     checkLike(currentUserMongoId, _id).then((bool) => setchecked(bool));
-    checkJoin(currentUserMongoId, _id).then((bool) => setisJoined(bool));
+    checkJoin(currentUserMongoId, _id).then((bool) => {
+      setisJoined(bool);
+    });
   }, [shouldEffectRun, currentUserMongoId, _id]);
 
   const allComments = async () => {
@@ -215,10 +225,11 @@ function Post({
 
   const removeLikeAtPost = async () => {
     try {
+      setpostLikes((postLikes) => postLikes - 1);
       await axios.get(
         `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/unLike/${currentUserMongoId}/${_id}`
       );
-      shouldEffectRun ? setshouldEffectRun(false) : setshouldEffectRun(true);
+      // shouldEffectRun ? setshouldEffectRun(false) : setshouldEffectRun(true);
     } catch (error) {
       console.log(error);
     }
@@ -232,11 +243,12 @@ function Post({
 
   const addLikeAtPost = async () => {
     try {
+      setpostLikes((postLikes) => postLikes + 1);
       await axios.get(
         `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/addLike/users/${currentUserMongoId}/${_id}`
       );
 
-      shouldEffectRun ? setshouldEffectRun(false) : setshouldEffectRun(true);
+      // shouldEffectRun ? setshouldEffectRun(false) : setshouldEffectRun(true);
     } catch (error) {
       console.log(error);
     }
@@ -259,6 +271,7 @@ function Post({
             }
             avatar={
               <Avatar
+                src={userWhoPosted?.prfilePicture}
                 sx={{
                   bgcolor: `#B24D74`,
                   textDecoration: "none",
@@ -289,7 +302,11 @@ function Post({
                   </StyledButton>
                 ) : isJoined === true ? (
                   <StyledButton
-                    onClick={() => unjoinPost()}
+                    onClick={() => {
+                      setisJoined(false);
+                      setnumberJoined((numberJoined) => numberJoined - 1);
+                      unjoinPost();
+                    }}
                     size="small"
                     variant="contained"
                   >
@@ -307,7 +324,11 @@ function Post({
                   </StyledButton>
                 ) : (
                   <StyledButton
-                    onClick={() => joinPost()}
+                    onClick={() => {
+                      setisJoined(true);
+                      setnumberJoined((numberJoined) => numberJoined + 1);
+                      joinPost();
+                    }}
                     size="small"
                     variant="contained"
                   >
@@ -344,7 +365,7 @@ function Post({
               <img src={peopleIcon} height={20} width={20} />
               <Typography mx={1}>
                 {" "}
-                {joined?.length}/{limit}
+                {numberJoined}/{limit}
               </Typography>
             </Stack>
             <Stack flexDirection="row" alignItems="center">
@@ -381,8 +402,12 @@ function Post({
                       }
                       onChange={
                         checked
-                          ? () => removeLikeAtPost()
-                          : () => addLikeAtPost()
+                          ? () => {
+                              removeLikeAtPost();
+                            }
+                          : () => {
+                              addLikeAtPost();
+                            }
                       }
                       icon={<FavoriteBorder sx={{ width: 20, height: 20 }} />}
                       checkedIcon={

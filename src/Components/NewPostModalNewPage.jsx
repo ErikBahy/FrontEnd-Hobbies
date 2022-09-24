@@ -62,6 +62,7 @@ function NewPostModalNewPage({ setOpen, called }) {
   const [mongoId, setmongoId] = useState();
   const userContext = useContext(UserContext);
   const { loggedUser } = userContext;
+
   const navigate = useNavigate();
   const handleNavigateClick = () => {
     console.log("navigate ran");
@@ -128,14 +129,18 @@ function NewPostModalNewPage({ setOpen, called }) {
         color="text.primary"
         borderRadius={5}
         p={3}
-        sx={{ paddingTop: 2 }}
+        sx={{ paddingTop: 2, width: called === "NewPostModal" ? "500px" : 1 }}
       >
         <Stack
           flexDirection="row"
           alignItems="center"
           justifyContent="space-between"
         >
-          <IconButton component={Link} to="/mainPage">
+          <IconButton
+            onClick={() => setOpen(false)}
+            component={Link}
+            to="/mainPage"
+          >
             <img src={xIcon} height={20} width={20} />
           </IconButton>
 
@@ -161,7 +166,7 @@ function NewPostModalNewPage({ setOpen, called }) {
           <Avatar
             sx={{ width: 40, height: 40 }}
             alt="photo"
-            src={loggedUser?.prfilePicture}
+            src={mongoId?.prfilePicture}
           />
           <Typography fontWeight={500} fontSize="16px" variant="span">
             {loggedUser?.username}
