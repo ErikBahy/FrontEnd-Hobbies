@@ -22,6 +22,17 @@ function UserProvider(props) {
 
   const [user, setUser] = useState([]);
 
+  async function signOut() {
+    try {
+      await Auth.signOut();
+      window.location.reload(true);
+
+      localStorage.removeItem("userLogged");
+    } catch (error) {
+      console.log("error signing out: ", error);
+    }
+  }
+
   const getUserFromDatabase = async (cognitoId, setloading) => {
     try {
       const currentUser = await Auth.currentAuthenticatedUser();
@@ -42,6 +53,7 @@ function UserProvider(props) {
     <UserContext.Provider
       value={{
         user: user,
+        signOut: signOut,
         getCurrentUserId: getCurrentUserId,
         currentUserId: currentUserId,
         loggedUser: loggedUser,
