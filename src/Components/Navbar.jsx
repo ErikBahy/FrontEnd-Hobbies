@@ -90,7 +90,7 @@ function Navbar({ called, userId }) {
   const theme = useTheme();
   const matchesDesktop = useMediaQuery(theme.breakpoints.up("sm"));
   const userContext = useContext(UserContext);
-  const { currentUserId } = userContext;
+  const { currentUserId, signOut } = userContext;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [searchOpen, setsearchOpen] = useState(false);
@@ -99,17 +99,7 @@ function Navbar({ called, userId }) {
   const [usersFound, setusersFound] = useState();
   const [modal, setmodal] = useState(false);
   console.log(usersFound, "users found");
-
-  async function signOut() {
-    try {
-      userContext.setUser([]);
-      userContext.setCurrentUserId();
-      localStorage.removeItem("userLogged");
-      await Auth.signOut();
-    } catch (error) {
-      console.log("error signing out: ", error);
-    }
-  }
+  console.log(currentUserId, "clg from logout fucntion");
 
   const SearchResults = async () => {
     const res = await axios.get(
@@ -286,7 +276,11 @@ function Navbar({ called, userId }) {
           aria-haspopup="true"
           color="inherit"
         >
-          <Logout onClick={signOut} />
+          <Logout
+            onClick={() => {
+              signOut();
+            }}
+          />
         </IconButton>
         <p>Log Out</p>
       </MenuItem>
@@ -387,6 +381,7 @@ function Navbar({ called, userId }) {
                   component={Link}
                   to={`/userprofile/${currentUserId}`}
                   color="inherit"
+                  onClick={() => addUser()}
                 >
                   <img src={userProfileIcon} height={25} width={25} />
                 </IconButton>
@@ -476,7 +471,7 @@ function Navbar({ called, userId }) {
                     aria-label="account of current user"
                     aria-controls={menuId}
                     aria-haspopup="true"
-                    onClick={addUser()}
+                    onClick={() => addUser()}
                     color="inherit"
                   >
                     <AccountCircle />
