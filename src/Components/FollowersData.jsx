@@ -2,17 +2,20 @@ import { Avatar, Box, Divider, IconButton, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { MoonLoader } from "react-spinners";
 import { getUserFollowers } from "../apiCalls";
 import xIcon from "../logos/Group 182.png";
 
 function FollowersData({ userId, setFollowersU }) {
   const [followers, setFollowers] = useState();
+  const [loading,setloading] = useState(true)
   console.log(userId, "mongoid  ", followers, "followers   ");
   console.log("modal rannnnnnnnn");
 
   useEffect(() => {
     getUserFollowers(userId).then((followersss) => {
       setFollowers(followersss);
+      setloading(false);
     });
   }, []);
 
@@ -55,6 +58,10 @@ function FollowersData({ userId, setFollowersU }) {
           fontWeight: 200,
         }}
       />
+      
+      {loading ? (
+        <MoonLoader color="grey" cssOverride={{}} loading speedMultiplier={1} />
+      ) : (
       <Stack width={1} sx={{ overflow: "hidden", overflowY: "scroll" }}>
         {followers?.map((aFollower) => (
           <Stack
@@ -89,7 +96,7 @@ function FollowersData({ userId, setFollowersU }) {
           </Stack>
         ))}
       </Stack>
-    </Stack>
+      )}</Stack>
   );
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createContext } from "react";
 import axios from "axios";
 import { Auth } from "aws-amplify";
@@ -11,6 +11,10 @@ function UserProvider(props) {
   const [userMongoId, setuserMongoId] = useState();
   const [currentUserMongoId, setcurrentUserMongoId] = useState();
   const [isFollowed, setisFollowed] = useState();
+
+  // useEffect(()=>) thirr funks
+
+
   const getCurrentUserId = async () => {
     const currentUser = await Auth.currentAuthenticatedUser();
 
@@ -26,7 +30,7 @@ function UserProvider(props) {
     try {
       await Auth.signOut();
       window.location.reload(true);
-
+      
       localStorage.removeItem("userLogged");
     } catch (error) {
       console.log("error signing out: ", error);
