@@ -60,7 +60,7 @@ function FollowedData({ userId, setFollowedU }) {
         }}
       />
       {loading ? (
-        <MoonLoader color="grey" cssOverride={{}} loading speedMultiplier={1} />
+        <MoonLoader color="grey" loading speedMultiplier={1} />
       ) : (
         <Stack width={1} sx={{ overflow: "hidden", overflowY: "scroll" }}>
           {followed?.map((aFollower) => (

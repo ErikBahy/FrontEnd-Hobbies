@@ -28,7 +28,6 @@ import {
   useTheme,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import { Auth } from "aws-amplify";
 import { UserContext } from "../contexts/UserContext";
 import { useContext } from "react";
 import { addUser, getUserFromCognitoId } from "../apiCalls";

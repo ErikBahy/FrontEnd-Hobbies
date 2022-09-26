@@ -1,14 +1,16 @@
 import { Avatar, Box, Divider, IconButton, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
+import { loadingBar } from "aws-amplify";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { MoonLoader } from "react-spinners";
 import { getUserFollowers } from "../apiCalls";
 import xIcon from "../logos/Group 182.png";
 import UnFollowUsersLine from "./UnFollowUsersLine";
 
 function FollowersData({ _id, userId, setFollowersU }) {
   const [followers, setFollowers] = useState();
-  //////////////////////////////////
+  const [loading, setloading] = useState(true);
   const [effect, seteffect] = useState(false);
   const [userMongo, setuserMongo] = useState();
   console.log(userId, "mongoid  !!!!!!", followers, "followers!!!!   ", userMongo, "userMongo");
@@ -20,6 +22,10 @@ function FollowersData({ _id, userId, setFollowersU }) {
       setFollowers(followersss);
     });
   }, [effect]);
+
+  useEffect(()=>{
+    setloading(false)
+  },[])
 
   return (
     <Stack
@@ -60,7 +66,12 @@ function FollowersData({ _id, userId, setFollowersU }) {
           fontWeight: 200,
         }}
       />
-      {/* <Stack width={1} sx={{ overflow: "hidden", overflowY: "scroll" }}> */}
+
+      { loading ? (
+                <MoonLoader color="grey" loading speedMultiplier={1} />
+      ) : (
+
+      <Stack width={1} sx={{ overflow: "hidden", overflowY: "scroll" }}>
         {followers?.map((aFollower) => (
           <UnFollowUsersLine
             aFollower={aFollower}
@@ -99,7 +110,8 @@ function FollowersData({ _id, userId, setFollowersU }) {
           //   </Typography>
           // </Stack>
         ))}
-      {/* </Stack> */}
+      </Stack>
+)}
     </Stack>
   );
 }
