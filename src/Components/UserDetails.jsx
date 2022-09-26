@@ -136,7 +136,7 @@ function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
         <Button
           size="medium"
           sx={{
-            width: 0.95,
+            width: { xs: 0.95, sm: 1 },
           }}
           variant="contained"
           onClick={(e) => {
@@ -149,7 +149,7 @@ function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
         <Button
           size="medium"
           sx={{
-            width: 0.95,
+            width: { xs: 0.95, sm: 1 },
           }}
           variant="contained"
           onClick={(e) => {

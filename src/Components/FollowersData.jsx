@@ -26,12 +26,17 @@ function FollowersData({ _id, userId, setFollowersU, checkId }) {
   useEffect(() => {
     getUserFollowers(userId).then((followersss) => {
       setFollowers(followersss);
-      setloading(false)
+      setloading(false);
     });
   }, [effect]);
 
-  const style = {position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" };
- 
+  const style = {
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+  };
+
   return (
     <Stack
       sx={{
@@ -71,24 +76,22 @@ function FollowersData({ _id, userId, setFollowersU, checkId }) {
           fontWeight: 200,
         }}
       />
-      { loading ? 
-      (
-      <div style={style}>
-        <MoonLoader  color="grey" loading speedMultiplier={1} />
+      {loading ? (
+        <div style={style}>
+          <MoonLoader color="grey" loading speedMultiplier={1} />
         </div>
       ) : (
-
-      <Stack width={1} sx={{ overflow: "hidden", overflowY: "scroll" }}>
-      {followers?.map((aFollower) => (
-        <UnFollowUsersLine
-          checkId={checkId}
-          aFollower={aFollower}
-          seteffect={seteffect}
-          _id={userId}
-          effect={effect}
-        />
-      ))}
-      </Stack>
+        <Stack width={1} sx={{ overflow: "hidden", overflowY: "scroll" }}>
+          {followers?.map((aFollower) => (
+            <UnFollowUsersLine
+              checkId={checkId}
+              aFollower={aFollower}
+              seteffect={seteffect}
+              _id={userId}
+              effect={effect}
+            />
+          ))}
+        </Stack>
       )}
     </Stack>
   );
