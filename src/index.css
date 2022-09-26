@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f4f4f4;
 }
 
 code {
@@ -12,21 +13,20 @@ code {
     monospace;
 }
 
-
 .css-1801f5r {
-  background-color:rgb(245 242 242 / 60%) !important;
+  background-color: rgb(245 242 242 / 60%) !important;
 }
 .MuiButtonBase-root {
   text-transform: capitalize !important;
 }
 
 .css-1801f5r {
-padding-top: 16px;
-padding-bottom: 16px;
-min-height: 38vh;
-max-height: fit-content;
-display: flex;
-flex-direction: column;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  min-height: 38vh;
+  max-height: fit-content;
+  display: flex;
+  flex-direction: column;
 }
 
 .css-15d7oug-MuiStack-root {
