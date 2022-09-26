@@ -257,7 +257,10 @@ function Post({
     <>
       <Card
         width="100%"
-        sx={{ marginX: called === "userProfile" ? 0 : 2, marginY: 2 }}
+        sx={{
+          marginX: { xs: 1, sm: called === "userProfile" ? 0 : 2 },
+          marginY: 2,
+        }}
       >
         <Stack flexdirection="row">
           <CardHeader
