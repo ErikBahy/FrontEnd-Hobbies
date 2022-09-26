@@ -108,6 +108,7 @@ function NewPostModalNewPage({ setOpen, called }) {
       console.log("postPostRan when clicked");
       clear();
       setisposting(false);
+      setOpen(false);
 
       //  fetchPost()
     } catch (err) {

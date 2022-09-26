@@ -8,12 +8,19 @@ import { getUserFollowers } from "../apiCalls";
 import xIcon from "../logos/Group 182.png";
 import UnFollowUsersLine from "./UnFollowUsersLine";
 
-function FollowersData({ _id, userId, setFollowersU }) {
+function FollowersData({ _id, userId, setFollowersU, checkId }) {
   const [followers, setFollowers] = useState();
   const [loading, setloading] = useState(true);
   const [effect, seteffect] = useState(false);
   const [userMongo, setuserMongo] = useState();
-  console.log(userId, "mongoid  !!!!!!", followers, "followers!!!!   ", userMongo, "userMongo");
+  console.log(
+    userId,
+    "mongoid  !!!!!!",
+    followers,
+    "followers!!!!   ",
+    userMongo,
+    "userMongo"
+  );
   //////////////////////////////////
   console.log("modal rannnnnnnnn followers");
 
@@ -72,44 +79,45 @@ function FollowersData({ _id, userId, setFollowersU }) {
       ) : (
 
       <Stack width={1} sx={{ overflow: "hidden", overflowY: "scroll" }}>
-        {followers?.map((aFollower) => (
-          <UnFollowUsersLine
-            aFollower={aFollower}
-            seteffect={seteffect}
-            _id={userId}
-            effect={effect}
-          />
-          // <Stack
-          //   flexDirection="row"
-          //   alignSelf="flex-start"
-          //   alignItems="center"
-          //   justifyContent="flex-start"
-          //   gap={2}
-          //   padding={1}
-          // >
-          //   <Avatar
-          //     src={aFollower.prfilePicture}
-          //     sx={{
-          //       bgcolor: `red`,
-          //       textDecoration: "none",
-          //       width: "30px",
-          //       height: "30px",
-          //       marginRight: "auto",
-          //     }}
-          //     aria-label="recipe"
-          //   >
-          //     {aFollower?.username.substring(0, 1)}
-          //   </Avatar>
+      {followers?.map((aFollower) => (
+        <UnFollowUsersLine
+          checkId={checkId}
+          aFollower={aFollower}
+          seteffect={seteffect}
+          _id={userId}
+          effect={effect}
+        />
+        // <Stack
+        //   flexDirection="row"
+        //   alignSelf="flex-start"
+        //   alignItems="center"
+        //   justifyContent="flex-start"
+        //   gap={2}
+        //   padding={1}
+        // >
+        //   <Avatar
+        //     src={aFollower.prfilePicture}
+        //     sx={{
+        //       bgcolor: `red`,
+        //       textDecoration: "none",
+        //       width: "30px",
+        //       height: "30px",
+        //       marginRight: "auto",
+        //     }}
+        //     aria-label="recipe"
+        //   >
+        //     {aFollower?.username.substring(0, 1)}
+        //   </Avatar>
 
-          //   <Typography
-          //     sx={{ textDecoration: "none", color: "text.primary" }}
-          //     marginRight={1}
-          //     fontWeight={600}
-          //   >
-          //     {aFollower?.username}
-          //   </Typography>
-          // </Stack>
-        ))}
+        //   <Typography
+        //     sx={{ textDecoration: "none", color: "text.primary" }}
+        //     marginRight={1}
+        //     fontWeight={600}
+        //   >
+        //     {aFollower?.username}
+        //   </Typography>
+        // </Stack>
+      ))}
       </Stack>
 )}
     </Stack>
