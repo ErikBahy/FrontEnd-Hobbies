@@ -2,7 +2,9 @@ import { Avatar, Button, Stack, Typography } from "@mui/material";
 import React from "react";
 import axios from "axios";
 
+
 function UnFollowUsersLine({ effect, aFollower, seteffect, _id, checkId }) {
+ 
   const removeFollower = async (e) => {
     e.preventDefault();
 
@@ -18,6 +20,7 @@ function UnFollowUsersLine({ effect, aFollower, seteffect, _id, checkId }) {
   };
 
   return (
+    
     <Stack
       flexDirection="row"
       alignSelf="flex-start"
@@ -59,8 +62,8 @@ function UnFollowUsersLine({ effect, aFollower, seteffect, _id, checkId }) {
           Remove
         </Button>
       ) : null}
-    </Stack>
-  );
+</Stack>
+        );
 }
 
 export default UnFollowUsersLine;

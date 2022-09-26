@@ -21,19 +21,16 @@ function FollowersData({ _id, userId, setFollowersU, checkId }) {
     userMongo,
     "userMongo"
   );
-  //////////////////////////////////
   console.log("modal rannnnnnnnn followers");
 
   useEffect(() => {
     getUserFollowers(userId).then((followersss) => {
       setFollowers(followersss);
+      setloading(false)
     });
   }, [effect]);
 
-  useEffect(()=>{
-    setloading(false)
-  },[])
-
+ 
   return (
     <Stack
       sx={{
@@ -73,9 +70,10 @@ function FollowersData({ _id, userId, setFollowersU, checkId }) {
           fontWeight: 200,
         }}
       />
+      { loading ? 
+      (
+        <MoonLoader color="grey" loading speedMultiplier={1} />
 
-      { loading ? (
-                <MoonLoader color="grey" loading speedMultiplier={1} />
       ) : (
 
       <Stack width={1} sx={{ overflow: "hidden", overflowY: "scroll" }}>
@@ -87,39 +85,9 @@ function FollowersData({ _id, userId, setFollowersU, checkId }) {
           _id={userId}
           effect={effect}
         />
-        // <Stack
-        //   flexDirection="row"
-        //   alignSelf="flex-start"
-        //   alignItems="center"
-        //   justifyContent="flex-start"
-        //   gap={2}
-        //   padding={1}
-        // >
-        //   <Avatar
-        //     src={aFollower.prfilePicture}
-        //     sx={{
-        //       bgcolor: `red`,
-        //       textDecoration: "none",
-        //       width: "30px",
-        //       height: "30px",
-        //       marginRight: "auto",
-        //     }}
-        //     aria-label="recipe"
-        //   >
-        //     {aFollower?.username.substring(0, 1)}
-        //   </Avatar>
-
-        //   <Typography
-        //     sx={{ textDecoration: "none", color: "text.primary" }}
-        //     marginRight={1}
-        //     fontWeight={600}
-        //   >
-        //     {aFollower?.username}
-        //   </Typography>
-        // </Stack>
       ))}
       </Stack>
-)}
+      )}
     </Stack>
   );
 }
