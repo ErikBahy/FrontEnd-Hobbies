@@ -30,6 +30,7 @@ function FollowersData({ _id, userId, setFollowersU, checkId }) {
     });
   }, [effect]);
 
+  const style = {position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" };
  
   return (
     <Stack
@@ -72,8 +73,9 @@ function FollowersData({ _id, userId, setFollowersU, checkId }) {
       />
       { loading ? 
       (
-        <MoonLoader color="grey" loading speedMultiplier={1} />
-
+      <div style={style}>
+        <MoonLoader  color="grey" loading speedMultiplier={1} />
+        </div>
       ) : (
 
       <Stack width={1} sx={{ overflow: "hidden", overflowY: "scroll" }}>
