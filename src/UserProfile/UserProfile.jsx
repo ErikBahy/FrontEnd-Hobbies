@@ -28,7 +28,12 @@ function UserProfile() {
         </div>
 
         <Stack pt={2} flexDirection="row" alignItems="center">
-          <Box flex={1} sx={{ display: { xs: "none", md: "block" } }}></Box>
+          <Box
+            sx={{
+              display: { xs: "none", sm: "block" },
+              flex: { sm: 1, md: 2 },
+            }}
+          ></Box>
           <Stack flex={4} flexDirection="column" sx={{ backgroundColor: "" }}>
             <UserDetails
               setdividerLoading={setdividerLoading}
@@ -60,7 +65,13 @@ function UserProfile() {
               />
             </Stack>
           </Stack>
-          <Box flex={1} sx={{ display: { xs: "none", md: "block" } }}></Box>
+          <Box
+            flex={2}
+            sx={{
+              display: { xs: "none", sm: "block" },
+              flex: { sm: 1, md: 2 },
+            }}
+          ></Box>
         </Stack>
       </Box>
     </>

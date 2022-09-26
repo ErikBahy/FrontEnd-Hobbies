@@ -255,7 +255,10 @@ function Post({
   };
   return (
     <>
-      <Card width="100%" sx={{ margin: 2 }}>
+      <Card
+        width="100%"
+        sx={{ marginX: called === "userProfile" ? 0 : 2, marginY: 2 }}
+      >
         <Stack flexdirection="row">
           <CardHeader
             sx={{ padding: "10px" }}
