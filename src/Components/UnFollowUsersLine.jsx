@@ -2,13 +2,13 @@ import { Avatar, Button, Stack, Typography } from "@mui/material";
 import React from "react";
 import axios from "axios";
 
-function JoinedUsersLine({ effect, aFollower, seteffect, _id }) {
-  const unjoinPost = async (e) => {
+function UnFollowUsersLine({ effect, aFollower, seteffect, _id }) {
+  const removeFollower = async (e) => {
     e.preventDefault();
 
     try {
       await axios.get(
-        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/unjoinPost/${aFollower._id}/${_id}`
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/unfollow/${aFollower._id}/${_id}`
       );
 
       seteffect(!effect);
@@ -50,14 +50,14 @@ function JoinedUsersLine({ effect, aFollower, seteffect, _id }) {
       <Button
         color="error"
         onClick={(e) => {
-          unjoinPost(e, aFollower._id);
+          removeFollower(e, aFollower._id);
         }}
       >
         {" "}
-        Delete
+        Remove
       </Button>
     </Stack>
   );
 }
 
-export default JoinedUsersLine;
+export default UnFollowUsersLine;
