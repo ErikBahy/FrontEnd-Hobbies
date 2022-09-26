@@ -255,8 +255,8 @@ function Post({
   };
   return (
     <>
-      <Card sx={{ margin: 2 }}>
-        <Stack flexdirection="row" width="100%">
+      <Card width="100%" sx={{ margin: 2 }}>
+        <Stack flexdirection="row">
           <CardHeader
             sx={{ padding: "10px" }}
             title={
