@@ -458,22 +458,31 @@ function Post({
               <Typography>{postLikes == 1 ? "Like" : "Likes"} </Typography>
             </Stack>
             <Stack flexDirection="row">
-              <Typography
+              <Button
+                variant="text"
+                disableRipple
                 onClick={() =>
                   comments.length > 0
                     ? setcommentsOpen(!commentsOpen)
                     : setcommentsOpen(commentsOpen)
                 }
-                sx={{ color: "text.secondary" }}
-                paddingRight="4px"
-                paddingLeft="2px"
+                sx={{
+                  color: "text.secondary",
+                  "&:hover": {
+                    backgroundColor: "#fff",
+                  },
+                  padding: "2px",
+                  margin: 0,
+                  minHeight: 0,
+                  minWidth: 0,
+                }}
               >
                 {!commentsOpen
                   ? comments.length > 0
                     ? `View all ${comments?.length} comments`
                     : "No Comments"
                   : "Hide Comments"}
-              </Typography>
+              </Button>
             </Stack>
             <Stack>
               {showComment ? (

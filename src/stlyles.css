@@ -18,3 +18,17 @@
   height: 10vh;
   margin-top: auto;
 }
+
+input[type="file" i] {
+  appearance: none;
+  background-color: initial;
+  cursor: pointer;
+
+  color: inherit;
+  text-overflow: ellipsis;
+  white-space: pre;
+  text-align: center !important;
+  padding: initial;
+  border: initial;
+  overflow: hidden !important;
+}

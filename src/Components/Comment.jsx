@@ -15,30 +15,29 @@ function Comment(data) {
   }, []);
 
   return (
-    <Stack
-      sx={{ whiteSpace: "initial" }}
-      flexDirection="row"
-      marginTop="10px"
-      alignItems="center"
-    >
-      <Typography
-        component={Link}
-        to={`/userprofile/${data.data.commentCognitoId}`}
-        sx={{
-          textDecoration: "none",
-          color: "text.primary",
-        }}
-        marginRight={1}
-        fontWeight={600}
-      >
-        {user?.username}{" "}
-      </Typography>
-      <Typography sx={{ wordBreak: "break-all" }} fontWeight={100}>
-        {data?.data?.text}{" "}
-      </Typography>
-      <Typography sx={{ marginLeft: "auto" }} fontWeight={100}>
-        {data?.data?.date.substring(0, 10)}{" "}
-      </Typography>
+    <Stack paddingLeft="2px" marginBottom={1}>
+      <Stack flexDirection="row">
+        <Typography
+          component={Link}
+          to={`/userprofile/${data.data.commentCognitoId}`}
+          sx={{
+            textDecoration: "none",
+            color: "text.primary",
+          }}
+          marginRight={1}
+          fontWeight={600}
+        >
+          {user?.username}{" "}
+        </Typography>
+        <Typography sx={{ marginLeft: "auto" }} fontWeight={100}>
+          {data?.data?.date.substring(0, 10)}{" "}
+        </Typography>
+      </Stack>
+      <Stack flexDirection="row" marginTop="0px" alignItems="center">
+        <Typography sx={{ width: 1, wordBreak: "break-all" }} fontWeight={100}>
+          {data?.data?.text}{" "}
+        </Typography>
+      </Stack>
     </Stack>
   );
 }

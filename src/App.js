@@ -13,16 +13,16 @@ import EditProfileModal from "./EditProfile/EditProfileModal";
 
 function App() {
   const userContext = useContext(UserContext);
-  const[isLogged,setIsLogged]=useState(false)
-  useEffect(()=>{
-    if(useContext.currentUserMongoId===undefined){
-      setIsLogged(false)
-    }else{
-      setIsLogged(true)
+  const [isLogged, setIsLogged] = useState(false);
+  useEffect(() => {
+    if (useContext.currentUserMongoId === undefined) {
+      setIsLogged(false);
+    } else {
+      setIsLogged(true);
     }
-  },[userContext])
+  }, [userContext]);
 
-console.log(isLogged,"is logged");
+  console.log(isLogged, "is logged");
 
   useEffect(() => {
     userContext
@@ -33,18 +33,21 @@ console.log(isLogged,"is logged");
         )
       );
   }, []);
- 
-
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={!isLogged ? <Login /> : <Navigate replace to={"/mainPage"} />} />
-        <Route path="/mainPage" element={<MainPage /> }  />
+        <Route
+          path="/"
+          element={
+            !isLogged ? <Login /> : <Navigate replace to={"/mainPage"} />
+          }
+        />
+        <Route path="/mainPage" element={<MainPage />} />
         <Route path="/newpost" element={<NewPostModalNewPage />} />
-        <Route path="/editprofile" element={<EditProfile/>} />
-        <Route path="/editmodal" element={<EditProfileModal/>}/>
-        <Route path="/userprofile/:cognitoId" element={ <UserProfile />}/>
+        <Route path="/editprofile" element={<EditProfile />} />
+        <Route path="/editmodal" element={<EditProfileModal />} />
+        <Route path="/userprofile/:cognitoId" element={<UserProfile />} />
       </Routes>
     </BrowserRouter>
   );

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createContext } from "react";
 import axios from "axios";
 import { Auth } from "aws-amplify";
+import { getMongoIdFromCognitoId } from "../apiCalls";
 
 const UserContext = createContext();
 
@@ -11,9 +12,9 @@ function UserProvider(props) {
   const [userMongoId, setuserMongoId] = useState();
   const [currentUserMongoId, setcurrentUserMongoId] = useState();
   const [isFollowed, setisFollowed] = useState();
+  const [appEffect, setappEffect] = useState(false);
 
   // useEffect(()=>) thirr funks
-
 
   const getCurrentUserId = async () => {
     const currentUser = await Auth.currentAuthenticatedUser();
@@ -24,13 +25,20 @@ function UserProvider(props) {
     return userId;
   };
 
+  useEffect(() => {
+    getCurrentUserId().then((cognitoId) =>
+      getMongoIdFromCognitoId(cognitoId).then((id) => setcurrentUserMongoId(id))
+    );
+  }, []);
+
   const [user, setUser] = useState([]);
 
   async function signOut() {
     try {
       await Auth.signOut();
       window.location.reload(true);
-      
+      setappEffect(!appEffect);
+
       localStorage.removeItem("userLogged");
     } catch (error) {
       console.log("error signing out: ", error);
@@ -57,6 +65,8 @@ function UserProvider(props) {
     <UserContext.Provider
       value={{
         user: user,
+        setappEffect: setappEffect,
+        appEffect: appEffect,
         signOut: signOut,
         getCurrentUserId: getCurrentUserId,
         currentUserId: currentUserId,

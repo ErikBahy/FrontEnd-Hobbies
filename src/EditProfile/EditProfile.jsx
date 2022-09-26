@@ -18,18 +18,17 @@ import {
 } from "../apiCalls";
 import { UserContext } from "../contexts/UserContext";
 import xIcon from "../logos/Group 182.png";
-import FileBase from 'react-file-base64';
-
+import FileBase from "react-file-base64";
 
 function EditProfile({ called, setOpen }) {
   console.log(called, "called");
   const userContext = useContext(UserContext);
   const myUser = userContext.user;
-  const { username, prfilePicture  , followers, followed } = userContext.user;
+  const { username, prfilePicture, followers, followed } = userContext.user;
   const [cognitoId, setcognitoId] = useState();
   const [newLocation, setnewLocation] = useState("");
   const [newBio, setnewBio] = useState("");
-  const [newProfilePicture, setNewProfilePicture]= useState("");
+  const [newProfilePicture, setNewProfilePicture] = useState("");
   const navigate = useNavigate();
   const handleNavigateClick = () => {
     console.log("navigate ran");
@@ -40,7 +39,7 @@ function EditProfile({ called, setOpen }) {
   const handleSave = (e) => {
     try {
       e.preventDefault();
-      updateUserInfo(myUser._id, newBio, newLocation,newProfilePicture);
+      updateUserInfo(myUser._id, newBio, newLocation, newProfilePicture);
       handleNavigateClick();
       if (called === "userdetails") {
         setOpen(false);
@@ -59,11 +58,10 @@ function EditProfile({ called, setOpen }) {
 
   return (
     <Stack
-    color="text.primary"
-    borderRadius={5}
-    p={3}
-    sx={{backgroundColor:"background.myBackground",  paddingTop: 2}}
-      
+      color="text.primary"
+      borderRadius={5}
+      p={3}
+      sx={{ backgroundColor: "background.myBackground", paddingTop: 2 }}
     >
       <Stack
         flexDirection="row"
@@ -99,22 +97,20 @@ function EditProfile({ called, setOpen }) {
         }}
       />
       <Stack gap={2} my={1} alignItems="center">
-        <Avatar
-          sx={{ width: 90, height: 90 }}
-          src={prfilePicture}
-        />
-        
+        <Avatar sx={{ width: 90, height: 90 }} src={prfilePicture} />
+
         <Typography
           fontWeight={500}
           color="primary"
           fontSize="16px"
           variant="span"
+          alignSelf="center !important"
         >
-        <FileBase 
-        type= "file"
-        multiple={false}
-        onDone={({base64})=>setNewProfilePicture(base64)}
-        />
+          <FileBase
+            type="file"
+            multiple={false}
+            onDone={({ base64 }) => setNewProfilePicture(base64)}
+          />
         </Typography>
       </Stack>
       <TextField
@@ -157,12 +153,11 @@ function EditProfile({ called, setOpen }) {
       <Button
         variant="contained"
         onClick={(e) => {
-          handleSave(e)
+          handleSave(e);
         }}
         size="large"
         color="primary"
         sx={{ width: "100%", marginY: 3 }}
-        
       >
         Save
       </Button>

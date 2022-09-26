@@ -38,7 +38,7 @@ export const addUser = async () => {
       username: username,
       location: "",
       bio: "",
-      prfilePicture:"",
+      prfilePicture: "",
     }
   );
   console.log(userId);
@@ -89,9 +89,25 @@ export const getUserFollowed = async (userMongoId) => {
   return await followed.data;
 };
 
-export const updateUserInfo = async (mongoId, newBio, newLocation, newProfilePicture) => {
+export const updateUserInfo = async (
+  mongoId,
+  newBio,
+  newLocation,
+  newProfilePicture
+) => {
+  let body = {};
+  if (newBio) {
+    body.bio = newBio;
+  }
+  if (newLocation) {
+    body.location = newLocation;
+  }
+  if (newProfilePicture) {
+    body.prfilePicture = newProfilePicture;
+  }
+
   await axios.patch(
     ` https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/user/put/${mongoId}`,
-    { bio: newBio, location: newLocation,prfilePicture: newProfilePicture }
+    body
   );
 };
