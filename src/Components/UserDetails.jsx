@@ -397,6 +397,7 @@ function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
           aria-describedby="modal-modal-description"
         >
           <FollowersData
+            checkId={checkId}
             setFollowersU={setFollowersU}
             userId={checkId ? currentUserMongoId : userMongoId}
           />

@@ -344,7 +344,7 @@ function Post({
 
         <CardContent sx={{ padding: "10px" }}>
           <Typography
-            sx={{ fontSize: 16 }}
+            sx={{ fontSize: 16, wordBreak: "break-all" }}
             variant="body2"
             color="text.primary"
           >

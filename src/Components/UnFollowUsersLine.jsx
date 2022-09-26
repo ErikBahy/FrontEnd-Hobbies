@@ -2,7 +2,7 @@ import { Avatar, Button, Stack, Typography } from "@mui/material";
 import React from "react";
 import axios from "axios";
 
-function UnFollowUsersLine({ effect, aFollower, seteffect, _id }) {
+function UnFollowUsersLine({ effect, aFollower, seteffect, _id, checkId }) {
   const removeFollower = async (e) => {
     e.preventDefault();
 
@@ -47,15 +47,18 @@ function UnFollowUsersLine({ effect, aFollower, seteffect, _id }) {
       >
         {aFollower?.username}
       </Typography>
-      <Button
-        color="error"
-        onClick={(e) => {
-          removeFollower(e, aFollower._id);
-        }}
-      >
-        {" "}
-        Remove
-      </Button>
+      {checkId ? (
+        <Button
+          sx={{ marginLeft: "auto", justifySelf: "flex-end" }}
+          color="error"
+          onClick={(e) => {
+            removeFollower(e, aFollower._id);
+          }}
+        >
+          {" "}
+          Remove
+        </Button>
+      ) : null}
     </Stack>
   );
 }

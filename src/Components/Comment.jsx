@@ -24,13 +24,18 @@ function Comment(data) {
       <Typography
         component={Link}
         to={`/userprofile/${data.data.commentCognitoId}`}
-        sx={{ textDecoration: "none", color: "text.primary" }}
+        sx={{
+          textDecoration: "none",
+          color: "text.primary",
+        }}
         marginRight={1}
         fontWeight={600}
       >
         {user?.username}{" "}
       </Typography>
-      <Typography fontWeight={100}>{data?.data?.text} </Typography>
+      <Typography sx={{ wordBreak: "break-all" }} fontWeight={100}>
+        {data?.data?.text}{" "}
+      </Typography>
       <Typography sx={{ marginLeft: "auto" }} fontWeight={100}>
         {data?.data?.date.substring(0, 10)}{" "}
       </Typography>
