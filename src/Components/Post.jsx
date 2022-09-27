@@ -292,20 +292,31 @@ function Post({
             action={
               <Stack flexDirection="row" alignItems="center">
                 {currentUserId == postCognitoId ? (
-                  <StyledButton
-                    onClick={() =>
-                      joined?.length > 0
-                        ? setJoinedUsers(true)
-                        : setJoinedUsers(false)
-                    }
-                    sx={{
-                      fontSize: "10px",
-                    }}
-                    size="small"
-                    variant="contained"
-                  >
-                    Check{" "}
-                  </StyledButton>
+                  <>
+                    <StyledButton
+                      onClick={() =>
+                        joined?.length > 0
+                          ? setJoinedUsers(true)
+                          : setJoinedUsers(false)
+                      }
+                      sx={{
+                        fontSize: "10px",
+                      }}
+                      size="small"
+                      variant="contained"
+                    >
+                      Check{" "}
+                    </StyledButton>
+                    <StyledButton
+                      component={Link}
+                      to={`/chat/${_id}`}
+                      size="small"
+                      variant="contained"
+                      sx={{ marginLeft: 1 }}
+                    >
+                      Open Chat
+                    </StyledButton>
+                  </>
                 ) : isJoined === true ? (
                   <StyledButton
                     onClick={() => {
