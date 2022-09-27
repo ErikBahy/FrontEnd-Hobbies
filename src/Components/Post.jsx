@@ -368,6 +368,7 @@ function Post({
                 {numberJoined}/{limit}
               </Typography>
             </Stack>
+            <Button component={Link} to={`/chat/${_id}`}  >Chat App</Button>
             <Stack flexDirection="row" alignItems="center">
               {tags?.map((el) => (
                 <ShowTags tags={el} />
