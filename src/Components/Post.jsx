@@ -49,6 +49,7 @@ import ShowTags from "./ShowTags";
 import peopleIcon from "../logos/Group 180.png";
 import calendarIcon from "../logos/Group 179.png";
 import commentIcon from "../logos/Group 175.png";
+import { Auth } from "aws-amplify";
 
 //////////////////////////////////////////////
 import JoinedUsersData from "./JoinedUsersData";
@@ -103,8 +104,15 @@ function Post({
 
   ///////////////////////////////////////////////////////////////
   const getJoinedUsers = async () => {
+    const userAuth = await Auth.currentAuthenticatedUser();
+      const token = userAuth.signInUserSession.idToken.jwtToken;
+      const requestInfo = {
+        headers: {
+          Authorization: token,
+        },
+      }
     const joinedU = await axios.get(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/joined/users/${_id}`
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/joined/users/${_id}`, requestInfo
     );
     console.log(joinedU.data);
     return await joinedU.data;
@@ -120,15 +128,29 @@ function Post({
   };
 
   const joinPost = async () => {
+    const userAuth = await Auth.currentAuthenticatedUser();
+      const token = userAuth.signInUserSession.idToken.jwtToken;
+      const requestInfo = {
+        headers: {
+          Authorization: token,
+        },
+      }
     await axios.get(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/joinPost/${currentUserMongoId}/${_id}`
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/joinPost/${currentUserMongoId}/${_id}`, requestInfo
     );
     // shouldEffectRun ? setshouldEffectRun(false) : setshouldEffectRun(true);
     // feedEffectRun ? setfeedEffectRun(false) : setfeedEffectRun(true);
   };
   const unjoinPost = async () => {
+    const userAuth = await Auth.currentAuthenticatedUser();
+      const token = userAuth.signInUserSession.idToken.jwtToken;
+      const requestInfo = {
+        headers: {
+          Authorization: token,
+        },
+      }
     await axios.get(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/unjoinPost/${currentUserMongoId}/${_id}`
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/unjoinPost/${currentUserMongoId}/${_id}`, requestInfo
     );
     // feedEffectRun ? setfeedEffectRun(false) : setfeedEffectRun(true);
     // shouldEffectRun ? setshouldEffectRun(false) : setshouldEffectRun(true);
@@ -136,9 +158,16 @@ function Post({
 
   const deletePost = async (e, _id) => {
     try {
+      const userAuth = await Auth.currentAuthenticatedUser();
+      const token = userAuth.signInUserSession.idToken.jwtToken;
+      const requestInfo = {
+        headers: {
+          Authorization: token,
+        },
+      }
       e.preventDefault();
       await axios.delete(
-        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/delete/post/${currentUserMongoId}/${_id}`
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/delete/post/${currentUserMongoId}/${_id}`, requestInfo
       );
 
       called === "userProfile"
@@ -167,8 +196,15 @@ function Post({
 
   const allComments = async () => {
     try {
+      const userAuth = await Auth.currentAuthenticatedUser();
+      const token = userAuth.signInUserSession.idToken.jwtToken;
+      const requestInfo = {
+        headers: {
+          Authorization: token,
+        },
+      }
       const res = await axios.get(
-        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comments/post/${_id}`
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comments/post/${_id}`, requestInfo
       );
       setComments(res.data);
 
@@ -195,8 +231,15 @@ function Post({
   );
   const getLikes = async () => {
     try {
+      const userAuth = await Auth.currentAuthenticatedUser();
+      const token = userAuth.signInUserSession.idToken.jwtToken;
+      const requestInfo = {
+        headers: {
+          Authorization: token,
+        },
+      }
       const res = await axios.get(
-        ` https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/getLike/users/${_id}`
+        ` https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/getLike/users/${_id}`, requestInfo
       );
       setpostLikes(res.data.length);
     } catch (error) {
@@ -209,12 +252,19 @@ function Post({
 
   const postComment = async () => {
     try {
+      const userAuth = await Auth.currentAuthenticatedUser();
+      const token = userAuth.signInUserSession.idToken.jwtToken;
+      const requestInfo = {
+        headers: {
+          Authorization: token,
+        },
+      }
       await axios.post(
-        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comment/post/${_id}`,
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comment/post/${_id}`, 
         {
           commentCognitoId: currentUserId,
           text: commentsText,
-        }
+        }, requestInfo
       );
       shouldEffectRun ? setshouldEffectRun(false) : setshouldEffectRun(true);
       clear();
@@ -225,9 +275,16 @@ function Post({
 
   const removeLikeAtPost = async () => {
     try {
+      const userAuth = await Auth.currentAuthenticatedUser();
+      const token = userAuth.signInUserSession.idToken.jwtToken;
+      const requestInfo = {
+        headers: {
+          Authorization: token,
+        },
+      }
       setpostLikes((postLikes) => postLikes - 1);
       await axios.get(
-        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/unLike/${currentUserMongoId}/${_id}`
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/unLike/${currentUserMongoId}/${_id}`, requestInfo
       );
       // shouldEffectRun ? setshouldEffectRun(false) : setshouldEffectRun(true);
     } catch (error) {
@@ -243,9 +300,16 @@ function Post({
 
   const addLikeAtPost = async () => {
     try {
+      const userAuth = await Auth.currentAuthenticatedUser();
+      const token = userAuth.signInUserSession.idToken.jwtToken;
+      const requestInfo = {
+        headers: {
+          Authorization: token,
+        },
+      }
       setpostLikes((postLikes) => postLikes + 1);
       await axios.get(
-        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/addLike/users/${currentUserMongoId}/${_id}`
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/addLike/users/${currentUserMongoId}/${_id}`, requestInfo
       );
 
       // shouldEffectRun ? setshouldEffectRun(false) : setshouldEffectRun(true);

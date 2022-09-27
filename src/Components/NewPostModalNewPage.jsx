@@ -35,6 +35,7 @@ import xIcon from "../logos/Group 182.png";
 import peopleIcon from "../logos/Group 180.png";
 import calendarIcon from "../logos/Group 179.png";
 import { Link, useNavigate } from "react-router-dom";
+import { Auth } from "aws-amplify";
 
 const StyledModal = styled(Modal)({
   display: "flex",
@@ -96,6 +97,13 @@ function NewPostModalNewPage({
       }
     }*/
     try {
+      const userAuth = await Auth.currentAuthenticatedUser();
+      const token = userAuth.signInUserSession.idToken.jwtToken;
+      const requestInfo = {
+        headers: {
+          Authorization: token,
+        },
+      }
       setisposting(true);
       e.preventDefault();
       await axios.post(
@@ -108,7 +116,7 @@ function NewPostModalNewPage({
           startTime: value.$d,
           username: loggedUser.username,
           tags: tag,
-        }
+        },requestInfo
       );
       handleNavigateClick();
       console.log("postPostRan when clicked");

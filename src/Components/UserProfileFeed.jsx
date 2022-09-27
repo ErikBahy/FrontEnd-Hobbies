@@ -5,6 +5,7 @@ import axios from "axios";
 import { useState } from "react";
 import { UserContext } from "../contexts/UserContext";
 import { getMongoIdFromCognitoId } from "../apiCalls";
+import { Auth } from "aws-amplify";
 
 const url = "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com";
 
@@ -16,13 +17,21 @@ function Feed({ cognitoId, seteffectRun, effectRun, tabValue }) {
 
   const [userPosts, setUserPosts] = useState([]);
   const getUserPosts = async (mongoId) => {
+    const userAuth = await Auth.currentAuthenticatedUser();
+      const token = userAuth.signInUserSession.idToken.jwtToken;
+      const requestInfo = {
+        headers: {
+          Authorization: token,
+        },
+      }
+
     setloading(true);
     const endpoint =
       tabValue === "MyPosts"
         ? `${url}/dev/posts/user/${mongoId}`
         : `${url}/dev/postsJoined/${mongoId}`;
     try {
-      const res = await axios.get(endpoint);
+      const res = await axios.get(endpoint, requestInfo);
       const data = res.data;
       console.log(data, "user post data from mongo id");
       setUserPosts(data);

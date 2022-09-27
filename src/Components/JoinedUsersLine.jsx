@@ -1,14 +1,22 @@
 import { Avatar, Box, Button, Stack, Typography } from "@mui/material";
 import React from "react";
 import axios from "axios";
+import { Auth } from "aws-amplify";
 
 function JoinedUsersLine({ effect, aFollower, seteffect, _id }) {
   const unjoinPost = async (e) => {
     e.preventDefault();
 
     try {
+      const userAuth = await Auth.currentAuthenticatedUser();
+      const token = userAuth.signInUserSession.idToken.jwtToken;
+      const requestInfo = {
+        headers: {
+          Authorization: token,
+        },
+      }
       await axios.get(
-        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/unjoinPost/${aFollower._id}/${_id}`
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/unjoinPost/${aFollower._id}/${_id}`, requestInfo
       );
 
       seteffect(!effect);

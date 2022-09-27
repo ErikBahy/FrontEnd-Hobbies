@@ -43,6 +43,7 @@ import axios from "axios";
 import FollowersData from "./FollowersData";
 import UserSearchModal from "./UserSearchModal";
 import { calculateNewValue } from "@testing-library/user-event/dist/utils";
+import { Auth } from "aws-amplify";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -130,8 +131,15 @@ function Navbar({ called, userId }) {
   console.log(currentUserId, "clg from logout fucntion");
 
   const SearchResults = async () => {
+    const userAuth = await Auth.currentAuthenticatedUser();
+    const token = userAuth.signInUserSession.idToken.jwtToken;
+    const requestInfo = {
+      headers: {
+        Authorization: token,
+      },
+    }
     const res = await axios.get(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/searchParams?searchQuery=${searchvalue}`
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/searchParams?searchQuery=${searchvalue}`, requestInfo
     );
     const data = res.data;
     setusersFound(data);
