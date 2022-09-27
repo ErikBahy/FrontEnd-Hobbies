@@ -13,17 +13,27 @@ import { getUserFollowers } from "../apiCalls";
 import xIcon from "../logos/Group 182.png";
 import axios from "axios";
 import JoinedUsersLine from "./JoinedUsersLine";
+import { MoonLoader } from "react-spinners";
 
 function JoinedUsersData({ _id, getJoinedUsers, setJoinedUsers }) {
   const [joinedU, setJoinedU] = useState();
   const [effect, seteffect] = useState(false);
   const [userMongo, setuserMongo] = useState();
+  const [loading, setloading] = useState(true)
+  const style = {
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+  };
+
   console.log(_id, "mongoid  ", joinedU, "joinedd   ", userMongo, "userMongo");
   console.log("modal rannnnnnnnn JOINED");
 
   useEffect(() => {
     getJoinedUsers().then((joinedUsers) => {
       setJoinedU(joinedUsers);
+      setloading(false)
     });
   }, [effect]);
 
@@ -63,14 +73,20 @@ function JoinedUsersData({ _id, getJoinedUsers, setJoinedUsers }) {
           fontWeight: 200,
         }}
       />
-      {joinedU?.map((aFollower) => (
+    
+     
+      { loading ?  (
+         <div style={style}>
+      <MoonLoader color="grey" loading speedMultiplier={1} />
+    </div> ): (
+      joinedU?.map((aFollower) => (
         <JoinedUsersLine
           aFollower={aFollower}
           seteffect={seteffect}
           _id={_id}
           effect={effect}
         />
-      ))}
+      )))}
     </Stack>
   );
 }

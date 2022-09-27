@@ -14,11 +14,8 @@ function UserProvider(props) {
   const [isFollowed, setisFollowed] = useState();
   const [appEffect, setappEffect] = useState(false);
 
-  // useEffect(()=>) thirr funks
-
   const getCurrentUserId = async () => {
     const currentUser = await Auth.currentAuthenticatedUser();
-
     const userId = currentUser.attributes.sub;
     setCurrentUserId(userId);
     setloggedUser(currentUser);
