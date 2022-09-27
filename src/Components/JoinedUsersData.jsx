@@ -19,7 +19,7 @@ function JoinedUsersData({ _id, getJoinedUsers, setJoinedUsers }) {
   const [joinedU, setJoinedU] = useState();
   const [effect, seteffect] = useState(false);
   const [userMongo, setuserMongo] = useState();
-  const [loading, setloading] = useState(true)
+  const [loading, setloading] = useState(true);
   const style = {
     position: "fixed",
     top: "50%",
@@ -33,7 +33,7 @@ function JoinedUsersData({ _id, getJoinedUsers, setJoinedUsers }) {
   useEffect(() => {
     getJoinedUsers().then((joinedUsers) => {
       setJoinedU(joinedUsers);
-      setloading(false)
+      setloading(false);
     });
   }, [effect]);
 
@@ -45,7 +45,6 @@ function JoinedUsersData({ _id, getJoinedUsers, setJoinedUsers }) {
         backgroundColor: "white",
         borderRadius: 10,
         padding: 2,
-        
       }}
       alignItems="center"
     >
@@ -60,7 +59,7 @@ function JoinedUsersData({ _id, getJoinedUsers, setJoinedUsers }) {
         </IconButton>
 
         <Typography sx={{}} fontSize="14px" color="gray" textAlign="center">
-          {`${joinedU?.length} people Joined`}
+          {`People Joined`}
         </Typography>
         <Box></Box>
       </Stack>
@@ -72,22 +71,23 @@ function JoinedUsersData({ _id, getJoinedUsers, setJoinedUsers }) {
           fontWeight: 200,
         }}
       />
-    
-     
-      { loading ?  (
-         <div style={style}>
-      <MoonLoader color="grey" loading speedMultiplier={1} />
-    </div> ): (
-      joinedU?.map((aFollower) => (
-       <Stack width={1} sx={{overflow: "hidden",
-       overflowY: "scroll",}} ><JoinedUsersLine
-          aFollower={aFollower}
-          seteffect={seteffect}
-          _id={_id}
-          effect={effect}
-        />
-        </Stack> 
-      )))}
+
+      {loading ? (
+        <div style={style}>
+          <MoonLoader color="grey" loading speedMultiplier={1} />
+        </div>
+      ) : (
+        joinedU?.map((aFollower) => (
+          <Stack width={1} sx={{ overflow: "hidden", overflowY: "scroll" }}>
+            <JoinedUsersLine
+              aFollower={aFollower}
+              seteffect={seteffect}
+              _id={_id}
+              effect={effect}
+            />
+          </Stack>
+        ))
+      )}
     </Stack>
   );
 }
