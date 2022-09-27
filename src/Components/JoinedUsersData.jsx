@@ -13,17 +13,27 @@ import { getUserFollowers } from "../apiCalls";
 import xIcon from "../logos/Group 182.png";
 import axios from "axios";
 import JoinedUsersLine from "./JoinedUsersLine";
+import { MoonLoader } from "react-spinners";
 
 function JoinedUsersData({ _id, getJoinedUsers, setJoinedUsers }) {
   const [joinedU, setJoinedU] = useState();
   const [effect, seteffect] = useState(false);
   const [userMongo, setuserMongo] = useState();
+  const [loading, setloading] = useState(true);
+  const style = {
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+  };
+
   console.log(_id, "mongoid  ", joinedU, "joinedd   ", userMongo, "userMongo");
   console.log("modal rannnnnnnnn JOINED");
 
   useEffect(() => {
     getJoinedUsers().then((joinedUsers) => {
       setJoinedU(joinedUsers);
+      setloading(false);
     });
   }, [effect]);
 
@@ -35,8 +45,6 @@ function JoinedUsersData({ _id, getJoinedUsers, setJoinedUsers }) {
         backgroundColor: "white",
         borderRadius: 10,
         padding: 2,
-        overflow: "hidden",
-        overflowY: "scroll",
       }}
       alignItems="center"
     >
@@ -51,7 +59,7 @@ function JoinedUsersData({ _id, getJoinedUsers, setJoinedUsers }) {
         </IconButton>
 
         <Typography sx={{}} fontSize="14px" color="gray" textAlign="center">
-          {`${joinedU?.length} people Joined`}
+          {`People Joined`}
         </Typography>
         <Box></Box>
       </Stack>
@@ -63,14 +71,23 @@ function JoinedUsersData({ _id, getJoinedUsers, setJoinedUsers }) {
           fontWeight: 200,
         }}
       />
-      {joinedU?.map((aFollower) => (
-        <JoinedUsersLine
-          aFollower={aFollower}
-          seteffect={seteffect}
-          _id={_id}
-          effect={effect}
-        />
-      ))}
+
+      {loading ? (
+        <div style={style}>
+          <MoonLoader color="grey" loading speedMultiplier={1} />
+        </div>
+      ) : (
+        joinedU?.map((aFollower) => (
+          <Stack width={1} sx={{ overflow: "hidden", overflowY: "scroll" }}>
+            <JoinedUsersLine
+              aFollower={aFollower}
+              seteffect={seteffect}
+              _id={_id}
+              effect={effect}
+            />
+          </Stack>
+        ))
+      )}
     </Stack>
   );
 }

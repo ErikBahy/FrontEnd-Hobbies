@@ -255,7 +255,13 @@ function Post({
   };
   return (
     <>
-      <Card width="100%" sx={{ margin: 2 }}>
+      <Card
+        width="100%"
+        sx={{
+          marginX: { xs: 1, sm: called === "userProfile" ? 0 : 2 },
+          marginY: 2,
+        }}
+      >
         <Stack flexdirection="row">
           <CardHeader
             sx={{ padding: "10px" }}
@@ -352,6 +358,7 @@ function Post({
           </Typography>
         </CardContent>
 
+<<<<<<< HEAD
         <CardActions sx={{ padding: "10px" }}>
           <Stack>
             <Stack flexDirection="row" alignItems="center">
@@ -374,71 +381,89 @@ function Post({
                 <ShowTags tags={el} />
               ))}
             </Stack>
+=======
+        <Stack sx={{ padding: "10px", width: "100%" }}>
+          <Stack flexDirection="row" alignItems="center">
+            <img src={calendarIcon} height={20} width={20} />
+            <Typography mx={1}>
+              {" "}
+              {startTime?.substring(0, 10) + " " + startTime?.slice(11, 16)}
+            </Typography>
+          </Stack>
+          <Stack my="3px" flexDirection="row" alignItems="center">
+            <img src={peopleIcon} height={20} width={20} />
+            <Typography mx={1}>
+              {" "}
+              {numberJoined}/{limit}
+            </Typography>
+          </Stack>
+          <Stack flexDirection="row" alignItems="center">
+            {tags?.map((el) => (
+              <ShowTags tags={el} />
+            ))}
+          </Stack>
+>>>>>>> d42a99d7d775a85db2bf58091e9b112a21e844b1
 
-            <Divider
-              sx={{
-                alignSelf: "center",
-                width: 1,
-                marginTop: 1,
-                fontWeight: 200,
-              }}
-            />
+          <Divider
+            sx={{
+              alignSelf: "center",
+              width: 1,
+              marginTop: 1,
+              fontWeight: 200,
+            }}
+          />
 
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-              width="100%"
-            >
-              <Box display="flex" alignItems="center" direction="row">
-                <Stack flexDirection="row" spacing={0} alignItems="center">
-                  <Tooltip title="">
-                    <Checkbox
-                      sx={{ width: 20, height: 20 }}
-                      checked={checked}
-                      onClick={
-                        checked
-                          ? () => setchecked(false)
-                          : () => setchecked(true)
-                      }
-                      onChange={
-                        checked
-                          ? () => {
-                              removeLikeAtPost();
-                            }
-                          : () => {
-                              addLikeAtPost();
-                            }
-                      }
-                      icon={<FavoriteBorder sx={{ width: 20, height: 20 }} />}
-                      checkedIcon={
-                        <Favorite
-                          sx={{ color: "red", width: 20, height: 20 }}
-                        />
-                      }
-                    />
-                  </Tooltip>
-                </Stack>
-
-                <Tooltip
-                  title=""
-                  onClick={() => {
-                    setShowComment(!showComment);
-                  }}
-                >
-                  <IconButton aria-label="add-comment">
-                    <img src={commentIcon} height={20} width={20} />
-                  </IconButton>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            width="100%"
+          >
+            <Box display="flex" alignItems="center" direction="row">
+              <Stack flexDirection="row" spacing={0} alignItems="center">
+                <Tooltip title="">
+                  <Checkbox
+                    sx={{ width: 20, height: 20 }}
+                    checked={checked}
+                    onClick={
+                      checked ? () => setchecked(false) : () => setchecked(true)
+                    }
+                    onChange={
+                      checked
+                        ? () => {
+                            removeLikeAtPost();
+                          }
+                        : () => {
+                            addLikeAtPost();
+                          }
+                    }
+                    icon={<FavoriteBorder sx={{ width: 20, height: 20 }} />}
+                    checkedIcon={
+                      <Favorite sx={{ color: "red", width: 20, height: 20 }} />
+                    }
+                  />
                 </Tooltip>
-              </Box>
+              </Stack>
 
-              <Box
-                display="flex"
-                direction="row"
-                alignItems="center"
-                sx={{ justifyContent: "space-between" }}
+              <Tooltip
+                title=""
+                onClick={() => {
+                  setShowComment(!showComment);
+                }}
               >
-                {/* <Tooltip title="Join room" sx={{ marginRight: 4 }}>
+                <IconButton aria-label="add-comment">
+                  <img src={commentIcon} height={20} width={20} />
+                </IconButton>
+              </Tooltip>
+            </Box>
+
+            <Box
+              display="flex"
+              direction="row"
+              alignItems="center"
+              sx={{ justifyContent: "space-between" }}
+            >
+              {/* <Tooltip title="Join room" sx={{ marginRight: 4 }}>
                   <IconButton
                     onClick={() =>
                       (window.location.href =
@@ -449,102 +474,101 @@ function Post({
                     <MeetingRoomIcon />
                   </IconButton>
                 </Tooltip> */}
-              </Box>
-            </Stack>
+            </Box>
+          </Stack>
 
-            <Stack flexDirection="row">
-              <Typography paddingRight="4px" paddingLeft="2px">
-                {postLikes}
-              </Typography>
-              <Typography>{postLikes == 1 ? "Like" : "Likes"} </Typography>
-            </Stack>
-            <Stack flexDirection="row">
-              <Button
-                variant="text"
-                disableRipple
-                onClick={() =>
-                  comments.length > 0
-                    ? setcommentsOpen(!commentsOpen)
-                    : setcommentsOpen(commentsOpen)
-                }
-                sx={{
-                  color: "text.secondary",
-                  "&:hover": {
-                    backgroundColor: "#fff",
-                  },
-                  padding: "2px",
-                  margin: 0,
-                  minHeight: 0,
-                  minWidth: 0,
-                }}
-              >
-                {!commentsOpen
-                  ? comments.length > 0
-                    ? `View all ${comments?.length} comments`
-                    : "No Comments"
-                  : "Hide Comments"}
-              </Button>
-            </Stack>
-            <Stack>
-              {showComment ? (
-                <>
-                  <FormControl>
-                    <OutlinedInput
-                      size="small"
-                      id="outlined-adornment-weight"
-                      placeholder="Type your comment"
-                      value={commentsText}
-                      endAdornment={
-                        <InputAdornment position="end">
-                          <StyledButton
-                            onClick={() => {
-                              postComment();
-                              setcommentsOpen(!commentsOpen);
-                              setShowComment(!showComment);
-                            }}
-                            sx={{ color: "white" }}
-                          >
-                            Done
-                          </StyledButton>
-                        </InputAdornment>
-                      }
-                      aria-describedby="outlined-weight-helper-text"
-                      onChange={(e) => setCommentsText(e.target.value)}
-                      inputProps={{
-                        "aria-label": "weight",
-                      }}
-                    />
-                  </FormControl>
-                  {/* <IconButton
+          <Stack flexDirection="row">
+            <Typography paddingRight="4px" paddingLeft="2px">
+              {postLikes}
+            </Typography>
+            <Typography>{postLikes == 1 ? "Like" : "Likes"} </Typography>
+          </Stack>
+          <Stack flexDirection="row">
+            <Button
+              variant="text"
+              disableRipple
+              onClick={() =>
+                comments.length > 0
+                  ? setcommentsOpen(!commentsOpen)
+                  : setcommentsOpen(commentsOpen)
+              }
+              sx={{
+                color: "text.secondary",
+                "&:hover": {
+                  backgroundColor: "#fff",
+                },
+                padding: "2px",
+                margin: 0,
+                minHeight: 0,
+                minWidth: 0,
+              }}
+            >
+              {!commentsOpen
+                ? comments.length > 0
+                  ? `View all ${comments?.length} comments`
+                  : "No Comments"
+                : "Hide Comments"}
+            </Button>
+          </Stack>
+          <Stack>
+            {showComment ? (
+              <>
+                <FormControl>
+                  <OutlinedInput
+                    size="small"
+                    id="outlined-adornment-weight"
+                    placeholder="Type your comment"
+                    value={commentsText}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <StyledButton
+                          onClick={() => {
+                            postComment();
+                            setcommentsOpen(!commentsOpen);
+                            setShowComment(!showComment);
+                          }}
+                          sx={{ color: "white" }}
+                        >
+                          Done
+                        </StyledButton>
+                      </InputAdornment>
+                    }
+                    aria-describedby="outlined-weight-helper-text"
+                    onChange={(e) => setCommentsText(e.target.value)}
+                    inputProps={{
+                      "aria-label": "weight",
+                    }}
+                  />
+                </FormControl>
+                {/* <IconButton
                 onClick={() => {
                   postComment();
                 }}
               >
                 <AddIcon />
               </IconButton> */}
-                </>
-              ) : null}
-            </Stack>
-            {commentsOpen ? renderComments : null}
-            <Modal
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              open={joinedUsers}
-              onClose={() => setJoinedUsers(false)}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <JoinedUsersData
-                setJoinedUsers={setJoinedUsers}
-                _id={_id}
-                getJoinedUsers={getJoinedUsers}
-              />
-            </Modal>
+              </>
+            ) : null}
           </Stack>
-        </CardActions>
+          {commentsOpen ? renderComments : null}
+          <Modal
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            open={joinedUsers}
+            onClose={() => setJoinedUsers(false)}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <JoinedUsersData
+              setJoinedUsers={setJoinedUsers}
+              _id={_id}
+              getJoinedUsers={getJoinedUsers}
+            />
+          </Modal>
+        </Stack>
       </Card>
     </>
   );

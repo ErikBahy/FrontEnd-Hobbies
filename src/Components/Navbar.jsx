@@ -32,6 +32,7 @@ import { UserContext } from "../contexts/UserContext";
 import { useContext } from "react";
 import { addUser, getUserFromCognitoId } from "../apiCalls";
 import group169 from "../logos/sportLogo.png";
+import logoHobbytales from "../logos/logoHobbyTales.png";
 import userProfileIcon from "../logos/Group 172.png";
 import searchIcon from "../logos/Group 173.png";
 import xIcon from "../logos/Group 182.png";
@@ -320,7 +321,7 @@ function Navbar({ called, userId }) {
               size="large"
               color="inherit"
             >
-              <img src={group169} height={25} width={75} />
+              <img src={logoHobbytales} height={25} width={150} />
             </IconButton>
           )}
           {renderMobileSearchInput}
@@ -428,7 +429,7 @@ function Navbar({ called, userId }) {
                     to="/mainpage"
                     color={"inherit"}
                   >
-                    <img src={group169} height={25} width={75} />
+                    <img src={logoHobbytales} height={30} width={200} />
                   </Typography>
                 </Box>
                 <Box>{renderDesktopSearchInput}</Box>
@@ -453,16 +454,6 @@ function Navbar({ called, userId }) {
 
                 <Box sx={{ display: { xs: "none", sm: "flex" } }}>
                   <IconButton
-                    size="large"
-                    aria-label="show 4 new mails"
-                    color="inherit"
-                  >
-                    <Badge badgeContent={4} color="error">
-                      <MailIcon />
-                    </Badge>
-                  </IconButton>
-
-                  <IconButton
                     component={Link}
                     to={`/userprofile/${currentUserId}`}
                     size="large"
@@ -473,7 +464,7 @@ function Navbar({ called, userId }) {
                     onClick={() => addUser()}
                     color="inherit"
                   >
-                    <AccountCircle />
+                    <img src={userProfileIcon} height={25} width={25} />
                   </IconButton>
                 </Box>
               </Toolbar>

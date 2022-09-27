@@ -46,7 +46,7 @@ const style = {
   p: 4,
 };
 
-function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
+function UserDetails({ userId, bio, location, effectRun, setdividerLoading }) {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const userContext = useContext(UserContext);
@@ -84,6 +84,7 @@ function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
   const [showFollowers, setShowFollowers] = useState(false);
   const [followersU, setFollowersU] = useState(false);
   const [followedU, setFollowedU] = useState(false);
+  const [userDetailsEffect, setuserDetailsEffect] = useState(false);
   //////////////////////////////////
 
   console.log(
@@ -136,7 +137,7 @@ function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
         <Button
           size="medium"
           sx={{
-            width: 0.95,
+            width: { xs: 0.95, sm: 1 },
           }}
           variant="contained"
           onClick={(e) => {
@@ -149,7 +150,7 @@ function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
         <Button
           size="medium"
           sx={{
-            width: 0.95,
+            width: { xs: 0.95, sm: 1 },
           }}
           variant="contained"
           onClick={(e) => {
@@ -171,7 +172,7 @@ function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
         setcurrentUserMongoId(mongoId)
       )
     );
-  }, [open, isFollowed, effectRun]);
+  }, [open, isFollowed, effectRun, userDetailsEffect]);
 
   useEffect(() => {
     checkFollow(currentUserMongoId, userMongoId).then((bool) =>
@@ -185,8 +186,7 @@ function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
         alignItems="center"
         justifyContent="space-between"
         flexDirection="row"
-        sx={{ backgroundColor: "" }}
-        marginX={1}
+        sx={{ backgroundColor: "", marginX: { xs: 1, sm: 0 } }}
       >
         <Stack flex={2}>
           {loading ? (
@@ -202,8 +202,8 @@ function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
               alt="Remy Sharp"
               src={prfilePicture}
               sx={{
-                width: { xs: "75px", sm: "150px" },
-                height: { xs: "75px", sm: "150px" },
+                width: { xs: "75px", sm: "125px" },
+                height: { xs: "75px", sm: "125px" },
               }}
             />
           )}
@@ -296,10 +296,10 @@ function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
 
         <Stack flex={1}></Stack>
       </Stack>
-      <Stack flex={4} flexDirection="column" sx={{ backgroundColor: "" }}>
+      <Stack flex={4} flexDirection="column">
         <Stack
           flexDirection="row"
-          sx={{ backgroundColor: "", paddingY: { xs: 1, sm: 3 } }}
+          sx={{ backgroundColor: "", paddingY: { xs: 1, sm: 1 } }}
         >
           {loading ? (
             <Skeleton
@@ -312,12 +312,12 @@ function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
           ) : (
             <Typography
               sx={{
-                paddingLeft: "8px",
-                fontSize: "14px",
+                paddingLeft: { xs: "8px", sm: 0 },
+                fontSize: { xs: "14px", sm: "16px" },
+                fontWeight: { xs: 300, sm: 400 },
               }}
               variant="p"
               component="span"
-              fontWeight={300}
             >
               {bio}
             </Typography>
@@ -325,13 +325,12 @@ function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
         </Stack>
         <Stack
           justifyContent="space-around"
-          alignItems="center"
           sx={{
             backgroundColor: "",
             paddingY: 0,
-            paddingX: 1,
+            paddingX: { xs: 1, sm: 0 },
             fontSize: "12px",
-            flexDirection: { xs: "column", sm: "row" },
+            flexDirection: { xs: "column", sm: "column" },
           }}
         >
           {loading ? (
@@ -341,19 +340,21 @@ function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
               height={10}
               width="20%"
               sx={{
-                alignSelf: { xs: "flex-start", sm: "center" },
+                alignSelf: { xs: "flex-start", sm: "flex-start" },
               }}
             />
           ) : (
             <Typography
               sx={{
-                alignSelf: { xs: "flex-start", sm: "center" },
+                alignSelf: { xs: "flex-start", sm: "flex-start" },
+                fontWeight: { xs: 100, sm: 100 },
+                fontSize: { sm: "16px" },
               }}
               variant="p"
               component="span"
               fontWeight={100}
             >
-              JOINED SINCE 1997
+              {location}
             </Typography>
           )}
         </Stack>
@@ -375,7 +376,7 @@ function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
               sx={{
                 color: "text.primary",
                 borderColor: "text.primary",
-                width: 0.95,
+                width: { xs: 0.95, sm: 1 },
               }}
               variant="outlined"
             >
@@ -397,6 +398,8 @@ function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
           aria-describedby="modal-modal-description"
         >
           <FollowersData
+            userDetailsEffect={userDetailsEffect}
+            setuserDetailsEffect={setuserDetailsEffect}
             checkId={checkId}
             setFollowersU={setFollowersU}
             userId={checkId ? currentUserMongoId : userMongoId}
@@ -429,7 +432,12 @@ function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <EditProfile setOpen={setOpen} called="userdetails" />
+          <EditProfile
+            userDetailsEffect={userDetailsEffect}
+            setuserDetailsEffect={setuserDetailsEffect}
+            setOpen={setOpen}
+            called="userdetails"
+          />
         </Modal>
       </Stack>
     </>

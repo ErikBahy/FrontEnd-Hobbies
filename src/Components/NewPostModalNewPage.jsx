@@ -49,7 +49,12 @@ const UserBox = styled(Box)({
   marginBottom: "20px",
 });
 
-function NewPostModalNewPage({ setOpen, called }) {
+function NewPostModalNewPage({
+  setOpen,
+  called,
+  seteffectRunFromModal,
+  effectRunFromModal,
+}) {
   const [value, setValue] = useState(dayjs());
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
@@ -99,6 +104,7 @@ function NewPostModalNewPage({ setOpen, called }) {
           postCognitoId: cognitoId,
           text: text,
           limit: limit,
+          date: Date.now(),
           startTime: value.$d,
           username: loggedUser.username,
           tags: tag,
@@ -109,6 +115,7 @@ function NewPostModalNewPage({ setOpen, called }) {
       clear();
       setisposting(false);
       setOpen(false);
+      seteffectRunFromModal(!effectRunFromModal);
 
       //  fetchPost()
     } catch (err) {

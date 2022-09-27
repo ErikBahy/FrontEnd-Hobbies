@@ -4,20 +4,17 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import MainPage from "../MainPage/MainPage";
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import {  ThemeProvider } from "@mui/material/styles";
-import { Divider, IconButton } from "@mui/material";
+import { Divider } from "@mui/material";
 import { myTheme } from "../theme";
 import group169 from "../logos/Group 169.png";
 import Football from "../logos/Football.png"
-import { Stack } from "@mui/system";
 import "../authenticationStyle.css"
 import { useNavigate } from "react-router-dom";
 function Login() {
@@ -26,13 +23,13 @@ function Login() {
     password: "",
     email: "",
     authCode: "",
-    formType: "signUp",
+    formType: "signIn",
   };
 
 
   const [formState, updateFormState] = useState(initalFormState);
   const [user, updateUser] = useState(null);
-  console.log(user,"user :::");
+  const navigate = useNavigate()
 
   useEffect(() => {
     checkUser();
@@ -90,13 +87,14 @@ function Login() {
     await Auth.confirmSignUp( username , authCode );
     updateFormState(() => ({ ...formState, formType: "signIn" }));
   }
-  const navigate = useNavigate()
+  
   async function signIn() {
     const { username, password } = formState;
     const user = await Auth.signIn(username, password);
-       navigate('/mainpage')
+       navigate('/mainPage')
     updateFormState(() => ({ ...formState, formType: "signedIn" }));
   }
+ 
   const { formType } = formState;
 
   return (

@@ -20,7 +20,12 @@ import { UserContext } from "../contexts/UserContext";
 import xIcon from "../logos/Group 182.png";
 import FileBase from "react-file-base64";
 
-function EditProfile({ called, setOpen }) {
+function EditProfile({
+  called,
+  setOpen,
+  userDetailsEffect,
+  setuserDetailsEffect,
+}) {
   console.log(called, "called");
   const userContext = useContext(UserContext);
   const myUser = userContext.user;
@@ -43,6 +48,7 @@ function EditProfile({ called, setOpen }) {
       handleNavigateClick();
       if (called === "userdetails") {
         setOpen(false);
+        setuserDetailsEffect(!userDetailsEffect);
       }
     } catch (error) {
       console.log(error);

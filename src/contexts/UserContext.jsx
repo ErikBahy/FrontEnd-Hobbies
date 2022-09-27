@@ -14,11 +14,8 @@ function UserProvider(props) {
   const [isFollowed, setisFollowed] = useState();
   const [appEffect, setappEffect] = useState(false);
 
-  // useEffect(()=>) thirr funks
-
   const getCurrentUserId = async () => {
     const currentUser = await Auth.currentAuthenticatedUser();
-
     const userId = currentUser.attributes.sub;
     setCurrentUserId(userId);
     setloggedUser(currentUser);
@@ -38,7 +35,6 @@ function UserProvider(props) {
       await Auth.signOut();
       window.location.reload(true);
       setappEffect(!appEffect);
-
       localStorage.removeItem("userLogged");
     } catch (error) {
       console.log("error signing out: ", error);
