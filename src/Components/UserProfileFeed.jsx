@@ -8,7 +8,7 @@ import { getMongoIdFromCognitoId } from "../apiCalls";
 
 const url = "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com";
 
-function Feed({ cognitoId, seteffectRun, effectRun }) {
+function Feed({ cognitoId, seteffectRun, effectRun, tabValue }) {
   const userContext = useContext(UserContext);
   const { posts } = userContext.user;
   const [userProfileFeedEffect, setuserProfileFeedEffect] = useState(false);
@@ -17,8 +17,12 @@ function Feed({ cognitoId, seteffectRun, effectRun }) {
   const [userPosts, setUserPosts] = useState([]);
   const getUserPosts = async (mongoId) => {
     setloading(true);
+    const endpoint =
+      tabValue === "MyPosts"
+        ? `${url}/dev/posts/user/${mongoId}`
+        : `${url}/dev/postsJoined/${mongoId}`;
     try {
-      const res = await axios.get(`${url}/dev/posts/user/${mongoId}`);
+      const res = await axios.get(endpoint);
       const data = res.data;
       console.log(data, "user post data from mongo id");
       setUserPosts(data);
@@ -39,7 +43,7 @@ function Feed({ cognitoId, seteffectRun, effectRun }) {
   });
   useEffect(() => {
     getMongoIdFromCognitoId(cognitoId).then((id) => getUserPosts(id));
-  }, [effectRun, userProfileFeedEffect]);
+  }, [effectRun, userProfileFeedEffect, tabValue]);
 
   return (
     <Stack flex={8}>

@@ -46,7 +46,7 @@ const style = {
   p: 4,
 };
 
-function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
+function UserDetails({ userId, bio, location, effectRun, setdividerLoading }) {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const userContext = useContext(UserContext);
@@ -354,7 +354,7 @@ function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
               component="span"
               fontWeight={100}
             >
-              JOINED SINCE 1997
+              {location}
             </Typography>
           )}
         </Stack>
