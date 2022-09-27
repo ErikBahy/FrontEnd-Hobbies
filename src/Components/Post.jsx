@@ -358,30 +358,6 @@ function Post({
           </Typography>
         </CardContent>
 
-<<<<<<< HEAD
-        <CardActions sx={{ padding: "10px" }}>
-          <Stack>
-            <Stack flexDirection="row" alignItems="center">
-              <img src={calendarIcon} height={20} width={20} />
-              <Typography mx={1}>
-                {" "}
-                {startTime?.substring(0, 10) + " " + startTime?.slice(11, 16)}
-              </Typography>
-            </Stack>
-            <Stack my="3px" flexDirection="row" alignItems="center">
-              <img src={peopleIcon} height={20} width={20} />
-              <Typography mx={1}>
-                {" "}
-                {numberJoined}/{limit}
-              </Typography>
-            </Stack>
-            <Button component={Link} to={`/chat/${_id}`}  >Chat App</Button>
-            <Stack flexDirection="row" alignItems="center">
-              {tags?.map((el) => (
-                <ShowTags tags={el} />
-              ))}
-            </Stack>
-=======
         <Stack sx={{ padding: "10px", width: "100%" }}>
           <Stack flexDirection="row" alignItems="center">
             <img src={calendarIcon} height={20} width={20} />
@@ -402,7 +378,6 @@ function Post({
               <ShowTags tags={el} />
             ))}
           </Stack>
->>>>>>> d42a99d7d775a85db2bf58091e9b112a21e844b1
 
           <Divider
             sx={{
