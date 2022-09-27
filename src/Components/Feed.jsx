@@ -1,4 +1,3 @@
-import { LineAxisOutlined } from "@mui/icons-material";
 import {
   Box,
   Stack,
@@ -11,7 +10,6 @@ import {
 import React, { useEffect, useState } from "react";
 import Post from "./Post";
 import axios from "axios";
-import { DotLoader } from "react-spinners";
 
 const url = "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com";
 

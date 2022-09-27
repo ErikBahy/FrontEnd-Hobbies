@@ -1,15 +1,10 @@
 import { Stack } from "@mui/system";
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import Feed from "../Components/UserProfileFeed";
 import UserDetails from "../Components/UserDetails";
-import { Box, Divider, Chip, Skeleton, Tabs, Tab } from "@mui/material";
+import { Box, Divider, Skeleton, Tabs, Tab } from "@mui/material";
 import { UserContext } from "../contexts/UserContext";
 import { useParams } from "react-router-dom";
-import {
-  checkFollow,
-  getCurrentUserId,
-  getMongoIdFromCognitoId,
-} from "../apiCalls";
 import Navbar from "../Components/Navbar";
 import { useState } from "react";
 

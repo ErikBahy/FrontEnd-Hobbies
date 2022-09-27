@@ -10,10 +10,10 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   getCurrentUserId,
-  getMongoIdFromCognitoId,
+ 
   updateUserInfo,
 } from "../apiCalls";
 import { UserContext } from "../contexts/UserContext";

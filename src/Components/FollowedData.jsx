@@ -1,8 +1,6 @@
 import { Avatar, Box, Divider, IconButton, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { getUserFollowers } from "../apiCalls";
 import xIcon from "../logos/Group 182.png";
 import { getUserFollowed } from "../apiCalls";
 import { MoonLoader } from "react-spinners";

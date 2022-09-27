@@ -1,6 +1,5 @@
-import { Add } from "@mui/icons-material";
-import { Box, Fab, Modal, styled, Tooltip } from "@mui/material";
-import React, { useState } from "react";
+import { Box, Modal, styled } from "@mui/material";
+import React from "react";
 import EditProfile from "./EditProfile";
 
 const StyledModal = styled(Modal)({
