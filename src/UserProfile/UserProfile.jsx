@@ -83,6 +83,7 @@ function UserProfile() {
             <Stack>
               {" "}
               <Feed
+                tabValue={tabValue}
                 seteffectRun={seteffectRun}
                 effectRun={effectRun}
                 called="UserProfile"

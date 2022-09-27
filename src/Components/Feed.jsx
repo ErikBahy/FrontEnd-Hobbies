@@ -47,20 +47,6 @@ function Feed({ called, setTag, tag, effectRunFromModal }) {
     } catch (error) {
       console.log(error);
     }
-    const page = await axios.get(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/allpostsPages`
-    );
-    setTotalPages(parseInt(page.data));
-    const res = await axios.get(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/allposts?page=${pageNumber}`
-    );
-    const data = res.data;
-
-    let i = [];
-    data.post.map((el) => i.push(el));
-
-    setPosts(i);
-    console.log(posts, " state from feed");
   };
 
   const getPostsByTag = async () => {
