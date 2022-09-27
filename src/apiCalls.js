@@ -61,13 +61,13 @@ export const addUser = async () => {
   const username = currentUser.username;
   console.log(username, "usernami robt");
   axios.post(
-    `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/chechandpost/user/${userId}`, requestInfo,
+    `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/chechandpost/user/${userId}`,
     {
       username: username,
       location: "",
       bio: "",
       prfilePicture: "",
-    }
+    }, requestInfo
   );
   console.log(userId);
 };
