@@ -2,7 +2,7 @@ import { Stack } from "@mui/system";
 import React, { useContext, useEffect } from "react";
 import Feed from "../Components/UserProfileFeed";
 import UserDetails from "../Components/UserDetails";
-import { Box, Divider, Chip, Skeleton } from "@mui/material";
+import { Box, Divider, Chip, Skeleton, Tabs, Tab } from "@mui/material";
 import { UserContext } from "../contexts/UserContext";
 import { useParams } from "react-router-dom";
 import {
@@ -19,6 +19,10 @@ function UserProfile() {
   const { posts, bio, location } = userContext.user;
   const [effectRun, seteffectRun] = useState(false);
   const [dividerLoading, setdividerLoading] = useState(true);
+  const [tabValue, settabValue] = useState("MyPosts");
+  const handleChange = (event, newValue) => {
+    settabValue(newValue);
+  };
 
   return (
     <>
@@ -52,7 +56,28 @@ function UserProfile() {
             ) : (
               <Divider sx={{ width: 1, marginTop: 3, fontWeight: 200 }}>
                 {" "}
-                <Chip label={posts?.length + " " + " POSTS"} />
+                <Tabs
+                  sx={{ zIndex: 5 }}
+                  textColor="text"
+                  indicatorColor="primary"
+                  aria-label="tabs "
+                  centered
+                  value={tabValue}
+                  onChange={handleChange}
+                >
+                  <Tab
+                    sx={{ padding: "0px", marginX: "4px" }}
+                    component="p"
+                    value="MyPosts"
+                    label="My Posts"
+                  />
+                  <Tab
+                    sx={{ padding: "0px", marginX: "4px" }}
+                    component="p"
+                    value="JoinedPosts"
+                    label="Joined Posts"
+                  />
+                </Tabs>
               </Divider>
             )}
             <Stack>
