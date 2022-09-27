@@ -45,8 +45,7 @@ function JoinedUsersData({ _id, getJoinedUsers, setJoinedUsers }) {
         backgroundColor: "white",
         borderRadius: 10,
         padding: 2,
-        overflow: "hidden",
-        overflowY: "scroll",
+        
       }}
       alignItems="center"
     >
@@ -80,12 +79,14 @@ function JoinedUsersData({ _id, getJoinedUsers, setJoinedUsers }) {
       <MoonLoader color="grey" loading speedMultiplier={1} />
     </div> ): (
       joinedU?.map((aFollower) => (
-        <JoinedUsersLine
+       <Stack width={1} sx={{overflow: "hidden",
+       overflowY: "scroll",}} ><JoinedUsersLine
           aFollower={aFollower}
           seteffect={seteffect}
           _id={_id}
           effect={effect}
         />
+        </Stack> 
       )))}
     </Stack>
   );

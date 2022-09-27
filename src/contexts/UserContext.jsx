@@ -35,7 +35,6 @@ function UserProvider(props) {
       await Auth.signOut();
       window.location.reload(true);
       setappEffect(!appEffect);
-
       localStorage.removeItem("userLogged");
     } catch (error) {
       console.log("error signing out: ", error);
