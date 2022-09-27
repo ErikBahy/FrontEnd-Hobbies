@@ -119,7 +119,7 @@ function Navbar({ called, userId }) {
   const theme = useTheme();
   const matchesDesktop = useMediaQuery(theme.breakpoints.up("sm"));
   const userContext = useContext(UserContext);
-  const { currentUserId, signOut } = userContext;
+  const { currentUserId } = userContext;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [searchOpen, setsearchOpen] = useState(false);
@@ -145,6 +145,16 @@ function Navbar({ called, userId }) {
     setusersFound(data);
     console.log(data);
   };
+
+  async function handleSignOut() {
+    try {    
+      await Auth.signOut()
+      localStorage.setItem("isLogged" , false);
+      window.location.href="/"
+    } catch (error) {
+      console.log("error signing out: ", error);
+    }
+  }
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -192,7 +202,7 @@ function Navbar({ called, userId }) {
       <MenuItem
         onClick={() => {
           handleMenuClose();
-          signOut();
+          handleSignOut();
         }}
       >
         Log Out
@@ -314,7 +324,7 @@ function Navbar({ called, userId }) {
         >
           <Logout
             onClick={() => {
-              signOut();
+              handleSignOut();
             }}
           />
         </IconButton>
