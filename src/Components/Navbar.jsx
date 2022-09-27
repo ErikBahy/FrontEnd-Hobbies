@@ -84,8 +84,36 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
+function getWindowDimensions() {
+  const { innerWidth: width, innerHeight: height } = window;
+  const percentageINeed = 0.5 * width;
+  return {
+    percentageINeed,
+    width,
+    height,
+  };
+}
+export function useWindowDimensions() {
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return windowDimensions;
+}
 
 function Navbar({ called, userId }) {
+  const { height, width, percentageINeed } = useWindowDimensions();
+
+  console.log(height, width, "height and width");
   const [username, setusername] = useState("");
   const theme = useTheme();
   const matchesDesktop = useMediaQuery(theme.breakpoints.up("sm"));
@@ -407,19 +435,26 @@ function Navbar({ called, userId }) {
       >
         <AppBar sx={{ backgroundColor: "navbarColor.main" }} position="static">
           <Stack flexDirection="row" justifyContent="space-between">
-            <Box flex={2} sx={{ display: { xs: "none", sm: "flex" } }}></Box>
+            <Box
+              sx={{
+                display: { xs: "none", lg: "flex" },
+                flex: { xl: 2, lg: 1 },
+              }}
+            ></Box>
 
             <Box flex={12}>
               <Toolbar
                 sx={{ alignItems: "center", justifyContent: "space-around" }}
               >
                 <Box
+                  flex={1}
                   sx={{
                     display: {
                       xs: "none",
-                      sm: "block",
+                      sm: "flex",
                       textDecoration: "none",
                     },
+                    alignItems: "center",
                   }}
                 >
                   <Typography
@@ -429,10 +464,10 @@ function Navbar({ called, userId }) {
                     to="/mainpage"
                     color={"inherit"}
                   >
-                    <img src={logoHobbytales} height={30} width={200} />
+                    <img src={logoHobbytales} height={30} width={175} />
                   </Typography>
                 </Box>
-                <Box>{renderDesktopSearchInput}</Box>
+                <Box flex={1}>{renderDesktopSearchInput}</Box>
                 <Popover
                   open={modal}
                   onClose={() => {
@@ -440,7 +475,7 @@ function Navbar({ called, userId }) {
                     setmodal(false);
                   }}
                   anchorReference="anchorPosition"
-                  anchorPosition={{ top: 67, left: 700 }}
+                  anchorPosition={{ top: 67, left: percentageINeed }}
                   PaperProps={{
                     style: { width: "30%" },
                   }}
@@ -452,7 +487,15 @@ function Navbar({ called, userId }) {
                   <UserSearchModal usersFound={usersFound} />
                 </Popover>
 
-                <Box sx={{ display: { xs: "none", sm: "flex" } }}>
+                <Stack
+                  flex={1}
+                  width={175}
+                  sx={{
+                    display: { xs: "none", sm: "flex" },
+                    justifyContent: "center",
+                  }}
+                  flexDirection="row"
+                >
                   <IconButton
                     component={Link}
                     to={`/userprofile/${currentUserId}`}
@@ -466,10 +509,16 @@ function Navbar({ called, userId }) {
                   >
                     <img src={userProfileIcon} height={25} width={25} />
                   </IconButton>
-                </Box>
+                </Stack>
               </Toolbar>
             </Box>
-            <Box flex={2} sx={{ display: { xs: "none", sm: "flex" } }}></Box>
+            <Box
+              flex={2}
+              sx={{
+                display: { xs: "none", lg: "flex" },
+                flex: { xl: 2, lg: 1 },
+              }}
+            ></Box>
           </Stack>
         </AppBar>
       </Box>

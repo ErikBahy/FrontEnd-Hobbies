@@ -6,22 +6,27 @@ import Navbar from "../Components/Navbar";
 import { Box } from "@mui/material";
 import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
-import { getMongoIdFromCognitoId } from "../apiCalls";
+import { addUser, getMongoIdFromCognitoId } from "../apiCalls";
 
 function MainPage() {
   const [tag, setTag] = useState([]);
   const userContext = useContext(UserContext);
   const [effectRunFromModal, seteffectRunFromModal] = useState(false);
+  const [cognitoID, setcognitoID] = useState();
+  console.log(cognitoID, "cognito from main adduser");
 
   useEffect(() => {
-    userContext
-      .getCurrentUserId()
-      .then((cognitoId) =>
-        getMongoIdFromCognitoId(cognitoId).then((id) =>
-          userContext.setcurrentUserMongoId(id)
-        )
+    userContext.getCurrentUserId().then((cognitoId) => {
+      setcognitoID(cognitoId);
+
+      getMongoIdFromCognitoId(cognitoId).then((id) =>
+        userContext.setcurrentUserMongoId(id)
       );
+    });
   }, []);
+  useEffect(() => {
+    addUser();
+  }, [cognitoID]);
 
   console.log(tag, "from main page");
   return (

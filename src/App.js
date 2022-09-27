@@ -7,13 +7,14 @@ import Navbar from "./Components/Navbar";
 import { Auth, Hub } from "aws-amplify";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "./contexts/UserContext";
-import { getMongoIdFromCognitoId } from "./apiCalls";
+import { addUser, getMongoIdFromCognitoId } from "./apiCalls";
 import NewPostModalNewPage from "./Components/NewPostModalNewPage";
 import EditProfileModal from "./EditProfile/EditProfileModal";
 
 function App() {
   const userContext = useContext(UserContext);
   const [isLogged, setIsLogged] = useState(false);
+
   useEffect(() => {
     if (useContext.currentUserMongoId === undefined) {
       setIsLogged(false);
@@ -25,13 +26,11 @@ function App() {
   console.log(isLogged, "is logged");
 
   useEffect(() => {
-    userContext
-      .getCurrentUserId()
-      .then((cognitoId) =>
-        getMongoIdFromCognitoId(cognitoId).then((id) =>
-          userContext.setcurrentUserMongoId(id)
-        )
+    userContext.getCurrentUserId().then((cognitoId) => {
+      getMongoIdFromCognitoId(cognitoId).then((id) =>
+        userContext.setcurrentUserMongoId(id)
       );
+    });
   }, []);
 
   return (
