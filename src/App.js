@@ -10,6 +10,7 @@ import { UserContext } from "./contexts/UserContext";
 import { addUser, getMongoIdFromCognitoId } from "./apiCalls";
 import NewPostModalNewPage from "./Components/NewPostModalNewPage";
 import EditProfileModal from "./EditProfile/EditProfileModal";
+import ChatApp from "./ChatApp";
 
 function App() {
   const userContext = useContext(UserContext);
@@ -47,6 +48,7 @@ function App() {
         <Route path="/editprofile" element={<EditProfile />} />
         <Route path="/editmodal" element={<EditProfileModal />} />
         <Route path="/userprofile/:cognitoId" element={<UserProfile />} />
+        <Route path="/chat/:postId" element={<ChatApp />} />
       </Routes>
     </BrowserRouter>
   );
