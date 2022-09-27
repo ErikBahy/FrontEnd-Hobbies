@@ -95,6 +95,7 @@ function NewPostModal({ effectRunFromModal, seteffectRunFromModal }) {
           postCognitoId: cognitoId,
           text: text,
           limit: limit,
+          date: Date.now(),
           startTime: value.$d,
           username: loggedUser.username,
           tags: tag,
