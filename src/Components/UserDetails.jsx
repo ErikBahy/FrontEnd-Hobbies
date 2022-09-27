@@ -84,6 +84,7 @@ function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
   const [showFollowers, setShowFollowers] = useState(false);
   const [followersU, setFollowersU] = useState(false);
   const [followedU, setFollowedU] = useState(false);
+  const [userDetailsEffect, setuserDetailsEffect] = useState(false);
   //////////////////////////////////
 
   console.log(
@@ -171,7 +172,7 @@ function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
         setcurrentUserMongoId(mongoId)
       )
     );
-  }, [open, isFollowed, effectRun]);
+  }, [open, isFollowed, effectRun, userDetailsEffect]);
 
   useEffect(() => {
     checkFollow(currentUserMongoId, userMongoId).then((bool) =>
@@ -397,6 +398,8 @@ function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
           aria-describedby="modal-modal-description"
         >
           <FollowersData
+            userDetailsEffect={userDetailsEffect}
+            setuserDetailsEffect={setuserDetailsEffect}
             checkId={checkId}
             setFollowersU={setFollowersU}
             userId={checkId ? currentUserMongoId : userMongoId}
@@ -429,7 +432,12 @@ function UserDetails({ userId, bio, effectRun, setdividerLoading }) {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <EditProfile setOpen={setOpen} called="userdetails" />
+          <EditProfile
+            userDetailsEffect={userDetailsEffect}
+            setuserDetailsEffect={setuserDetailsEffect}
+            setOpen={setOpen}
+            called="userdetails"
+          />
         </Modal>
       </Stack>
     </>

@@ -144,7 +144,12 @@ function NewPostModal({ effectRunFromModal, seteffectRunFromModal }) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <NewPostModalNewPage setOpen={setOpen} called="NewPostModal" />
+        <NewPostModalNewPage
+          seteffectRunFromModal={seteffectRunFromModal}
+          effectRunFromModal={effectRunFromModal}
+          setOpen={setOpen}
+          called="NewPostModal"
+        />
       </StyledModal>
     </>
   );

@@ -453,16 +453,6 @@ function Navbar({ called, userId }) {
 
                 <Box sx={{ display: { xs: "none", sm: "flex" } }}>
                   <IconButton
-                    size="large"
-                    aria-label="show 4 new mails"
-                    color="inherit"
-                  >
-                    <Badge badgeContent={4} color="error">
-                      <MailIcon />
-                    </Badge>
-                  </IconButton>
-
-                  <IconButton
                     component={Link}
                     to={`/userprofile/${currentUserId}`}
                     size="large"
@@ -473,7 +463,7 @@ function Navbar({ called, userId }) {
                     onClick={() => addUser()}
                     color="inherit"
                   >
-                    <AccountCircle />
+                    <img src={userProfileIcon} height={25} width={25} />
                   </IconButton>
                 </Box>
               </Toolbar>

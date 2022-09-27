@@ -109,7 +109,7 @@ function Feed({ called, setTag, tag, effectRunFromModal }) {
   useEffect(() => {
     getPostsByTag();
     console.log("===============");
-  }, [tag, feedEffectRun, pageNumber]);
+  }, [tag, feedEffectRun, pageNumber, effectRunFromModal]);
 
   useEffect(() => {
     getAllPosts();

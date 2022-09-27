@@ -8,7 +8,14 @@ import { getUserFollowers } from "../apiCalls";
 import xIcon from "../logos/Group 182.png";
 import UnFollowUsersLine from "./UnFollowUsersLine";
 
-function FollowersData({ _id, userId, setFollowersU, checkId }) {
+function FollowersData({
+  _id,
+  userId,
+  setFollowersU,
+  checkId,
+  userDetailsEffect,
+  setuserDetailsEffect,
+}) {
   const [followers, setFollowers] = useState();
   const [loading, setloading] = useState(true);
   const [effect, seteffect] = useState(false);
@@ -84,6 +91,8 @@ function FollowersData({ _id, userId, setFollowersU, checkId }) {
         <Stack width={1} sx={{ overflow: "hidden", overflowY: "scroll" }}>
           {followers?.map((aFollower) => (
             <UnFollowUsersLine
+              userDetailsEffect={userDetailsEffect}
+              setuserDetailsEffect={setuserDetailsEffect}
               checkId={checkId}
               aFollower={aFollower}
               seteffect={seteffect}
