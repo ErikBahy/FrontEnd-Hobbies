@@ -313,6 +313,7 @@ function Post({
                       setnumberJoined((numberJoined) => numberJoined - 1);
                       unjoinPost();
                     }}
+                    sx={{ marginRight: 1 }}
                     size="small"
                     variant="contained"
                   >
@@ -341,6 +342,16 @@ function Post({
                     Join
                   </StyledButton>
                 )}
+                {isJoined ? (
+                  <StyledButton
+                    component={Link}
+                    to={`/chat/${_id}`}
+                    size="small"
+                    variant="contained"
+                  >
+                    Open Chat
+                  </StyledButton>
+                ) : null}
                 {renderDeleteButton}
               </Stack>
             }
