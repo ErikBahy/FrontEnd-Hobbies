@@ -272,6 +272,7 @@ function Post({
         {
           commentCognitoId: currentUserId,
           text: commentsText,
+          date: Date.now(),
         },
         requestInfo
       );
