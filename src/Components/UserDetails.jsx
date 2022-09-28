@@ -47,7 +47,14 @@ const style = {
   p: 4,
 };
 
-function UserDetails({ userId, bio, location, effectRun, setdividerLoading }) {
+function UserDetails({
+  userId,
+  bio,
+  location,
+  effectRun,
+  seteffectRun,
+  setdividerLoading,
+}) {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const userContext = useContext(UserContext);
@@ -86,6 +93,7 @@ function UserDetails({ userId, bio, location, effectRun, setdividerLoading }) {
   const [followersU, setFollowersU] = useState(false);
   const [followedU, setFollowedU] = useState(false);
   const [userDetailsEffect, setuserDetailsEffect] = useState(false);
+  const [followedEffect, setfollowedEffect] = useState(false);
   //////////////////////////////////
 
   console.log(
@@ -97,15 +105,16 @@ function UserDetails({ userId, bio, location, effectRun, setdividerLoading }) {
 
   const updateUserInfo = async (e) => {
     const userAuth = await Auth.currentAuthenticatedUser();
-      const token = userAuth.signInUserSession.idToken.jwtToken;
-      const requestInfo = {
-        headers: {
-          Authorization: token,
-        },
-      }
+    const token = userAuth.signInUserSession.idToken.jwtToken;
+    const requestInfo = {
+      headers: {
+        Authorization: token,
+      },
+    };
     e.preventDefault();
     await axios.patch(
-      ` https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/user/put/${currentUserMongoId}`, requestInfo,
+      ` https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/user/put/${currentUserMongoId}`,
+      requestInfo,
       { bio: bioUpdate, location: locationUpdate }
     );
 
@@ -114,16 +123,17 @@ function UserDetails({ userId, bio, location, effectRun, setdividerLoading }) {
 
   const follow = async (e, currentUserMongoId, userMongoId) => {
     const userAuth = await Auth.currentAuthenticatedUser();
-      const token = userAuth.signInUserSession.idToken.jwtToken;
-      const requestInfo = {
-        headers: {
-          Authorization: token,
-        },
-      }
+    const token = userAuth.signInUserSession.idToken.jwtToken;
+    const requestInfo = {
+      headers: {
+        Authorization: token,
+      },
+    };
     e.preventDefault();
 
     const idk = await axios.get(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/followers/${currentUserMongoId}/${userMongoId}`, requestInfo
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/followers/${currentUserMongoId}/${userMongoId}`,
+      requestInfo
     );
     console.log(idk.data);
     if (runEffect) {
@@ -135,16 +145,17 @@ function UserDetails({ userId, bio, location, effectRun, setdividerLoading }) {
 
   const unfollow = async (e, currentUserMongoId, userMongoId) => {
     const userAuth = await Auth.currentAuthenticatedUser();
-      const token = userAuth.signInUserSession.idToken.jwtToken;
-      const requestInfo = {
-        headers: {
-          Authorization: token,
-        },
-      }
+    const token = userAuth.signInUserSession.idToken.jwtToken;
+    const requestInfo = {
+      headers: {
+        Authorization: token,
+      },
+    };
     e.preventDefault();
 
     const idk = await axios.get(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/unfollow/${currentUserMongoId}/${userMongoId}`, requestInfo
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/unfollow/${currentUserMongoId}/${userMongoId}`,
+      requestInfo
     );
     console.log(idk.data);
     if (runEffect) {
@@ -194,7 +205,7 @@ function UserDetails({ userId, bio, location, effectRun, setdividerLoading }) {
         setcurrentUserMongoId(mongoId)
       )
     );
-  }, [open, isFollowed, effectRun, userDetailsEffect]);
+  }, [open, isFollowed, effectRun, userDetailsEffect, followedEffect]);
 
   useEffect(() => {
     checkFollow(currentUserMongoId, userMongoId).then((bool) =>
@@ -420,6 +431,10 @@ function UserDetails({ userId, bio, location, effectRun, setdividerLoading }) {
           aria-describedby="modal-modal-description"
         >
           <FollowersData
+            followedEffect={followedEffect}
+            setfollowedEffect={setfollowedEffect}
+            seteffectRun={seteffectRun}
+            effectRun={effectRun}
             userDetailsEffect={userDetailsEffect}
             setuserDetailsEffect={setuserDetailsEffect}
             checkId={checkId}
@@ -439,6 +454,10 @@ function UserDetails({ userId, bio, location, effectRun, setdividerLoading }) {
           aria-describedby="modal-modal-description"
         >
           <FollowedData
+            followedEffect={followedEffect}
+            setfollowedEffect={setfollowedEffect}
+            seteffectRun={seteffectRun}
+            effectRun={effectRun}
             setFollowedU={setFollowedU}
             userId={checkId ? currentUserMongoId : userMongoId}
           />

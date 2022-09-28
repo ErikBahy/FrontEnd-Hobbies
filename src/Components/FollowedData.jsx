@@ -4,10 +4,27 @@ import React, { useEffect, useState } from "react";
 import xIcon from "../logos/Group 182.png";
 import { getUserFollowed } from "../apiCalls";
 import { MoonLoader } from "react-spinners";
+import { useNavigate } from "react-router-dom";
 
-function FollowedData({ userId, setFollowedU }) {
+function FollowedData({
+  userId,
+  setFollowedU,
+  followedEffect,
+  setfollowedEffect,
+  seteffectRun,
+  effectRun,
+}) {
   const [followed, setFollowed] = useState();
   const [loading, setloading] = useState(true);
+  const navigate = useNavigate();
+  const handleNavigateClick = (cognitoId) => {
+    console.log("navigate ran");
+    setFollowedU(false);
+    setfollowedEffect(!followedEffect);
+    seteffectRun(!effectRun);
+
+    navigate(`/userprofile/${cognitoId}`);
+  };
   console.log(userId, "mongoid  ", followed, "followers   ");
   console.log("modal rannnnnnnnn FOLLOWEDs");
 
@@ -79,6 +96,7 @@ function FollowedData({ userId, setFollowedU }) {
               padding={1}
             >
               <Avatar
+                onClick={(e) => handleNavigateClick(aFollower?.userCognitoId)}
                 src={aFollower.prfilePicture}
                 sx={{
                   bgcolor: `red`,
@@ -93,6 +111,7 @@ function FollowedData({ userId, setFollowedU }) {
               </Avatar>
 
               <Typography
+                onClick={(e) => handleNavigateClick(aFollower?.userCognitoId)}
                 sx={{ textDecoration: "none", color: "text.primary" }}
                 marginRight={1}
                 fontWeight={600}

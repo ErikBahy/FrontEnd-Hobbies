@@ -2,6 +2,7 @@ import { Avatar, Button, Stack, Typography } from "@mui/material";
 import React from "react";
 import axios from "axios";
 import { Auth } from "aws-amplify";
+import { useNavigate } from "react-router-dom";
 
 function UnFollowUsersLine({
   effect,
@@ -11,7 +12,22 @@ function UnFollowUsersLine({
   checkId,
   userDetailsEffect,
   setuserDetailsEffect,
+  followedEffect,
+  setfollowedEffect,
+  seteffectRun,
+  effectRun,
+  setFollowersU,
 }) {
+  const navigate = useNavigate();
+  const handleNavigateClick = (cognitoId) => {
+    console.log("navigate ran");
+    setFollowersU(false);
+    setfollowedEffect(!followedEffect);
+    seteffectRun(!effectRun);
+
+    navigate(`/userprofile/${cognitoId}`);
+  };
+
   const removeFollower = async (e) => {
     e.preventDefault();
 
@@ -22,9 +38,10 @@ function UnFollowUsersLine({
         headers: {
           Authorization: token,
         },
-      }
+      };
       await axios.get(
-        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/unfollow/${aFollower._id}/${_id}`, requestInfo
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/unfollow/${aFollower._id}/${_id}`,
+        requestInfo
       );
 
       seteffect(!effect);
@@ -47,6 +64,7 @@ function UnFollowUsersLine({
       <Stack flexDirection="row" alignItems="center" gap={2}>
         <Avatar
           src={aFollower.prfilePicture}
+          onClick={(e) => handleNavigateClick(aFollower?.userCognitoId)}
           sx={{
             bgcolor: `red`,
             textDecoration: "none",
@@ -60,6 +78,7 @@ function UnFollowUsersLine({
         </Avatar>
 
         <Typography
+          onClick={(e) => handleNavigateClick(aFollower?.userCognitoId)}
           sx={{ textDecoration: "none", color: "text.primary" }}
           marginRight={1}
           fontWeight={600}

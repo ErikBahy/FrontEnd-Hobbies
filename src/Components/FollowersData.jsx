@@ -15,11 +15,16 @@ function FollowersData({
   checkId,
   userDetailsEffect,
   setuserDetailsEffect,
+  followedEffect,
+  setfollowedEffect,
+  seteffectRun,
+  effectRun,
 }) {
   const [followers, setFollowers] = useState();
   const [loading, setloading] = useState(true);
   const [effect, seteffect] = useState(false);
   const [userMongo, setuserMongo] = useState();
+
   console.log(
     userId,
     "mongoid  !!!!!!",
@@ -92,6 +97,11 @@ function FollowersData({
         <Stack width={1} sx={{ overflow: "hidden", overflowY: "scroll" }}>
           {followers?.map((aFollower) => (
             <UnFollowUsersLine
+              setFollowersU={setFollowersU}
+              followedEffect={followedEffect}
+              setfollowedEffect={setfollowedEffect}
+              seteffectRun={seteffectRun}
+              effectRun={effectRun}
               userDetailsEffect={userDetailsEffect}
               setuserDetailsEffect={setuserDetailsEffect}
               checkId={checkId}
