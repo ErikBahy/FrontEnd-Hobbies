@@ -15,6 +15,8 @@ import { Divider } from "@mui/material";
 import { myTheme } from "../theme";
 import group169 from "../logos/Group 169.png";
 import Football from "../logos/Football.png"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "../authenticationStyle.css"
 import { useNavigate } from "react-router-dom";
 function Login() {
@@ -89,10 +91,17 @@ function Login() {
   }
   
   async function signIn() {
-    const { username, password } = formState;
-    const user = await Auth.signIn(username, password);
-       navigate('/mainPage')
-    updateFormState(() => ({ ...formState, formType: "signedIn" }));
+    try{
+      const { username, password } = formState;
+      const user = await Auth.signIn(username, password);
+         navigate('/mainPage')
+      updateFormState(() => ({ ...formState, formType: "signedIn" }));
+      localStorage.setItem("isLogged",true)
+    }catch(e){
+      console.log(e.message);
+      toast.error(e.message)
+    }
+  
   }
  
   const { formType } = formState;
@@ -536,6 +545,7 @@ function Login() {
       
       } 
       </div>
+      <ToastContainer/>
     </>
   );
 }

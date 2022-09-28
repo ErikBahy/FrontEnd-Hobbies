@@ -17,15 +17,21 @@ function FollowedData({ userId, setFollowedU }) {
       setloading(false);
     });
   }, []);
-  const style = {position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" };
+  const style = {
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+  };
   return (
     <Stack
       sx={{
         width: 400,
         height: 300,
         backgroundColor: "white",
-        borderRadius: 10,
+        borderRadius: 5,
         padding: 2,
+        margin: { xs: 2 },
       }}
       alignItems="center"
     >
@@ -58,9 +64,9 @@ function FollowedData({ userId, setFollowedU }) {
         }}
       />
       {loading ? (
-         <div style={style}>
-         <MoonLoader  color="grey" loading speedMultiplier={1} />
-         </div>
+        <div style={style}>
+          <MoonLoader color="grey" loading speedMultiplier={1} />
+        </div>
       ) : (
         <Stack width={1} sx={{ overflow: "hidden", overflowY: "scroll" }}>
           {followed?.map((aFollower) => (

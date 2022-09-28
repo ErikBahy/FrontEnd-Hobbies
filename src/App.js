@@ -16,13 +16,16 @@ function App() {
   const userContext = useContext(UserContext);
   const [isLogged, setIsLogged] = useState(false);
 
+  let key = localStorage.getItem("isLogged");
+  console.log(key, "key");
+
   useEffect(() => {
-    if (useContext.currentUserMongoId === undefined) {
-      setIsLogged(false);
-    } else {
+    if (key === "true") {
       setIsLogged(true);
+    } else {
+      setIsLogged(false);
     }
-  }, [userContext]);
+  }, [key]);
 
   console.log(isLogged, "is logged");
 
@@ -34,21 +37,36 @@ function App() {
     });
   }, []);
 
+  console.log(isLogged, " is logged ..");
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="*" element={<Navigate to="/" />} />
         <Route
           path="/"
-          element={
-            !isLogged ? <Login /> : <Navigate replace to={"/mainPage"} />
-          }
+          element={!isLogged ? <Login /> : <Navigate to={"/mainPage"} />}
         />
         <Route path="/mainPage" element={<MainPage />} />
-        <Route path="/newpost" element={<NewPostModalNewPage />} />
-        <Route path="/editprofile" element={<EditProfile />} />
-        <Route path="/editmodal" element={<EditProfileModal />} />
-        <Route path="/userprofile/:cognitoId" element={<UserProfile />} />
-        <Route path="/chat/:postId" element={<ChatApp />} />
+        <Route
+          path="/newpost"
+          element={isLogged ? <NewPostModalNewPage /> : <Navigate to={"/"} />}
+        />
+        <Route
+          path="/editprofile"
+          element={isLogged ? <EditProfile /> : <Navigate to={"/"} />}
+        />
+        <Route
+          path="/editmodal"
+          element={isLogged ? <EditProfileModal /> : <Navigate to={"/"} />}
+        />
+        <Route
+          path="/userprofile/:cognitoId"
+          element={isLogged ? <UserProfile /> : <Navigate to={"/"} />}
+        />
+        <Route
+          path="/chat/:postId"
+          element={isLogged ? <ChatApp /> : <Navigate to={"/"} />}
+        />
       </Routes>
     </BrowserRouter>
   );

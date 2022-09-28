@@ -1,6 +1,7 @@
 import { Autocomplete, Box, Stack, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Auth } from "aws-amplify";
 
 function Tags({ called, setTag, tag }) {
   // const tags = [
@@ -12,8 +13,15 @@ function Tags({ called, setTag, tag }) {
   const [tags, setTags] = useState([]);
   // console.log(tags, " state hereeee");
   const getTags = async () => {
+    const userAuth = await Auth.currentAuthenticatedUser();
+      const token = userAuth.signInUserSession.idToken.jwtToken;
+      const requestInfo = {
+        headers: {
+          Authorization: token,
+        },
+      }
     const res = await axios.get(
-      "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/locations"
+      "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/locations", requestInfo
     );
     const data = res.data;
 
@@ -26,7 +34,7 @@ function Tags({ called, setTag, tag }) {
     // console.log(i, "tags heree");
 
     const response = await axios.get(
-      "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/sports"
+      "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/sports", requestInfo
     );
     const sportTags = response.data;
     sportTags.map((el) =>

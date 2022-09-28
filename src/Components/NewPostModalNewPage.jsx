@@ -20,6 +20,7 @@ import {
 import { Stack } from "@mui/system";
 import { AccountCircle } from "@mui/icons-material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs from "dayjs";
@@ -35,6 +36,8 @@ import xIcon from "../logos/Group 182.png";
 import peopleIcon from "../logos/Group 180.png";
 import calendarIcon from "../logos/Group 179.png";
 import { Link, useNavigate } from "react-router-dom";
+import { Auth } from "aws-amplify";
+import moment from "moment";
 
 const StyledModal = styled(Modal)({
   display: "flex",
@@ -56,6 +59,7 @@ function NewPostModalNewPage({
   effectRunFromModal,
 }) {
   const [value, setValue] = useState(dayjs());
+  console.log(value.$d.toString(), "date using moment");
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const [text, setText] = useState("");
@@ -96,6 +100,13 @@ function NewPostModalNewPage({
       }
     }*/
     try {
+      const userAuth = await Auth.currentAuthenticatedUser();
+      const token = userAuth.signInUserSession.idToken.jwtToken;
+      const requestInfo = {
+        headers: {
+          Authorization: token,
+        },
+      };
       setisposting(true);
       e.preventDefault();
       await axios.post(
@@ -105,10 +116,11 @@ function NewPostModalNewPage({
           text: text,
           limit: limit,
           date: Date.now(),
-          startTime: value.$d,
+          startTime: value.$d.toString(),
           username: loggedUser.username,
           tags: tag,
-        }
+        },
+        requestInfo
       );
       handleNavigateClick();
       console.log("postPostRan when clicked");

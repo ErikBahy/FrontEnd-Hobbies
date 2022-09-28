@@ -43,6 +43,7 @@ import axios from "axios";
 import FollowersData from "./FollowersData";
 import UserSearchModal from "./UserSearchModal";
 import { calculateNewValue } from "@testing-library/user-event/dist/utils";
+import { Auth } from "aws-amplify";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -118,7 +119,7 @@ function Navbar({ called, userId }) {
   const theme = useTheme();
   const matchesDesktop = useMediaQuery(theme.breakpoints.up("sm"));
   const userContext = useContext(UserContext);
-  const { currentUserId, signOut } = userContext;
+  const { currentUserId } = userContext;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [searchOpen, setsearchOpen] = useState(false);
@@ -130,13 +131,30 @@ function Navbar({ called, userId }) {
   console.log(currentUserId, "clg from logout fucntion");
 
   const SearchResults = async () => {
+    const userAuth = await Auth.currentAuthenticatedUser();
+    const token = userAuth.signInUserSession.idToken.jwtToken;
+    const requestInfo = {
+      headers: {
+        Authorization: token,
+      },
+    }
     const res = await axios.get(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/searchParams?searchQuery=${searchvalue}`
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/searchParams?searchQuery=${searchvalue}`, requestInfo
     );
     const data = res.data;
     setusersFound(data);
     console.log(data);
   };
+
+  async function handleSignOut() {
+    try {    
+      await Auth.signOut()
+      localStorage.setItem("isLogged" , false);
+      window.location.href="/"
+    } catch (error) {
+      console.log("error signing out: ", error);
+    }
+  }
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -184,7 +202,7 @@ function Navbar({ called, userId }) {
       <MenuItem
         onClick={() => {
           handleMenuClose();
-          signOut();
+          handleSignOut();
         }}
       >
         Log Out
@@ -306,7 +324,7 @@ function Navbar({ called, userId }) {
         >
           <Logout
             onClick={() => {
-              signOut();
+              handleSignOut();
             }}
           />
         </IconButton>

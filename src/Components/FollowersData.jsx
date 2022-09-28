@@ -50,8 +50,9 @@ function FollowersData({
         width: 400,
         height: 300,
         backgroundColor: "white",
-        borderRadius: 10,
+        borderRadius: 5,
         padding: 2,
+        margin: { xs: 2 },
       }}
       alignItems="center"
     >

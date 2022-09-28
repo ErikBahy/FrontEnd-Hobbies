@@ -32,6 +32,7 @@ import { UserContext } from "../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import peopleIcon from "../logos/Group 180.png";
 import NewPostModalNewPage from "./NewPostModalNewPage";
+import { Auth } from "aws-amplify";
 
 const StyledModal = styled(Modal)({
   display: "flex",
@@ -87,6 +88,13 @@ function NewPostModal({ effectRunFromModal, seteffectRunFromModal }) {
       }
     }*/
     try {
+      const userAuth = await Auth.currentAuthenticatedUser();
+      const token = userAuth.signInUserSession.idToken.jwtToken;
+      const requestInfo = {
+        headers: {
+          Authorization: token,
+        },
+      }
       setisposting(true);
       e.preventDefault();
       await axios.post(
@@ -99,7 +107,7 @@ function NewPostModal({ effectRunFromModal, seteffectRunFromModal }) {
           startTime: value.$d,
           username: loggedUser.username,
           tags: tag,
-        }
+        }, requestInfo
       );
       console.log("postPostRan when clicked");
       clear();
