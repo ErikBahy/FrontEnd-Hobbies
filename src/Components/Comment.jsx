@@ -1,5 +1,6 @@
 import { Typography } from "@mui/material";
 import { Stack } from "@mui/system";
+import moment from "moment/moment";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getUserFromCognitoId } from "../apiCalls";
@@ -7,6 +8,7 @@ import { getUserFromCognitoId } from "../apiCalls";
 function Comment(data) {
   const [user, setUser] = useState();
   console.log(data, "data  ", user, "and user ");
+  const commentedFromNow = moment(data.data.date).fromNow();
 
   useEffect(() => {
     getUserFromCognitoId(data.data.commentCognitoId).then((userr) =>
@@ -29,8 +31,8 @@ function Comment(data) {
         >
           {user?.username}{" "}
         </Typography>
-        <Typography sx={{ marginLeft: "auto" }} fontWeight={100}>
-          {data?.data?.date.substring(0, 10)}{" "}
+        <Typography sx={{ marginLeft: "auto", fontSize: 12 }} fontWeight={100}>
+          {commentedFromNow}{" "}
         </Typography>
       </Stack>
       <Stack flexDirection="row" marginTop="0px" alignItems="center">

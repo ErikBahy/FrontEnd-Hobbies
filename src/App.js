@@ -16,11 +16,11 @@ function App() {
   const userContext = useContext(UserContext);
   const [isLogged, setIsLogged] = useState(false);
 
-  let key = localStorage.getItem( "isLogged")
-  console.log(key,"key");
+  let key = localStorage.getItem("isLogged");
+  console.log(key, "key");
 
   useEffect(() => {
-    if (key==="true") {
+    if (key === "true") {
       setIsLogged(true);
     } else {
       setIsLogged(false);
@@ -41,17 +41,32 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="*" element={<Navigate to='/'/>}/>
+        <Route path="*" element={<Navigate to="/" />} />
         <Route
           path="/"
-          element={ !isLogged ? <Login /> : <Navigate to={"/mainPage"} />}
+          element={!isLogged ? <Login /> : <Navigate to={"/mainPage"} />}
         />
-        <Route path="/mainPage" element={ <MainPage />} />
-        <Route path="/newpost" element={ isLogged ? <NewPostModalNewPage /> : <Navigate to={"/"} />} />
-        <Route path="/editprofile" element={ isLogged ? <EditProfile /> : <Navigate to={"/"} />} />
-        <Route path="/editmodal" element={isLogged ? <EditProfileModal /> : <Navigate to={"/"} />} />
-        <Route path="/userprofile/:cognitoId" element={ isLogged ? <UserProfile /> : <Navigate to={"/"} />} />
-        <Route path="/chat/:postId" element={isLogged ? <ChatApp />  : <Navigate to={"/"} /> } />
+        <Route path="/mainPage" element={<MainPage />} />
+        <Route
+          path="/newpost"
+          element={isLogged ? <NewPostModalNewPage /> : <Navigate to={"/"} />}
+        />
+        <Route
+          path="/editprofile"
+          element={isLogged ? <EditProfile /> : <Navigate to={"/"} />}
+        />
+        <Route
+          path="/editmodal"
+          element={isLogged ? <EditProfileModal /> : <Navigate to={"/"} />}
+        />
+        <Route
+          path="/userprofile/:cognitoId"
+          element={isLogged ? <UserProfile /> : <Navigate to={"/"} />}
+        />
+        <Route
+          path="/chat/:postId"
+          element={isLogged ? <ChatApp /> : <Navigate to={"/"} />}
+        />
       </Routes>
     </BrowserRouter>
   );

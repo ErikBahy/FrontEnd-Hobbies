@@ -53,6 +53,7 @@ import { Auth } from "aws-amplify";
 
 //////////////////////////////////////////////
 import JoinedUsersData from "./JoinedUsersData";
+import moment from "moment/moment";
 /////////////////////////////////////////////
 
 const StyledButton = styled(Button)(({ theme }) => ({
@@ -101,18 +102,20 @@ function Post({
   } = post;
   const [numberJoined, setnumberJoined] = useState(joined.length);
   const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+  const postedFromNow = moment(date).fromNow();
 
   ///////////////////////////////////////////////////////////////
   const getJoinedUsers = async () => {
     const userAuth = await Auth.currentAuthenticatedUser();
-      const token = userAuth.signInUserSession.idToken.jwtToken;
-      const requestInfo = {
-        headers: {
-          Authorization: token,
-        },
-      }
+    const token = userAuth.signInUserSession.idToken.jwtToken;
+    const requestInfo = {
+      headers: {
+        Authorization: token,
+      },
+    };
     const joinedU = await axios.get(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/joined/users/${_id}`, requestInfo
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/joined/users/${_id}`,
+      requestInfo
     );
     console.log(joinedU.data);
     return await joinedU.data;
@@ -129,28 +132,30 @@ function Post({
 
   const joinPost = async () => {
     const userAuth = await Auth.currentAuthenticatedUser();
-      const token = userAuth.signInUserSession.idToken.jwtToken;
-      const requestInfo = {
-        headers: {
-          Authorization: token,
-        },
-      }
+    const token = userAuth.signInUserSession.idToken.jwtToken;
+    const requestInfo = {
+      headers: {
+        Authorization: token,
+      },
+    };
     await axios.get(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/joinPost/${currentUserMongoId}/${_id}`, requestInfo
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/joinPost/${currentUserMongoId}/${_id}`,
+      requestInfo
     );
     // shouldEffectRun ? setshouldEffectRun(false) : setshouldEffectRun(true);
     // feedEffectRun ? setfeedEffectRun(false) : setfeedEffectRun(true);
   };
   const unjoinPost = async () => {
     const userAuth = await Auth.currentAuthenticatedUser();
-      const token = userAuth.signInUserSession.idToken.jwtToken;
-      const requestInfo = {
-        headers: {
-          Authorization: token,
-        },
-      }
+    const token = userAuth.signInUserSession.idToken.jwtToken;
+    const requestInfo = {
+      headers: {
+        Authorization: token,
+      },
+    };
     await axios.get(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/unjoinPost/${currentUserMongoId}/${_id}`, requestInfo
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/unjoinPost/${currentUserMongoId}/${_id}`,
+      requestInfo
     );
     // feedEffectRun ? setfeedEffectRun(false) : setfeedEffectRun(true);
     // shouldEffectRun ? setshouldEffectRun(false) : setshouldEffectRun(true);
@@ -164,10 +169,11 @@ function Post({
         headers: {
           Authorization: token,
         },
-      }
+      };
       e.preventDefault();
       await axios.delete(
-        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/delete/post/${currentUserMongoId}/${_id}`, requestInfo
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/delete/post/${currentUserMongoId}/${_id}`,
+        requestInfo
       );
 
       called === "userProfile"
@@ -202,9 +208,10 @@ function Post({
         headers: {
           Authorization: token,
         },
-      }
+      };
       const res = await axios.get(
-        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comments/post/${_id}`, requestInfo
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comments/post/${_id}`,
+        requestInfo
       );
       setComments(res.data);
 
@@ -237,9 +244,10 @@ function Post({
         headers: {
           Authorization: token,
         },
-      }
+      };
       const res = await axios.get(
-        ` https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/getLike/users/${_id}`, requestInfo
+        ` https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/getLike/users/${_id}`,
+        requestInfo
       );
       setpostLikes(res.data.length);
     } catch (error) {
@@ -258,13 +266,14 @@ function Post({
         headers: {
           Authorization: token,
         },
-      }
+      };
       await axios.post(
-        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comment/post/${_id}`, 
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/comment/post/${_id}`,
         {
           commentCognitoId: currentUserId,
           text: commentsText,
-        }, requestInfo
+        },
+        requestInfo
       );
       shouldEffectRun ? setshouldEffectRun(false) : setshouldEffectRun(true);
       clear();
@@ -281,10 +290,11 @@ function Post({
         headers: {
           Authorization: token,
         },
-      }
+      };
       setpostLikes((postLikes) => postLikes - 1);
       await axios.get(
-        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/unLike/${currentUserMongoId}/${_id}`, requestInfo
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/unLike/${currentUserMongoId}/${_id}`,
+        requestInfo
       );
       // shouldEffectRun ? setshouldEffectRun(false) : setshouldEffectRun(true);
     } catch (error) {
@@ -306,10 +316,11 @@ function Post({
         headers: {
           Authorization: token,
         },
-      }
+      };
       setpostLikes((postLikes) => postLikes + 1);
       await axios.get(
-        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/addLike/users/${currentUserMongoId}/${_id}`, requestInfo
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/addLike/users/${currentUserMongoId}/${_id}`,
+        requestInfo
       );
 
       // shouldEffectRun ? setshouldEffectRun(false) : setshouldEffectRun(true);
@@ -374,6 +385,7 @@ function Post({
                     <StyledButton
                       component={Link}
                       to={`/chat/${_id}`}
+                      target={"_blank"}
                       size="small"
                       variant="contained"
                       sx={{ marginLeft: 1 }}
@@ -430,7 +442,7 @@ function Post({
                 {renderDeleteButton}
               </Stack>
             }
-            subheader={date?.substring(0, 10)}
+            subheader={postedFromNow}
           />
         </Stack>
 
@@ -449,7 +461,7 @@ function Post({
             <img src={calendarIcon} height={20} width={20} />
             <Typography mx={1}>
               {" "}
-              {startTime?.substring(0, 10) + " " + startTime?.slice(11, 16)}
+              {startTime?.substring(0, 10) + " " + startTime?.slice(11, 21)}
             </Typography>
           </Stack>
           <Stack my="3px" flexDirection="row" alignItems="center">

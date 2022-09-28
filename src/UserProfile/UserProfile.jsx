@@ -2,7 +2,7 @@ import { Stack } from "@mui/system";
 import React, { useContext } from "react";
 import Feed from "../Components/UserProfileFeed";
 import UserDetails from "../Components/UserDetails";
-import { Box, Divider, Skeleton, Tabs, Tab } from "@mui/material";
+import { Box, Divider, Skeleton, Tabs, Tab, Chip } from "@mui/material";
 import { UserContext } from "../contexts/UserContext";
 import { useParams } from "react-router-dom";
 import Navbar from "../Components/Navbar";
@@ -15,6 +15,7 @@ function UserProfile() {
   const [effectRun, seteffectRun] = useState(false);
   const [dividerLoading, setdividerLoading] = useState(true);
   const [tabValue, settabValue] = useState("MyPosts");
+  const check = cognitoId === userContext.currentUserId;
   const handleChange = (event, newValue) => {
     settabValue(newValue);
   };
@@ -50,29 +51,32 @@ function UserProfile() {
               />
             ) : (
               <Divider sx={{ width: 1, marginTop: 3, fontWeight: 200 }}>
-                {" "}
-                <Tabs
-                  sx={{ zIndex: 5 }}
-                  textColor="text"
-                  indicatorColor="primary"
-                  aria-label="tabs "
-                  centered
-                  value={tabValue}
-                  onChange={handleChange}
-                >
-                  <Tab
-                    sx={{ padding: "0px", marginX: "4px" }}
-                    component="p"
-                    value="MyPosts"
-                    label="My Posts"
-                  />
-                  <Tab
-                    sx={{ padding: "0px", marginX: "4px" }}
-                    component="p"
-                    value="JoinedPosts"
-                    label="Joined Posts"
-                  />
-                </Tabs>
+                {check ? (
+                  <Tabs
+                    sx={{ zIndex: 5 }}
+                    textColor="text"
+                    indicatorColor="primary"
+                    aria-label="tabs "
+                    centered
+                    value={tabValue}
+                    onChange={handleChange}
+                  >
+                    <Tab
+                      sx={{ padding: "0px", marginX: "4px" }}
+                      component="p"
+                      value="MyPosts"
+                      label="My Posts"
+                    />
+                    <Tab
+                      sx={{ padding: "0px", marginX: "4px" }}
+                      component="p"
+                      value="JoinedPosts"
+                      label="Joined Posts"
+                    />
+                  </Tabs>
+                ) : (
+                  <>{`${userContext?.user?.username} Posts `}</>
+                )}
               </Divider>
             )}
             <Stack>
