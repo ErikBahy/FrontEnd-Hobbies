@@ -292,7 +292,7 @@ function Login() {
               <Typography component="h1" variant="h5">
               </Typography>
               <Box component="form" sx={{ mt: 3 }}>
-                <Grid container spacing={2}>
+                <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <TextField
                       required
