@@ -63,10 +63,7 @@ function App() {
           path="/userprofile/:cognitoId"
           element={isLogged ? <UserProfile /> : <Navigate to={"/"} />}
         />
-        <Route
-          path="/chat/:postId"
-          element={isLogged ? <ChatApp /> : <Navigate to={"/"} />}
-        />
+        <Route path="/chat/:postId" element={<ChatApp />} />
       </Routes>
     </BrowserRouter>
   );

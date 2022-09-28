@@ -19,6 +19,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "../authenticationStyle.css"
 import { useNavigate } from "react-router-dom";
+import logosign from "../logos/logosign.png"
 function Login() {
   const initalFormState = {
     username: "",
@@ -127,7 +128,7 @@ function Login() {
              <img className="top" src={Football}  height={75} width={75}/>
              </Box>
              <Box marginBottom={2}>
-             <img src={group169} height={25} width={75} />
+             <img src={logosign} height={25} width={75} />
              </Box>
            
               <Typography component="h1" variant="h5">
@@ -230,7 +231,7 @@ function Login() {
       <img className="top" src={Football}  height={75} width={75}/>
       </Box>
       <Box marginBottom={2}>
-      <img src={group169} height={25} width={75} />
+      <img src={logosign} height={25} width={75} />
       </Box>
     
         <Typography component="h1" variant="h5">
@@ -285,14 +286,13 @@ function Login() {
              <img className="top" src={Football}  height={75} width={75}/>
              </Box>
              <Box marginBottom={2}>
-             <img src={group169} height={25} width={75} />
+             <img src={logosign} height={25} width={75} />
              </Box>
            
               <Typography component="h1" variant="h5">
-                Sports Arena
               </Typography>
               <Box component="form" sx={{ mt: 3 }}>
-                <Grid container spacing={2}>
+                <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <TextField
                       required
@@ -369,11 +369,11 @@ function Login() {
              <img className="top" src={Football}  height={75} width={75}/>
              </Box>
              <Box marginBottom={2}>
-             <img src={group169} height={25} width={75} />
+             <img src={logosign} height={25} width={75} />
              </Box>
            
               <Typography component="h1" variant="h5">
-                Sports Arena
+              
               </Typography>
               <Box component="form" sx={{ mt: 3 }}>
                 <Grid container spacing={2}>
@@ -467,7 +467,7 @@ function Login() {
              <img className="topi" src={Football}  height={75} width={75}/>
              </Box>
              <Box marginBottom={2}>
-             <img src={group169} height={25} width={75} />
+             <img src={logosign} height={25} width={75} />
              </Box>
              
               <Typography component="h1" variant="h5">
