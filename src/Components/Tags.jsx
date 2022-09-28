@@ -27,7 +27,7 @@ function Tags({ called, setTag, tag }) {
 
     let i = [];
     data.map((el) =>
-      i.push({ title: el.text, _id: el._id, category: "location" })
+      i.push({ title: el.text, _id: el._id, category: "Location" })
     );
     // setTags(data.map((el)=>[...tags , { title: el.text, _id: el._id, category: "location" }]))
 
@@ -38,7 +38,7 @@ function Tags({ called, setTag, tag }) {
     );
     const sportTags = response.data;
     sportTags.map((el) =>
-      i.push({ title: el.text, _id: el._id, category: "sport" })
+      i.push({ title: el.text, _id: el._id, category: "Sport" })
     );
     console.log(i, " from tags");
     setTags(i);
