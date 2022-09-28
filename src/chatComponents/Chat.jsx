@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 //import { firebaseRef } from "../config";
 
 const style = {
-  main: `flex flex-col p-[10px]`,
+  main: `flex flex-col p-[10px] overflow-auto mb-[40px]`,
 };
 
 const Chat = ({user }) => {
@@ -34,6 +34,7 @@ const Chat = ({user }) => {
             ))}
         </main>
         {/* Send Message Compoenent */}
+              
         <SendMessage user={user} scroll={scroll} />
         <span ref={scroll}></span>
       </>

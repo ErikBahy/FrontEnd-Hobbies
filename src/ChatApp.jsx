@@ -9,8 +9,8 @@ import { getUserFromDatabase } from './apiCalls';
 import { useParams } from 'react-router-dom';
 
 const style = {
-  appContainer: `max-w-[100vW] mx-auto text-center`,
-  sectionContainer: `flex flex-col h-[90vh] bg-gray-100 mt-10 shadow-xl border relative`,
+  appContainer: `max-w-[100vW] mx-auto text-center overflow-auto`,
+  sectionContainer: `flex flex-col h-[90vh] bg-gray-100 mt-10 border relative`,
 };
 
 function ChatApp() {
