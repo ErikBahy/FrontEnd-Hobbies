@@ -4,9 +4,9 @@ import {addDoc, collection, serverTimestamp} from 'firebase/firestore'
 import { useParams } from 'react-router-dom';
 
 const style = {
-  form: `h-14 w-full max-w-[100vW] flex text-xl absolute bottom-0`,
-  input: `w-full text-xl p-3 bg-gray-900 text-white outline-none border-none`,
-  button: `w-[20%] bg-green-500`,
+  form: `h-12 w-full max-w-[100vW] flex text-xl fixed bottom-0`,
+  input: `w-full text-sm p-3 bg-white-900 text-black outline outline-black-500 outline-1`,
+  button: `w-[15%] text-white text-sm bg-[#118C94] outline outline-[#118C94] outline-1`,
 };
 
 const SendMessage = ({scroll , user }) => {

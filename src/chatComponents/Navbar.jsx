@@ -7,8 +7,7 @@ import React from 'react';
 const Navbar = () => {
   return (
     <div className="nav-bar-chat">
-        <img src='/hobby-chat.png' alt="" height={200} width={160} style={{paddingTop: 12,paddingLeft: 20, 
-                                                                      paddingBottom: 12, paddingRight: 20}} />
+        <img src='/hobby-chat.png' alt="" height={200} width={160} style={{padding: 20}} />
         {/* <h1 className={style.heading}>Chat App</h1> */}
     </div>
   );
