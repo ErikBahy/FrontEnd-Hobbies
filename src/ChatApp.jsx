@@ -19,9 +19,9 @@ function ChatApp() {
  console.log(user," user from chat app")
  const {postId} = useParams();
  console.log(postId, "postId from chat")
- 
-
   
+
+ 
   //  console.log(user)
   useEffect(() => {
    getUserFromDatabase(userContext.currentUserId).then((userr)=>setUser(userr))
@@ -31,6 +31,7 @@ function ChatApp() {
         <div className='{style.sectionContainer}'>
           {/* Navbar */}
           <Navbar />
+          
           {/* <img src='/Background1.png' alt='' /> */}
           {user ? <Chat user={user} /> : null}
         </div>
