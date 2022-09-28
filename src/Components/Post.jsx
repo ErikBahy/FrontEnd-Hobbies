@@ -429,16 +429,7 @@ function Post({
                     Join
                   </StyledButton>
                 )}
-                {isJoined ? (
-                  <StyledButton
-                    component={Link}
-                    to={`/chat/${_id}`}
-                    size="small"
-                    variant="contained"
-                  >
-                    Open Chat
-                  </StyledButton>
-                ) : null}
+
                 {renderDeleteButton}
               </Stack>
             }
@@ -492,7 +483,11 @@ function Post({
             alignItems="center"
             width="100%"
           >
-            <Box display="flex" alignItems="center" direction="row">
+            <Stack
+              flexDirection="row"
+              alignItems="center"
+              sx={{ justifyContent: "space-between" }}
+            >
               <Stack flexDirection="row" spacing={0} alignItems="center">
                 <Tooltip title="">
                   <Checkbox
@@ -516,19 +511,29 @@ function Post({
                     }
                   />
                 </Tooltip>
-              </Stack>
 
-              <Tooltip
-                title=""
-                onClick={() => {
-                  setShowComment(!showComment);
-                }}
-              >
-                <IconButton aria-label="add-comment">
-                  <img src={commentIcon} height={20} width={20} />
-                </IconButton>
-              </Tooltip>
-            </Box>
+                <Tooltip
+                  title=""
+                  onClick={() => {
+                    setShowComment(!showComment);
+                  }}
+                >
+                  <IconButton aria-label="add-comment">
+                    <img src={commentIcon} height={20} width={20} />
+                  </IconButton>
+                </Tooltip>
+              </Stack>
+              {isJoined ? (
+                <StyledButton
+                  component={Link}
+                  to={`/chat/${_id}`}
+                  size="small"
+                  variant="contained"
+                >
+                  Open Chat
+                </StyledButton>
+              ) : null}
+            </Stack>
 
             <Box
               display="flex"
