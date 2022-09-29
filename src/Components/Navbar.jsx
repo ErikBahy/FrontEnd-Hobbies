@@ -288,7 +288,11 @@ function Navbar({ called, userId }) {
         <p>Settings</p>
       </MenuItem>
 
-      <MenuItem component={Link} to="/" onClick={handleProfileMenuOpen}>
+      <MenuItem onClick={()=>{
+          handleSignOut()
+        handleProfileMenuOpen()
+        
+        }}>
         <IconButton
           size="large"
           aria-label="account of current user"
@@ -297,9 +301,7 @@ function Navbar({ called, userId }) {
           color="inherit"
         >
           <Logout
-            onClick={() => {
-              handleSignOut();
-            }}
+           
           />
         </IconButton>
         <p>Log Out</p>
