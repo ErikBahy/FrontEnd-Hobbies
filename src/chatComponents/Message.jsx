@@ -6,8 +6,7 @@ const style = {
   sent: `bg-[#118C94] text-white flex-row-reverse text-end float-right`,
   received: `bg-[#e5e5ea] text-black float-left`,
 };
-
-//rounded-tl-full rounded-tr-full    rounded-bl-full   
+  
 
 const Message = ({ message,user }) => {
   const messageClass = 
