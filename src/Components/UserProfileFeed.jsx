@@ -9,7 +9,7 @@ import { Auth } from "aws-amplify";
 
 const url = "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com";
 
-function Feed({ cognitoId, seteffectRun, effectRun, tabValue }) {
+function Feed({ cognitoId, seteffectRun, effectRun, tabValue, settabValue }) {
   const userContext = useContext(UserContext);
   const { posts } = userContext.user;
   const [userProfileFeedEffect, setuserProfileFeedEffect] = useState(false);
@@ -44,6 +44,7 @@ function Feed({ cognitoId, seteffectRun, effectRun, tabValue }) {
     .map((el) => {
       return (
         <Post
+          settabValue={settabValue}
           userProfileFeedEffect={userProfileFeedEffect}
           setuserProfileFeedEffect={setuserProfileFeedEffect}
           seteffectRun={seteffectRun}

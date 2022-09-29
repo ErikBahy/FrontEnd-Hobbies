@@ -60,6 +60,7 @@ function Post({
   setfeedEffectRun,
   userProfileFeedEffect,
   setuserProfileFeedEffect,
+  settabValue,
 }) {
   const userContext = useContext(UserContext);
   const { currentUserMongoId, currentUserId } = userContext;
@@ -83,6 +84,7 @@ function Post({
   };
   const onUsernameClick = () => {
     if (called === "userProfile") {
+      settabValue("MyPosts");
       seteffectRun(!effectRun);
     }
   };
