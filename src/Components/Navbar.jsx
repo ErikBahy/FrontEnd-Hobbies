@@ -276,6 +276,11 @@ function Navbar({ called, userId }) {
       onChange={(e) => setsearchvalue(e.target.value)}
       startAdornment={
         <InputAdornment
+          sx={{
+            "& :hover": {
+              cursor: "pointer",
+            },
+          }}
           onClick={() => {
             setnavbarsearch(searchvalue);
             SearchResults();

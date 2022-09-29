@@ -38,18 +38,21 @@ function Feed({ cognitoId, seteffectRun, effectRun, tabValue }) {
       setloading(false);
     } catch (error) {}
   };
-  const renderPosts = userPosts.map((el) => {
-    return (
-      <Post
-        userProfileFeedEffect={userProfileFeedEffect}
-        setuserProfileFeedEffect={setuserProfileFeedEffect}
-        seteffectRun={seteffectRun}
-        effectRun={effectRun}
-        called="userProfile"
-        post={el}
-      />
-    );
-  });
+  const renderPosts = userPosts
+    .slice(0)
+    .reverse()
+    .map((el) => {
+      return (
+        <Post
+          userProfileFeedEffect={userProfileFeedEffect}
+          setuserProfileFeedEffect={setuserProfileFeedEffect}
+          seteffectRun={seteffectRun}
+          effectRun={effectRun}
+          called="userProfile"
+          post={el}
+        />
+      );
+    });
   useEffect(() => {
     getMongoIdFromCognitoId(cognitoId).then((id) => getUserPosts(id));
   }, [effectRun, userProfileFeedEffect, tabValue]);
