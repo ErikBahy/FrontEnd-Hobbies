@@ -101,6 +101,7 @@ function FollowedData({
                   width: "30px",
                   height: "30px",
                   marginRight: "auto",
+                  "& :hover": { cursor: "pointer" },
                 }}
                 aria-label="recipe"
               >
