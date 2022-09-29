@@ -1,17 +1,9 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Divider,
-  IconButton,
-  Typography,
-} from "@mui/material";
+import { Box, Divider, IconButton, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { getUserFollowers } from "../apiCalls";
+
 import xIcon from "../logos/Group 182.png";
-import axios from "axios";
+
 import JoinedUsersLine from "./JoinedUsersLine";
 import { MoonLoader } from "react-spinners";
 
@@ -24,7 +16,7 @@ function JoinedUsersData({
 }) {
   const [joinedU, setJoinedU] = useState();
   const [effect, seteffect] = useState(false);
-  const [userMongo, setuserMongo] = useState();
+
   const [loading, setloading] = useState(true);
   const style = {
     position: "fixed",
@@ -32,9 +24,6 @@ function JoinedUsersData({
     left: "50%",
     transform: "translate(-50%, -50%)",
   };
-
-  console.log(_id, "mongoid  ", joinedU, "joinedd   ", userMongo, "userMongo");
-  console.log("modal rannnnnnnnn JOINED");
 
   useEffect(() => {
     getJoinedUsers().then((joinedUsers) => {

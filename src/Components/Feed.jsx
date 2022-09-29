@@ -12,8 +12,6 @@ import Post from "./Post";
 import axios from "axios";
 import { Auth } from "aws-amplify";
 
-const url = "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com";
-
 function Feed({ called, setTag, tag, effectRunFromModal }) {
   const [posts, setPosts] = useState([]);
   const [pageNumber, setPageNumber] = useState();
@@ -34,14 +32,16 @@ function Feed({ called, setTag, tag, effectRunFromModal }) {
         headers: {
           Authorization: token,
         },
-      }
+      };
       const page = await axios.get(
-        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/allpostsPages`, requestInfo
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/allpostsPages`,
+        requestInfo
       );
       setTotalPages(parseInt(page.data));
 
       const res = await axios.get(
-        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/allposts?page=${pageNumber}`, requestInfo
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/allposts?page=${pageNumber}`,
+        requestInfo
       );
       const data = res.data;
 
@@ -49,7 +49,7 @@ function Feed({ called, setTag, tag, effectRunFromModal }) {
       data.post.map((el) => i.push(el));
 
       setPosts(i);
-      console.log(posts, " state from feed");
+
       setloading(false);
     } catch (error) {
       console.log(error);
@@ -65,34 +65,37 @@ function Feed({ called, setTag, tag, effectRunFromModal }) {
         headers: {
           Authorization: token,
         },
-      }
+      };
       if (tag.length === 1) {
         const page = await axios.get(
-          `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/allPagesforLS?tags=${tag}`, requestInfo
+          `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/allPagesforLS?tags=${tag}`,
+          requestInfo
         );
         setTotalPages(parseInt(page.data));
         const res = await axios.get(
-          `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/bylocationsport?page=${pageNumber}&tags=${tag}`, requestInfo
+          `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/bylocationsport?page=${pageNumber}&tags=${tag}`,
+          requestInfo
         );
         const data = res.data;
-        console.log(data);
+
         let i = [];
         data.map((el) => i.push(el));
 
         setPosts(i);
       } else if (tag.length > 1) {
         const page = await axios.get(
-          `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/allPagesforTags?tags=${tag}`, requestInfo
+          `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/allPagesforTags?tags=${tag}`,
+          requestInfo
         );
         setTotalPages(parseInt(page.data));
         let str = tag.join();
-        console.log(str);
 
         const res = await axios.get(
-          `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/bytag?page=${pageNumber}&tags=${str}`, requestInfo
+          `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/bytag?page=${pageNumber}&tags=${str}`,
+          requestInfo
         );
         const data = res.data;
-        console.log(data);
+
         let i = [];
         data.map((el) => i.push(el));
 
@@ -108,7 +111,6 @@ function Feed({ called, setTag, tag, effectRunFromModal }) {
 
   useEffect(() => {
     getPostsByTag();
-    console.log("===============");
   }, [tag, feedEffectRun, pageNumber, effectRunFromModal]);
 
   useEffect(() => {

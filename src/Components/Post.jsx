@@ -1,10 +1,8 @@
 import {
   Avatar,
   Modal,
-  Box,
   Button,
   Card,
-  CardActions,
   CardContent,
   CardHeader,
   Divider,
@@ -20,31 +18,19 @@ import React from "react";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
 import Checkbox from "@mui/material/Checkbox";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import AddCommentOutlinedIcon from "@mui/icons-material/AddCommentOutlined";
-import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
 import { useState, useEffect, useContext } from "react";
 import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import AddIcon from "@mui/icons-material/Add";
+
 import "../stlyles.css";
-import { Chip } from "@mui/material";
+
 import { DeleteOutline, MoreVert } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import {
-  checkJoin,
-  checkLike,
-  getCurrentUserId,
-  getMongoIdFromCognitoId,
-  getUserFromCognitoId,
-} from "../apiCalls";
+import { checkJoin, checkLike, getUserFromCognitoId } from "../apiCalls";
 import Comment from "./Comment";
-import Likes from "./likes";
+
 import { UserContext } from "../contexts/UserContext";
 import ShowTags from "./ShowTags";
 import peopleIcon from "../logos/Group 180.png";
@@ -134,14 +120,13 @@ function Post({
       `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/joined/users/${_id}`,
       requestInfo
     );
-    console.log(joinedU.data);
+
     return await joinedU.data;
   };
 
   const [joinedUsers, setJoinedUsers] = useState(false);
   ///////////////////////////////////////////////////////////////
 
-  console.log(commentsOpen, showComment, "comments open");
   const clear = () => {
     setCommentsText("");
     setLiked("");

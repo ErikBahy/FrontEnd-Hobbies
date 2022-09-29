@@ -22,7 +22,6 @@ function EditProfile({
   userDetailsEffect,
   setuserDetailsEffect,
 }) {
-  console.log(called, "called");
   const userContext = useContext(UserContext);
   const myUser = userContext.user;
   const { username, prfilePicture, followers, followed } = userContext.user;
@@ -32,11 +31,9 @@ function EditProfile({
   const [newProfilePicture, setNewProfilePicture] = useState("");
   const navigate = useNavigate();
   const handleNavigateClick = () => {
-    console.log("navigate ran");
     navigate(`/userprofile/${cognitoId}`);
   };
-  console.log(myUser, "myUser here");
-  console.log(newBio, newLocation);
+
   const handleSave = (e) => {
     try {
       e.preventDefault();

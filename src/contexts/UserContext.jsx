@@ -58,7 +58,7 @@ function UserProvider(props) {
         requestInfo
       );
       setUser(res.data);
-      console.log("useeffect ran after edit profile maybe");
+
       setloading(false);
     } catch (error) {
       console.log(error);

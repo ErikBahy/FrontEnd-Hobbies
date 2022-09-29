@@ -13,7 +13,6 @@ function MainPage() {
   const userContext = useContext(UserContext);
   const [effectRunFromModal, seteffectRunFromModal] = useState(false);
   const [cognitoID, setcognitoID] = useState();
-  console.log(cognitoID, "cognito from main adduser");
 
   useEffect(() => {
     userContext.getCurrentUserId().then((cognitoId) => {
@@ -28,7 +27,6 @@ function MainPage() {
     addUser();
   }, [cognitoID]);
 
-  console.log(tag, "from main page");
   return (
     <>
       <Box sx={{ backgroundColor: "background.myBackground" }}>

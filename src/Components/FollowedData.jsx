@@ -18,15 +18,12 @@ function FollowedData({
   const [loading, setloading] = useState(true);
   const navigate = useNavigate();
   const handleNavigateClick = (cognitoId) => {
-    console.log("navigate ran");
     setFollowedU(false);
     setfollowedEffect(!followedEffect);
     seteffectRun(!effectRun);
 
     navigate(`/userprofile/${cognitoId}`);
   };
-  console.log(userId, "mongoid  ", followed, "followers   ");
-  console.log("modal rannnnnnnnn FOLLOWEDs");
 
   useEffect(() => {
     getUserFollowed(userId).then((followersss) => {

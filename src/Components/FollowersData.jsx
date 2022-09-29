@@ -1,8 +1,8 @@
-import { Avatar, Box, Divider, IconButton, Typography } from "@mui/material";
+import { Box, Divider, IconButton, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
-import { loadingBar } from "aws-amplify";
+
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+
 import { MoonLoader } from "react-spinners";
 import { getUserFollowers } from "../apiCalls";
 import xIcon from "../logos/Group 182.png";
@@ -23,17 +23,6 @@ function FollowersData({
   const [followers, setFollowers] = useState();
   const [loading, setloading] = useState(true);
   const [effect, seteffect] = useState(false);
-  const [userMongo, setuserMongo] = useState();
-
-  console.log(
-    userId,
-    "mongoid  !!!!!!",
-    followers,
-    "followers!!!!   ",
-    userMongo,
-    "userMongo"
-  );
-  console.log("modal rannnnnnnnn followers");
 
   useEffect(() => {
     getUserFollowers(userId).then((followersss) => {

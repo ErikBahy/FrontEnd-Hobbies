@@ -46,7 +46,6 @@ export const getUserFromDatabase = async (cognitoId) => {
     requestInfo
   );
 
-  console.log(res.data, "cognito idfrom context");
   return res.data;
 };
 
@@ -62,7 +61,7 @@ export const addUser = async () => {
   // const token = user.signInUserSession.idToken.jwtToken;
   const userId = currentUser.attributes.sub;
   const username = currentUser.username;
-  console.log(username, "usernami robt");
+
   axios.post(
     `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/chechandpost/user/${userId}`,
     {
@@ -73,7 +72,6 @@ export const addUser = async () => {
     },
     requestInfo
   );
-  console.log(userId);
 };
 
 export const getCurrentUserId = async () => {
@@ -95,7 +93,7 @@ export const checkFollow = async (currentUserMongoId, userMongoId) => {
     `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/boolIfFollows/${currentUserMongoId}/${userMongoId}`,
     requestInfo
   );
-  console.log(res.data, "res.data is followed or no");
+
   return await res.data;
 };
 export const checkLike = async (currentUserMongoId, postId) => {
@@ -110,7 +108,7 @@ export const checkLike = async (currentUserMongoId, postId) => {
     `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/boolIfLikes/${currentUserMongoId}/${postId}`,
     requestInfo
   );
-  console.log(res.data, "res.data is followed or no");
+
   return await res.data;
 };
 export const checkJoin = async (currentUserMongoId, postId) => {
@@ -125,7 +123,7 @@ export const checkJoin = async (currentUserMongoId, postId) => {
     `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/boolIfJoined/${currentUserMongoId}/${postId}`,
     requestInfo
   );
-  console.log(res.data, "res.data is followed or no");
+
   return await res.data;
 };
 
@@ -141,7 +139,7 @@ export const getUserFollowers = async (userMongoId) => {
     `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/yourfollowers/${userMongoId}`,
     requestInfo
   );
-  console.log(followers.data);
+
   return await followers.data;
 };
 
@@ -157,7 +155,7 @@ export const getUserFollowed = async (userMongoId) => {
     `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/yourfollowed/${userMongoId}`,
     requestInfo
   );
-  console.log(followed.data);
+
   return await followed.data;
 };
 

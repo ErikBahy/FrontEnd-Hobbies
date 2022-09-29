@@ -26,13 +26,6 @@ const StyledModal = styled(Modal)({
   alignItems: "center",
 });
 
-const UserBox = styled(Box)({
-  display: "flex",
-  alignItems: "center",
-  gap: "10px",
-  marginBottom: "20px",
-});
-
 function NewPostModal({ effectRunFromModal, seteffectRunFromModal, called }) {
   const navigate = useNavigate();
   const [value, setValue] = useState(dayjs());
@@ -47,17 +40,10 @@ function NewPostModal({ effectRunFromModal, seteffectRunFromModal, called }) {
   const userContext = useContext(UserContext);
   const { loggedUser } = userContext;
   const [isposting, setisposting] = useState(false);
-  console.log(value, "date time");
+
   const handleNavigateClick = () => {
     navigate("/newpost");
   };
-
-  // console.log(cognitoId, "and currentuser ", mongoId, "hopefully");
-
-  // console.log(text, "     console logging text ");
-  // console.log(value.$d, " console logging date ");
-  // console.log(limit, "     console logging limit ");
-  // console.log(tag, "     console logging tag from newpostmodal ");
 
   const clear = () => {
     setLimit("");
@@ -66,13 +52,6 @@ function NewPostModal({ effectRunFromModal, seteffectRunFromModal, called }) {
   };
 
   const postPost = async (e) => {
-    /* const user = await Auth.currentAuthenticatedUser()
-    const token = user.signInUserSession.idToken.jwtToken
-    const requestInfo = {
-      headers: {
-        Authorization: token
-      }
-    }*/
     try {
       const userAuth = await Auth.currentAuthenticatedUser();
       const token = userAuth.signInUserSession.idToken.jwtToken;
@@ -96,7 +75,7 @@ function NewPostModal({ effectRunFromModal, seteffectRunFromModal, called }) {
         },
         requestInfo
       );
-      console.log("postPostRan when clicked");
+
       clear();
       setOpen(false);
       seteffectRunFromModal(!effectRunFromModal);

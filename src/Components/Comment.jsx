@@ -7,7 +7,7 @@ import { getUserFromCognitoId } from "../apiCalls";
 
 function Comment(data) {
   const [user, setUser] = useState();
-  console.log(data, "data  ", user, "and user ");
+
   const commentedFromNow = moment(data.data.date).fromNow();
 
   useEffect(() => {

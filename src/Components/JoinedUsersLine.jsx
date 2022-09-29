@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Stack, Typography } from "@mui/material";
+import { Avatar, Button, Stack, Typography } from "@mui/material";
 import React from "react";
 import axios from "axios";
 import { Auth } from "aws-amplify";
@@ -14,7 +14,6 @@ function JoinedUsersLine({
 }) {
   const navigate = useNavigate();
   const handleNavigateClick = (cognitoId) => {
-    console.log("navigate ran");
     seteffectRun(!effectRun);
 
     navigate(`/userprofile/${cognitoId}`);

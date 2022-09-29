@@ -1,4 +1,4 @@
-import { Box, Skeleton, Stack } from "@mui/material";
+import { Skeleton, Stack } from "@mui/material";
 import React, { useContext, useEffect } from "react";
 import Post from "./Post";
 import axios from "axios";
@@ -33,7 +33,7 @@ function Feed({ cognitoId, seteffectRun, effectRun, tabValue }) {
     try {
       const res = await axios.get(endpoint, requestInfo);
       const data = res.data;
-      console.log(data, "user post data from mongo id");
+
       setUserPosts(data);
       setloading(false);
     } catch (error) {}

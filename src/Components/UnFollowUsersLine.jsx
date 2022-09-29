@@ -20,7 +20,6 @@ function UnFollowUsersLine({
 }) {
   const navigate = useNavigate();
   const handleNavigateClick = (cognitoId) => {
-    console.log("navigate ran");
     setFollowersU(false);
     setfollowedEffect(!followedEffect);
     seteffectRun(!effectRun);

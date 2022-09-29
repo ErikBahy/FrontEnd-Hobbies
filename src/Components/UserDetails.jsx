@@ -1,22 +1,16 @@
 import {
   Avatar,
-  Box,
   Button,
-  InputAdornment,
   Modal,
   Skeleton,
   Stack,
-  TextField,
-  Tooltip,
   Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
-import DescriptionIcon from "@mui/icons-material/Description";
-import EditLocationIcon from "@mui/icons-material/EditLocation";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+
 import {
   checkFollow,
   getCurrentUserId,
@@ -31,21 +25,9 @@ import FollowedData from "./FollowedData";
 
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import EditProfileModal from "../EditProfile/EditProfileModal";
+
 import EditProfile from "../EditProfile/EditProfile";
 import { Auth } from "aws-amplify";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
 
 function UserDetails({
   userId,
@@ -71,7 +53,6 @@ function UserDetails({
   } = userContext;
   const navigate = useNavigate();
   const handleNavigateClick = () => {
-    console.log("navigate ran");
     navigate(`/editprofile`);
   };
   const [followState, setfollowState] = useState(isFollowed);
@@ -84,7 +65,7 @@ function UserDetails({
   const handleFollowersUModalClose = () => setFollowersU(false);
   const checkId = userId === userContext.currentUserId;
   const [runEffect, setrunEffect] = useState(false);
-  console.log(bioUpdate, locationUpdate);
+
   const [loading, setloading] = useState(true);
 
   //////////////////////////////
@@ -95,31 +76,6 @@ function UserDetails({
   const [userDetailsEffect, setuserDetailsEffect] = useState(false);
   const [followedEffect, setfollowedEffect] = useState(false);
   //////////////////////////////////
-
-  console.log(
-    userMongoId,
-    " userMongo",
-    currentUserMongoId,
-    "currentUsermongo"
-  );
-
-  const updateUserInfo = async (e) => {
-    const userAuth = await Auth.currentAuthenticatedUser();
-    const token = userAuth.signInUserSession.idToken.jwtToken;
-    const requestInfo = {
-      headers: {
-        Authorization: token,
-      },
-    };
-    e.preventDefault();
-    await axios.patch(
-      ` https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/user/put/${currentUserMongoId}`,
-      requestInfo,
-      { bio: bioUpdate, location: locationUpdate }
-    );
-
-    setOpen(false);
-  };
 
   const follow = async (e, currentUserMongoId, userMongoId) => {
     const userAuth = await Auth.currentAuthenticatedUser();
@@ -135,7 +91,7 @@ function UserDetails({
       `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/followers/${currentUserMongoId}/${userMongoId}`,
       requestInfo
     );
-    console.log(idk.data);
+
     if (runEffect) {
       setrunEffect(false);
     } else {
@@ -157,7 +113,7 @@ function UserDetails({
       `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/unfollow/${currentUserMongoId}/${userMongoId}`,
       requestInfo
     );
-    console.log(idk.data);
+
     if (runEffect) {
       setrunEffect(false);
     } else {
