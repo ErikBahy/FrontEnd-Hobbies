@@ -1,4 +1,4 @@
-import { Box, Skeleton, Stack } from "@mui/material";
+import { Skeleton, Stack } from "@mui/material";
 import React, { useContext, useEffect } from "react";
 import Post from "./Post";
 import axios from "axios";
@@ -18,12 +18,12 @@ function Feed({ cognitoId, seteffectRun, effectRun, tabValue }) {
   const [userPosts, setUserPosts] = useState([]);
   const getUserPosts = async (mongoId) => {
     const userAuth = await Auth.currentAuthenticatedUser();
-      const token = userAuth.signInUserSession.idToken.jwtToken;
-      const requestInfo = {
-        headers: {
-          Authorization: token,
-        },
-      }
+    const token = userAuth.signInUserSession.idToken.jwtToken;
+    const requestInfo = {
+      headers: {
+        Authorization: token,
+      },
+    };
 
     setloading(true);
     const endpoint =
@@ -33,29 +33,32 @@ function Feed({ cognitoId, seteffectRun, effectRun, tabValue }) {
     try {
       const res = await axios.get(endpoint, requestInfo);
       const data = res.data;
-      console.log(data, "user post data from mongo id");
+
       setUserPosts(data);
       setloading(false);
     } catch (error) {}
   };
-  const renderPosts = userPosts.map((el) => {
-    return (
-      <Post
-        userProfileFeedEffect={userProfileFeedEffect}
-        setuserProfileFeedEffect={setuserProfileFeedEffect}
-        seteffectRun={seteffectRun}
-        effectRun={effectRun}
-        called="userProfile"
-        post={el}
-      />
-    );
-  });
+  const renderPosts = userPosts
+    .slice(0)
+    .reverse()
+    .map((el) => {
+      return (
+        <Post
+          userProfileFeedEffect={userProfileFeedEffect}
+          setuserProfileFeedEffect={setuserProfileFeedEffect}
+          seteffectRun={seteffectRun}
+          effectRun={effectRun}
+          called="userProfile"
+          post={el}
+        />
+      );
+    });
   useEffect(() => {
     getMongoIdFromCognitoId(cognitoId).then((id) => getUserPosts(id));
   }, [effectRun, userProfileFeedEffect, tabValue]);
 
   return (
-    <Stack flex={8}>
+    <Stack flex={8} marginBottom={userPosts?.length > 3 ? 12 : 0}>
       {loading ? (
         <Stack
           sx={{ height: "100vh" }}

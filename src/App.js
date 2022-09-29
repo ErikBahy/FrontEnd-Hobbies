@@ -3,11 +3,10 @@ import UserProfile from "./UserProfile/UserProfile";
 import Login from "./Authentication/authentication.jsx";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import EditProfile from "./EditProfile/EditProfile";
-import Navbar from "./Components/Navbar";
-import { Auth, Hub } from "aws-amplify";
+
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "./contexts/UserContext";
-import { addUser, getMongoIdFromCognitoId } from "./apiCalls";
+import { getMongoIdFromCognitoId } from "./apiCalls";
 import NewPostModalNewPage from "./Components/NewPostModalNewPage";
 import EditProfileModal from "./EditProfile/EditProfileModal";
 import ChatApp from "./ChatApp";
@@ -17,7 +16,6 @@ function App() {
   const [isLogged, setIsLogged] = useState(false);
 
   let key = localStorage.getItem("isLogged");
-  console.log(key, "key");
 
   useEffect(() => {
     if (key === "true") {
@@ -27,8 +25,6 @@ function App() {
     }
   }, [key]);
 
-  console.log(isLogged, "is logged");
-
   useEffect(() => {
     userContext.getCurrentUserId().then((cognitoId) => {
       getMongoIdFromCognitoId(cognitoId).then((id) =>
@@ -37,7 +33,6 @@ function App() {
     });
   }, []);
 
-  console.log(isLogged, " is logged ..");
   return (
     <BrowserRouter>
       <Routes>

@@ -1,29 +1,21 @@
 import * as React from "react";
-import { styled, alpha } from "@mui/material/styles";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
-import Badge from "@mui/material/Badge";
+
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import LogoutIcon from "@mui/icons-material/Logout";
-import SearchIcon from "@mui/icons-material/Search";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
+
 import MoreIcon from "@mui/icons-material/MoreVert";
-import { Home, Logout, MoreVert, Settings } from "@mui/icons-material";
+import { Close, Logout, Settings } from "@mui/icons-material";
 import {
-  Button,
-  FormControl,
   InputAdornment,
-  Modal,
   OutlinedInput,
   Popover,
   Stack,
-  TextField,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -31,60 +23,20 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
 import { useContext } from "react";
 import { addUser, getUserFromCognitoId } from "../apiCalls";
-import group169 from "../logos/sportLogo.png";
+
 import logoHobbytales from "../logos/logoHobbyTales.png";
 import userProfileIcon from "../logos/Group 172.png";
 import searchIcon from "../logos/Group 173.png";
-import xIcon from "../logos/Group 182.png";
+
 import backIcon from "../logos/Group 181.png";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
-import FollowersData from "./FollowersData";
+
 import UserSearchModal from "./UserSearchModal";
-import { calculateNewValue } from "@testing-library/user-event/dist/utils";
+
 import { Auth } from "aws-amplify";
 
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  flex: 3,
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(2),
-    width: "100%",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "100%",
-    },
-  },
-}));
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
   const percentageINeed = 0.5 * width;
@@ -112,9 +64,8 @@ export function useWindowDimensions() {
 }
 
 function Navbar({ called, userId }) {
-  const { height, width, percentageINeed } = useWindowDimensions();
+  const { percentageINeed } = useWindowDimensions();
 
-  console.log(height, width, "height and width");
   const [username, setusername] = useState("");
   const theme = useTheme();
   const matchesDesktop = useMediaQuery(theme.breakpoints.up("sm"));
@@ -127,8 +78,6 @@ function Navbar({ called, userId }) {
   const [navbarsearch, setnavbarsearch] = useState("");
   const [usersFound, setusersFound] = useState();
   const [modal, setmodal] = useState(false);
-  console.log(usersFound, "users found");
-  console.log(currentUserId, "clg from logout fucntion");
 
   const SearchResults = async () => {
     const userAuth = await Auth.currentAuthenticatedUser();
@@ -137,20 +86,20 @@ function Navbar({ called, userId }) {
       headers: {
         Authorization: token,
       },
-    }
+    };
     const res = await axios.get(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/searchParams?searchQuery=${searchvalue}`, requestInfo
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/searchParams?searchQuery=${searchvalue}`,
+      requestInfo
     );
     const data = res.data;
     setusersFound(data);
-    console.log(data);
   };
 
   async function handleSignOut() {
-    try {    
-      await Auth.signOut()
-      localStorage.setItem("isLogged" , false);
-      window.location.href="/"
+    try {
+      await Auth.signOut();
+      localStorage.setItem("isLogged", false);
+      window.location.href = "/";
     } catch (error) {
       console.log("error signing out: ", error);
     }
@@ -238,9 +187,19 @@ function Navbar({ called, userId }) {
       endAdornment={
         <InputAdornment onClick={() => setsearchvalue("")} position="end">
           <IconButton
-            sx={{ backgroundColor: "navbarColor.light", height: 25, width: 25 }}
+            sx={{
+              backgroundColor: "navbarColor.light",
+              "& :hover": {
+                backgroundColor: "navbarColor.light",
+                height: 17,
+                width: 17,
+                borderRadius: "50%",
+              },
+              height: 20,
+              width: 20,
+            }}
           >
-            <img src={xIcon} height={20} width={20} />
+            <Close sx={{ height: 20, width: 20 }} />
           </IconButton>
         </InputAdornment>
       }
@@ -265,6 +224,11 @@ function Navbar({ called, userId }) {
       onChange={(e) => setsearchvalue(e.target.value)}
       startAdornment={
         <InputAdornment
+          sx={{
+            "& :hover": {
+              cursor: "pointer",
+            },
+          }}
           onClick={() => {
             setnavbarsearch(searchvalue);
             SearchResults();
@@ -278,9 +242,19 @@ function Navbar({ called, userId }) {
       endAdornment={
         <InputAdornment onClick={() => setsearchvalue("")} position="end">
           <IconButton
-            sx={{ backgroundColor: "navbarColor.light", height: 25, width: 25 }}
+            sx={{
+              backgroundColor: "navbarColor.light",
+              "& :hover": {
+                backgroundColor: "navbarColor.light",
+                height: 17,
+                width: 17,
+                borderRadius: "50%",
+              },
+              height: 20,
+              width: 20,
+            }}
           >
-            <img src={xIcon} height={20} width={20} />
+            <Close sx={{ height: 20, width: 20 }} />
           </IconButton>
         </InputAdornment>
       }

@@ -11,17 +11,18 @@ function Tags({ called, setTag, tag }) {
   //   { title: "Fier", category: "City" },
   // ];
   const [tags, setTags] = useState([]);
-  // console.log(tags, " state hereeee");
+
   const getTags = async () => {
     const userAuth = await Auth.currentAuthenticatedUser();
-      const token = userAuth.signInUserSession.idToken.jwtToken;
-      const requestInfo = {
-        headers: {
-          Authorization: token,
-        },
-      }
+    const token = userAuth.signInUserSession.idToken.jwtToken;
+    const requestInfo = {
+      headers: {
+        Authorization: token,
+      },
+    };
     const res = await axios.get(
-      "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/locations", requestInfo
+      "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/locations",
+      requestInfo
     );
     const data = res.data;
 
@@ -31,16 +32,15 @@ function Tags({ called, setTag, tag }) {
     );
     // setTags(data.map((el)=>[...tags , { title: el.text, _id: el._id, category: "location" }]))
 
-    // console.log(i, "tags heree");
-
     const response = await axios.get(
-      "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/sports", requestInfo
+      "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/sports",
+      requestInfo
     );
     const sportTags = response.data;
     sportTags.map((el) =>
       i.push({ title: el.text, _id: el._id, category: "Sport" })
     );
-    console.log(i, " from tags");
+
     setTags(i);
   };
 

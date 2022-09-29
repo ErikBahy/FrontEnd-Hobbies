@@ -11,11 +11,7 @@ import {
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  getCurrentUserId,
- 
-  updateUserInfo,
-} from "../apiCalls";
+import { getCurrentUserId, updateUserInfo } from "../apiCalls";
 import { UserContext } from "../contexts/UserContext";
 import xIcon from "../logos/Group 182.png";
 import FileBase from "react-file-base64";
@@ -26,7 +22,6 @@ function EditProfile({
   userDetailsEffect,
   setuserDetailsEffect,
 }) {
-  console.log(called, "called");
   const userContext = useContext(UserContext);
   const myUser = userContext.user;
   const { username, prfilePicture, followers, followed } = userContext.user;
@@ -36,19 +31,24 @@ function EditProfile({
   const [newProfilePicture, setNewProfilePicture] = useState("");
   const navigate = useNavigate();
   const handleNavigateClick = () => {
-    console.log("navigate ran");
     navigate(`/userprofile/${cognitoId}`);
   };
-  console.log(myUser, "myUser here");
-  console.log(newBio, newLocation);
+
   const handleSave = (e) => {
     try {
       e.preventDefault();
-      updateUserInfo(myUser._id, newBio, newLocation, newProfilePicture);
+      updateUserInfo(
+        myUser._id,
+        newBio,
+        newLocation,
+        newProfilePicture,
+        setuserDetailsEffect,
+        userDetailsEffect,
+        called
+      );
       handleNavigateClick();
       if (called === "userdetails") {
         setOpen(false);
-        setuserDetailsEffect(!userDetailsEffect);
       }
     } catch (error) {
       console.log(error);

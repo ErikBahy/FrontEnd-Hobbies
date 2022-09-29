@@ -1,24 +1,22 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Divider,
-  IconButton,
-  Typography,
-} from "@mui/material";
+import { Box, Divider, IconButton, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { getUserFollowers } from "../apiCalls";
+
 import xIcon from "../logos/Group 182.png";
-import axios from "axios";
+
 import JoinedUsersLine from "./JoinedUsersLine";
 import { MoonLoader } from "react-spinners";
 
-function JoinedUsersData({ _id, getJoinedUsers, setJoinedUsers }) {
+function JoinedUsersData({
+  _id,
+  getJoinedUsers,
+  setJoinedUsers,
+  effectRun,
+  seteffectRun,
+}) {
   const [joinedU, setJoinedU] = useState();
   const [effect, seteffect] = useState(false);
-  const [userMongo, setuserMongo] = useState();
+
   const [loading, setloading] = useState(true);
   const style = {
     position: "fixed",
@@ -26,9 +24,6 @@ function JoinedUsersData({ _id, getJoinedUsers, setJoinedUsers }) {
     left: "50%",
     transform: "translate(-50%, -50%)",
   };
-
-  console.log(_id, "mongoid  ", joinedU, "joinedd   ", userMongo, "userMongo");
-  console.log("modal rannnnnnnnn JOINED");
 
   useEffect(() => {
     getJoinedUsers().then((joinedUsers) => {
@@ -81,6 +76,8 @@ function JoinedUsersData({ _id, getJoinedUsers, setJoinedUsers }) {
         joinedU?.map((aFollower) => (
           <Stack width={1} sx={{ overflow: "hidden", overflowY: "scroll" }}>
             <JoinedUsersLine
+              effectRun={effectRun}
+              seteffectRun={seteffectRun}
               aFollower={aFollower}
               seteffect={seteffect}
               _id={_id}

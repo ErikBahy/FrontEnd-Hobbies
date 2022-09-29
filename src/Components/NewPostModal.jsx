@@ -1,36 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import Tooltip from "@mui/material/Tooltip";
-import Tags from "./Tags";
+
 import {
-  Avatar,
   Box,
-  Button,
   Fab,
-  InputAdornment,
   Modal,
   styled,
-  TextField,
-  Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { Stack } from "@mui/system";
-import { AccountCircle } from "@mui/icons-material";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+
 import dayjs from "dayjs";
 import axios from "axios";
-import {
-  getCurrentUserId,
-  getMongoIdFromCognitoId,
-  getUserFromCognitoId,
-  addUser,
-} from "../apiCalls";
+import { getCurrentUserId, getUserFromCognitoId, addUser } from "../apiCalls";
 import { UserContext } from "../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
-import peopleIcon from "../logos/Group 180.png";
+
 import NewPostModalNewPage from "./NewPostModalNewPage";
 import { Auth } from "aws-amplify";
 
@@ -40,14 +26,7 @@ const StyledModal = styled(Modal)({
   alignItems: "center",
 });
 
-const UserBox = styled(Box)({
-  display: "flex",
-  alignItems: "center",
-  gap: "10px",
-  marginBottom: "20px",
-});
-
-function NewPostModal({ effectRunFromModal, seteffectRunFromModal }) {
+function NewPostModal({ effectRunFromModal, seteffectRunFromModal, called }) {
   const navigate = useNavigate();
   const [value, setValue] = useState(dayjs());
   const theme = useTheme();
@@ -61,17 +40,10 @@ function NewPostModal({ effectRunFromModal, seteffectRunFromModal }) {
   const userContext = useContext(UserContext);
   const { loggedUser } = userContext;
   const [isposting, setisposting] = useState(false);
-  console.log(value, "date time");
+
   const handleNavigateClick = () => {
     navigate("/newpost");
   };
-
-  // console.log(cognitoId, "and currentuser ", mongoId, "hopefully");
-
-  // console.log(text, "     console logging text ");
-  // console.log(value.$d, " console logging date ");
-  // console.log(limit, "     console logging limit ");
-  // console.log(tag, "     console logging tag from newpostmodal ");
 
   const clear = () => {
     setLimit("");
@@ -80,13 +52,6 @@ function NewPostModal({ effectRunFromModal, seteffectRunFromModal }) {
   };
 
   const postPost = async (e) => {
-    /* const user = await Auth.currentAuthenticatedUser()
-    const token = user.signInUserSession.idToken.jwtToken
-    const requestInfo = {
-      headers: {
-        Authorization: token
-      }
-    }*/
     try {
       const userAuth = await Auth.currentAuthenticatedUser();
       const token = userAuth.signInUserSession.idToken.jwtToken;
@@ -94,7 +59,7 @@ function NewPostModal({ effectRunFromModal, seteffectRunFromModal }) {
         headers: {
           Authorization: token,
         },
-      }
+      };
       setisposting(true);
       e.preventDefault();
       await axios.post(
@@ -107,9 +72,10 @@ function NewPostModal({ effectRunFromModal, seteffectRunFromModal }) {
           startTime: value.$d,
           username: loggedUser.username,
           tags: tag,
-        }, requestInfo
+        },
+        requestInfo
       );
-      console.log("postPostRan when clicked");
+
       clear();
       setOpen(false);
       seteffectRunFromModal(!effectRunFromModal);
@@ -134,7 +100,7 @@ function NewPostModal({ effectRunFromModal, seteffectRunFromModal }) {
         sx={{
           position: "fixed",
           bottom: 50,
-          right: { xs: "calc(0% + 30px)", md: 30 },
+          right: { xs: "calc(0% + 15px)", md: 30 },
         }}
         onClick={(e) => {
           matches ? setOpen(true) : handleNavigateClick();
@@ -154,6 +120,7 @@ function NewPostModal({ effectRunFromModal, seteffectRunFromModal }) {
         aria-describedby="modal-modal-description"
       >
         <NewPostModalNewPage
+          calledd={called}
           seteffectRunFromModal={seteffectRunFromModal}
           effectRunFromModal={effectRunFromModal}
           setOpen={setOpen}

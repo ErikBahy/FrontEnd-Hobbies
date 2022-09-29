@@ -1,13 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import AddIcon from "@mui/icons-material/Add";
-import Tooltip from "@mui/material/Tooltip";
+
 import Tags from "./Tags";
 import {
   Avatar,
   Box,
   Button,
   Divider,
-  Fab,
   IconButton,
   InputAdornment,
   Modal,
@@ -18,32 +16,20 @@ import {
   useTheme,
 } from "@mui/material";
 import { Stack } from "@mui/system";
-import { AccountCircle } from "@mui/icons-material";
+
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs from "dayjs";
 import axios from "axios";
-import {
-  getCurrentUserId,
-  getMongoIdFromCognitoId,
-  getUserFromCognitoId,
-  addUser,
-} from "../apiCalls";
+import { getCurrentUserId, getUserFromCognitoId } from "../apiCalls";
 import { UserContext } from "../contexts/UserContext";
 import xIcon from "../logos/Group 182.png";
 import peopleIcon from "../logos/Group 180.png";
 import calendarIcon from "../logos/Group 179.png";
 import { Link, useNavigate } from "react-router-dom";
 import { Auth } from "aws-amplify";
-import moment from "moment";
-
-const StyledModal = styled(Modal)({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-});
 
 const UserBox = styled(Box)({
   display: "flex",
@@ -53,13 +39,14 @@ const UserBox = styled(Box)({
 });
 
 function NewPostModalNewPage({
+  calledd,
   setOpen,
   called,
   seteffectRunFromModal,
   effectRunFromModal,
 }) {
   const [value, setValue] = useState(dayjs());
-  console.log(value.$d.toString(), "date using moment");
+
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const [text, setText] = useState("");
@@ -74,16 +61,8 @@ function NewPostModalNewPage({
 
   const navigate = useNavigate();
   const handleNavigateClick = () => {
-    console.log("navigate ran");
     navigate("/mainPage");
   };
-
-  // console.log(cognitoId, "and currentuser ", mongoId, "hopefully");
-
-  // console.log(text, "     console logging text ");
-  // console.log(value.$d, " console logging date ");
-  // console.log(limit, "     console logging limit ");
-  // console.log(tag, "     console logging tag from NewPostModalNewPage ");
 
   const clear = () => {
     setLimit("");
@@ -92,13 +71,6 @@ function NewPostModalNewPage({
   };
 
   const postPost = async (e) => {
-    /* const user = await Auth.currentAuthenticatedUser()
-    const token = user.signInUserSession.idToken.jwtToken
-    const requestInfo = {
-      headers: {
-        Authorization: token
-      }
-    }*/
     try {
       const userAuth = await Auth.currentAuthenticatedUser();
       const token = userAuth.signInUserSession.idToken.jwtToken;
@@ -122,8 +94,11 @@ function NewPostModalNewPage({
         },
         requestInfo
       );
-      handleNavigateClick();
-      console.log("postPostRan when clicked");
+
+      if (calledd !== "UserProfile") {
+        handleNavigateClick();
+      }
+
       clear();
       setisposting(false);
       setOpen(false);

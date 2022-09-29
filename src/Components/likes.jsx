@@ -5,16 +5,18 @@ import { getUserFromCognitoId } from "../apiCalls";
 
 function Likes(data) {
   const [user, setUser] = useState();
-  console.log(data , "data  " , user , "and user " );
 
   useEffect(() => {
-    getUserFromCognitoId(data.data.commentCognitoId).then((userr) => setUser(userr));
+    getUserFromCognitoId(data.data.commentCognitoId).then((userr) =>
+      setUser(userr)
+    );
   }, []);
 
-
   return (
-    <Stack display={"flex"}> 
-      <Typography>{user?.username} : {data?.data?.likes}</Typography>
+    <Stack display={"flex"}>
+      <Typography>
+        {user?.username} : {data?.data?.likes}
+      </Typography>
     </Stack>
   );
 }

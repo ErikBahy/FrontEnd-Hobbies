@@ -1,10 +1,8 @@
 import {
   Avatar,
   Modal,
-  Box,
   Button,
   Card,
-  CardActions,
   CardContent,
   CardHeader,
   Divider,
@@ -14,41 +12,31 @@ import {
   styled,
   Tooltip,
   Typography,
+  Popover,
 } from "@mui/material";
 import React from "react";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
 import Checkbox from "@mui/material/Checkbox";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import AddCommentOutlinedIcon from "@mui/icons-material/AddCommentOutlined";
-import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
 import { useState, useEffect, useContext } from "react";
 import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import AddIcon from "@mui/icons-material/Add";
+
 import "../stlyles.css";
-import { Chip } from "@mui/material";
+
 import { DeleteOutline, MoreVert } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import {
-  checkJoin,
-  checkLike,
-  getCurrentUserId,
-  getMongoIdFromCognitoId,
-  getUserFromCognitoId,
-} from "../apiCalls";
+import { checkJoin, checkLike, getUserFromCognitoId } from "../apiCalls";
 import Comment from "./Comment";
-import Likes from "./likes";
+
 import { UserContext } from "../contexts/UserContext";
 import ShowTags from "./ShowTags";
 import peopleIcon from "../logos/Group 180.png";
 import calendarIcon from "../logos/Group 179.png";
 import commentIcon from "../logos/Group 175.png";
+import chatIcon from "../logos/chat_2.png";
 import { Auth } from "aws-amplify";
 
 //////////////////////////////////////////////
@@ -85,6 +73,21 @@ function Post({
   const [postLikes, setpostLikes] = useState();
   const [liked, setLiked] = useState();
   const [isJoined, setisJoined] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+    setTimeout(() => {
+      setAnchorEl(false);
+    }, 2000);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
 
   const [userWhoPosted, setuserWhoPosted] = useState();
 
@@ -117,14 +120,13 @@ function Post({
       `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/joined/users/${_id}`,
       requestInfo
     );
-    console.log(joinedU.data);
+
     return await joinedU.data;
   };
 
   const [joinedUsers, setJoinedUsers] = useState(false);
   ///////////////////////////////////////////////////////////////
 
-  console.log(commentsOpen, showComment, "comments open");
   const clear = () => {
     setCommentsText("");
     setLiked("");
@@ -370,10 +372,10 @@ function Post({
                 {currentUserId == postCognitoId ? (
                   <>
                     <StyledButton
-                      onClick={() =>
+                      onClick={(e) =>
                         joined?.length > 0
                           ? setJoinedUsers(true)
-                          : setJoinedUsers(false)
+                          : handleClick(e)
                       }
                       sx={{
                         fontSize: "10px",
@@ -383,16 +385,24 @@ function Post({
                     >
                       Check{" "}
                     </StyledButton>
-                    <StyledButton
-                      component={Link}
-                      to={`/chat/${_id}`}
-                      target={"_blank"}
-                      size="small"
-                      variant="contained"
-                      sx={{ marginLeft: 1 }}
+                    <Popover
+                      id={id}
+                      open={open}
+                      anchorEl={anchorEl}
+                      onClose={handleClose}
+                      anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "left",
+                      }}
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "center",
+                      }}
                     >
-                      Open Chat
-                    </StyledButton>
+                      <Typography sx={{ p: 2 }}>
+                        No one has joined yet
+                      </Typography>
+                    </Popover>
                   </>
                 ) : isJoined === true ? (
                   <StyledButton
@@ -407,7 +417,7 @@ function Post({
                   >
                     Leave
                   </StyledButton>
-                ) : joined?.length == limit ? (
+                ) : numberJoined == limit ? (
                   <StyledButton
                     disabled
                     sx={{ paddingX: 1 }}
@@ -479,81 +489,84 @@ function Post({
           />
 
           <Stack
-            direction="row"
-            justifyContent="space-between"
+            flexDirection="row"
             alignItems="center"
-            width="100%"
+            sx={{ justifyContent: "space-between" }}
           >
-            <Stack
-              flexDirection="row"
-              alignItems="center"
-              sx={{ justifyContent: "space-between" }}
-            >
-              <Stack flexDirection="row" spacing={0} alignItems="center">
-                <Tooltip title="">
-                  <Checkbox
-                    sx={{ width: 20, height: 20 }}
-                    checked={checked}
-                    onClick={
-                      checked ? () => setchecked(false) : () => setchecked(true)
-                    }
-                    onChange={
-                      checked
-                        ? () => {
-                            removeLikeAtPost();
-                          }
-                        : () => {
-                            addLikeAtPost();
-                          }
-                    }
-                    icon={<FavoriteBorder sx={{ width: 20, height: 20 }} />}
-                    checkedIcon={
-                      <Favorite sx={{ color: "red", width: 20, height: 20 }} />
-                    }
-                  />
-                </Tooltip>
+            <Tooltip title="">
+              <Checkbox
+                sx={{ width: 20, height: 20 }}
+                checked={checked}
+                onClick={
+                  checked ? () => setchecked(false) : () => setchecked(true)
+                }
+                onChange={
+                  checked
+                    ? () => {
+                        removeLikeAtPost();
+                      }
+                    : () => {
+                        addLikeAtPost();
+                      }
+                }
+                icon={<FavoriteBorder sx={{ width: 20, height: 20 }} />}
+                checkedIcon={
+                  <Favorite sx={{ color: "red", width: 20, height: 20 }} />
+                }
+              />
+            </Tooltip>
 
-                <Tooltip
-                  title=""
-                  onClick={() => {
-                    setShowComment(!showComment);
-                  }}
-                >
-                  <IconButton aria-label="add-comment">
-                    <img src={commentIcon} height={20} width={20} />
-                  </IconButton>
-                </Tooltip>
-              </Stack>
-              {isJoined ? (
-                <StyledButton
-                  component={Link}
-                  to={`/chat/${_id}`}
-                  size="small"
-                  variant="contained"
-                >
-                  Open Chat
-                </StyledButton>
-              ) : null}
-            </Stack>
-
-            <Box
-              display="flex"
-              direction="row"
-              alignItems="center"
-              sx={{ justifyContent: "space-between" }}
+            <Tooltip
+              sx={{ marginRight: "auto" }}
+              title=""
+              onClick={() => {
+                setShowComment(!showComment);
+              }}
             >
-              {/* <Tooltip title="Join room" sx={{ marginRight: 4 }}>
-                  <IconButton
-                    onClick={() =>
-                      (window.location.href =
-                        "https://d3rr23y8wyk3tl.cloudfront.net/")
-                    }
-                    aria-label="join-room"
-                  >
-                    <MeetingRoomIcon />
-                  </IconButton>
-                </Tooltip> */}
-            </Box>
+              <IconButton aria-label="add-comment">
+                <img src={commentIcon} height={20} width={20} />
+              </IconButton>
+            </Tooltip>
+            {currentUserId == postCognitoId ? (
+              <Button
+                startIcon={<img src={chatIcon} height={15} width={15} />}
+                color="primary"
+                sx={{
+                  marginLeft: "auto",
+                  marginRight: 1,
+                  fontSize: "10px",
+                  padding: "0px 0px ",
+                  height: "25px",
+                }}
+                component={Link}
+                to={`/chat/${_id}`}
+                target={"_blank"}
+                size="small"
+                variant="outlined"
+              >
+                Chat
+              </Button>
+            ) : null}
+            {isJoined ? (
+              <Button
+                startIcon={<img src={chatIcon} height={15} width={15} />}
+                color="primary"
+                sx={{
+                  marginLeft: "auto",
+                  marginRight: 1,
+                  fontSize: "10px",
+                  padding: "0px 0px ",
+                  height: "25px",
+                }}
+                to={`/chat/${_id}`}
+                component={Link}
+                target={"_blank"}
+                size="small"
+                variant="outlined"
+              >
+                Chat
+              </Button>
+            ) : null}
           </Stack>
 
           <Stack flexDirection="row">
@@ -592,7 +605,13 @@ function Post({
           <Stack>
             {showComment ? (
               <>
-                <FormControl>
+                <FormControl
+                  onSubmit={() => {
+                    postComment();
+                    setcommentsOpen(!commentsOpen);
+                    setShowComment(!showComment);
+                  }}
+                >
                   <OutlinedInput
                     size="small"
                     id="outlined-adornment-weight"
@@ -601,6 +620,12 @@ function Post({
                     endAdornment={
                       <InputAdornment position="end">
                         <StyledButton
+                          type="submit"
+                          onSubmit={() => {
+                            postComment();
+                            setcommentsOpen(!commentsOpen);
+                            setShowComment(!showComment);
+                          }}
                           onClick={() => {
                             postComment();
                             setcommentsOpen(!commentsOpen);
@@ -642,6 +667,8 @@ function Post({
             aria-describedby="modal-modal-description"
           >
             <JoinedUsersData
+              effectRun={effectRun}
+              seteffectRun={seteffectRun}
               setJoinedUsers={setJoinedUsers}
               _id={_id}
               getJoinedUsers={getJoinedUsers}
