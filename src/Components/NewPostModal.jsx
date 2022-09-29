@@ -1,36 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import Tooltip from "@mui/material/Tooltip";
-import Tags from "./Tags";
+
 import {
-  Avatar,
   Box,
-  Button,
   Fab,
-  InputAdornment,
   Modal,
   styled,
-  TextField,
-  Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { Stack } from "@mui/system";
-import { AccountCircle } from "@mui/icons-material";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+
 import dayjs from "dayjs";
 import axios from "axios";
-import {
-  getCurrentUserId,
-  getMongoIdFromCognitoId,
-  getUserFromCognitoId,
-  addUser,
-} from "../apiCalls";
+import { getCurrentUserId, getUserFromCognitoId, addUser } from "../apiCalls";
 import { UserContext } from "../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
-import peopleIcon from "../logos/Group 180.png";
+
 import NewPostModalNewPage from "./NewPostModalNewPage";
 import { Auth } from "aws-amplify";
 
@@ -47,7 +33,7 @@ const UserBox = styled(Box)({
   marginBottom: "20px",
 });
 
-function NewPostModal({ effectRunFromModal, seteffectRunFromModal }) {
+function NewPostModal({ effectRunFromModal, seteffectRunFromModal, called }) {
   const navigate = useNavigate();
   const [value, setValue] = useState(dayjs());
   const theme = useTheme();
@@ -94,7 +80,7 @@ function NewPostModal({ effectRunFromModal, seteffectRunFromModal }) {
         headers: {
           Authorization: token,
         },
-      }
+      };
       setisposting(true);
       e.preventDefault();
       await axios.post(
@@ -107,7 +93,8 @@ function NewPostModal({ effectRunFromModal, seteffectRunFromModal }) {
           startTime: value.$d,
           username: loggedUser.username,
           tags: tag,
-        }, requestInfo
+        },
+        requestInfo
       );
       console.log("postPostRan when clicked");
       clear();
@@ -134,7 +121,7 @@ function NewPostModal({ effectRunFromModal, seteffectRunFromModal }) {
         sx={{
           position: "fixed",
           bottom: 50,
-          right: { xs: "calc(0% + 30px)", md: 30 },
+          right: { xs: "calc(0% + 15px)", md: 30 },
         }}
         onClick={(e) => {
           matches ? setOpen(true) : handleNavigateClick();
@@ -154,6 +141,7 @@ function NewPostModal({ effectRunFromModal, seteffectRunFromModal }) {
         aria-describedby="modal-modal-description"
       >
         <NewPostModalNewPage
+          calledd={called}
           seteffectRunFromModal={seteffectRunFromModal}
           effectRunFromModal={effectRunFromModal}
           setOpen={setOpen}

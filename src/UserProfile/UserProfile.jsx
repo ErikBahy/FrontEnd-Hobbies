@@ -7,6 +7,7 @@ import { UserContext } from "../contexts/UserContext";
 import { useParams } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import { useState } from "react";
+import NewPostModal from "../Components/NewPostModal";
 
 function UserProfile() {
   const { cognitoId } = useParams();
@@ -98,6 +99,7 @@ function UserProfile() {
             }}
           ></Box>
         </Stack>
+        <NewPostModal called="UserProfile" />
       </Box>
     </>
   );

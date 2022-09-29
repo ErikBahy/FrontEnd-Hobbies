@@ -15,7 +15,13 @@ import axios from "axios";
 import JoinedUsersLine from "./JoinedUsersLine";
 import { MoonLoader } from "react-spinners";
 
-function JoinedUsersData({ _id, getJoinedUsers, setJoinedUsers }) {
+function JoinedUsersData({
+  _id,
+  getJoinedUsers,
+  setJoinedUsers,
+  effectRun,
+  seteffectRun,
+}) {
   const [joinedU, setJoinedU] = useState();
   const [effect, seteffect] = useState(false);
   const [userMongo, setuserMongo] = useState();
@@ -81,6 +87,8 @@ function JoinedUsersData({ _id, getJoinedUsers, setJoinedUsers }) {
         joinedU?.map((aFollower) => (
           <Stack width={1} sx={{ overflow: "hidden", overflowY: "scroll" }}>
             <JoinedUsersLine
+              effectRun={effectRun}
+              seteffectRun={seteffectRun}
               aFollower={aFollower}
               seteffect={seteffect}
               _id={_id}

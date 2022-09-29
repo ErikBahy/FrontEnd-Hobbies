@@ -53,6 +53,7 @@ const UserBox = styled(Box)({
 });
 
 function NewPostModalNewPage({
+  calledd,
   setOpen,
   called,
   seteffectRunFromModal,
@@ -122,7 +123,10 @@ function NewPostModalNewPage({
         },
         requestInfo
       );
-      handleNavigateClick();
+
+      if (calledd !== "UserProfile") {
+        handleNavigateClick();
+      }
       console.log("postPostRan when clicked");
       clear();
       setisposting(false);

@@ -18,12 +18,12 @@ function Feed({ cognitoId, seteffectRun, effectRun, tabValue }) {
   const [userPosts, setUserPosts] = useState([]);
   const getUserPosts = async (mongoId) => {
     const userAuth = await Auth.currentAuthenticatedUser();
-      const token = userAuth.signInUserSession.idToken.jwtToken;
-      const requestInfo = {
-        headers: {
-          Authorization: token,
-        },
-      }
+    const token = userAuth.signInUserSession.idToken.jwtToken;
+    const requestInfo = {
+      headers: {
+        Authorization: token,
+      },
+    };
 
     setloading(true);
     const endpoint =
@@ -55,7 +55,7 @@ function Feed({ cognitoId, seteffectRun, effectRun, tabValue }) {
   }, [effectRun, userProfileFeedEffect, tabValue]);
 
   return (
-    <Stack flex={8}>
+    <Stack flex={8} marginBottom={userPosts?.length > 3 ? 12 : 0}>
       {loading ? (
         <Stack
           sx={{ height: "100vh" }}

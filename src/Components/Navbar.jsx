@@ -14,7 +14,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import { Home, Logout, MoreVert, Settings } from "@mui/icons-material";
+import { Close, Home, Logout, MoreVert, Settings } from "@mui/icons-material";
 import {
   Button,
   FormControl,
@@ -137,9 +137,10 @@ function Navbar({ called, userId }) {
       headers: {
         Authorization: token,
       },
-    }
+    };
     const res = await axios.get(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/searchParams?searchQuery=${searchvalue}`, requestInfo
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/searchParams?searchQuery=${searchvalue}`,
+      requestInfo
     );
     const data = res.data;
     setusersFound(data);
@@ -147,10 +148,10 @@ function Navbar({ called, userId }) {
   };
 
   async function handleSignOut() {
-    try {    
-      await Auth.signOut()
-      localStorage.setItem("isLogged" , false);
-      window.location.href="/"
+    try {
+      await Auth.signOut();
+      localStorage.setItem("isLogged", false);
+      window.location.href = "/";
     } catch (error) {
       console.log("error signing out: ", error);
     }
@@ -238,9 +239,19 @@ function Navbar({ called, userId }) {
       endAdornment={
         <InputAdornment onClick={() => setsearchvalue("")} position="end">
           <IconButton
-            sx={{ backgroundColor: "navbarColor.light", height: 25, width: 25 }}
+            sx={{
+              backgroundColor: "navbarColor.light",
+              "& :hover": {
+                backgroundColor: "navbarColor.light",
+                height: 17,
+                width: 17,
+                borderRadius: "50%",
+              },
+              height: 20,
+              width: 20,
+            }}
           >
-            <img src={xIcon} height={20} width={20} />
+            <Close sx={{ height: 20, width: 20 }} />
           </IconButton>
         </InputAdornment>
       }
@@ -278,9 +289,19 @@ function Navbar({ called, userId }) {
       endAdornment={
         <InputAdornment onClick={() => setsearchvalue("")} position="end">
           <IconButton
-            sx={{ backgroundColor: "navbarColor.light", height: 25, width: 25 }}
+            sx={{
+              backgroundColor: "navbarColor.light",
+              "& :hover": {
+                backgroundColor: "navbarColor.light",
+                height: 17,
+                width: 17,
+                borderRadius: "50%",
+              },
+              height: 20,
+              width: 20,
+            }}
           >
-            <img src={xIcon} height={20} width={20} />
+            <Close sx={{ height: 20, width: 20 }} />
           </IconButton>
         </InputAdornment>
       }
