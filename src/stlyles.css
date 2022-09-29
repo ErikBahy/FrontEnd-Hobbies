@@ -34,15 +34,17 @@ input[type="file" i] {
 }
 
 .rounded-bl-full {
-  background: #118C94 !important;
+  background: #118c94 !important;
 }
 
 .nav-bar-chat {
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin: 0px;
   width: 100%;
   height: 66px;
-  background-color: #3C3A3B;
+  background-color: #3c3a3b;
 }
 
 @tailwind base;
