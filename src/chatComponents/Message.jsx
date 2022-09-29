@@ -3,7 +3,7 @@ import React from 'react';
 const style = {
   message: `flex break-all items-center m-4 py-2 px-3 `,
   name: `relative mt-[-4rem] text-gray-600 text-xs overflow-auto mb-[5px] mr-[10px]`,
-  sent: `bg-[#395dff] text-white flex-row-reverse text-end float-right`,
+  sent: `bg-[#118C94] text-white flex-row-reverse text-end float-right`,
   received: `bg-[#e5e5ea] text-black float-left`,
 };
 

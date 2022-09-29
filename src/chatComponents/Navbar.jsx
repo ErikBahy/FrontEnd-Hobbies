@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '@mui/material';
+import { Box, width } from '@mui/system';
 /*const style = {
     nav: `bg-gray-800 h-20 flex justify-between items-center p-4`,
     heading: `text-white text-3xl`
@@ -8,9 +9,19 @@ import { Button } from '@mui/material';
 const Navbar = () => {   
   return (
     <div className="nav-bar-chat">
+      {/* <img src='/hobby-chat.png' alt="yo" height={10} width={10} style={{padding: 20}} />   */}
       {/* <button>Go back</button> */}
-      {/* <Button variant="contained" color="secondary" href="/mainpage">Mainpage</Button> */}
-        <img src='/hobby-chat.png' alt="" height={200} width={160} style={{padding: 20}} />
+      <Box
+  m={1}
+ //margin
+  display="flex"
+  justifyContent="flex-end"
+  alignItems="flex-end"
+>
+  <Button variant="contained" color="primary" href='/mainpage' sx={{ height: 35}}>
+    Main page
+  </Button>
+</Box>
         {/* <h1 className={style.heading}>Chat App</h1> */}
     </div>
   );
