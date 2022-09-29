@@ -16,23 +16,17 @@ const style = {
 function ChatApp() {
  const [user , setUser] = useState()
  const userContext = useContext(UserContext)
- console.log(user," user from chat app")
- const {postId} = useParams();
- console.log(postId, "postId from chat")
+ //const {postId} = useParams();
   
 
- 
-  //  console.log(user)
   useEffect(() => {
    getUserFromDatabase(userContext.currentUserId).then((userr)=>setUser(userr))
   }, [userContext.currentUserId]);
   return (
       <div className={style.appContainer}>
         <div className='{style.sectionContainer}'>
-          {/* Navbar */}
           <Navbar />
           
-          {/* <img src='/Background1.png' alt='' /> */}
           {user ? <Chat user={user} /> : null}
         </div>
 
