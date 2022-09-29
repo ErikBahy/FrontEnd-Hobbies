@@ -81,6 +81,11 @@ function Post({
       setAnchorEl(false);
     }, 2000);
   };
+  const onUsernameClick = () => {
+    if (called === "userProfile") {
+      seteffectRun(!effectRun);
+    }
+  };
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -349,6 +354,7 @@ function Post({
                 color="text.primary"
                 component={Link}
                 to={`/userprofile/${postCognitoId}`}
+                onClick={() => onUsernameClick()}
               >
                 {username}
               </Typography>
