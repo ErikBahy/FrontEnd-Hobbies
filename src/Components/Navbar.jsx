@@ -185,23 +185,25 @@ function Navbar({ called, userId }) {
         </InputAdornment>
       }
       endAdornment={
-        <InputAdornment onClick={() => setsearchvalue("")} position="end">
-          <IconButton
-            sx={{
-              backgroundColor: "navbarColor.light",
-              "& :hover": {
+        searchvalue ? (
+          <InputAdornment onClick={() => setsearchvalue("")} position="end">
+            <IconButton
+              sx={{
                 backgroundColor: "navbarColor.light",
-                height: 17,
-                width: 17,
-                borderRadius: "50%",
-              },
-              height: 20,
-              width: 20,
-            }}
-          >
-            <Close sx={{ height: 20, width: 20 }} />
-          </IconButton>
-        </InputAdornment>
+                "& :hover": {
+                  backgroundColor: "navbarColor.light",
+                  height: 17,
+                  width: 17,
+                  borderRadius: "50%",
+                },
+                height: 20,
+                width: 20,
+              }}
+            >
+              <Close sx={{ height: 20, width: 20 }} />
+            </IconButton>
+          </InputAdornment>
+        ) : null
       }
       aria-describedby="outlined-weight-helper-text"
       inputProps={{
@@ -240,23 +242,25 @@ function Navbar({ called, userId }) {
         </InputAdornment>
       }
       endAdornment={
-        <InputAdornment onClick={() => setsearchvalue("")} position="end">
-          <IconButton
-            sx={{
-              backgroundColor: "navbarColor.light",
-              "& :hover": {
+        searchvalue ? (
+          <InputAdornment onClick={() => setsearchvalue("")} position="end">
+            <IconButton
+              sx={{
                 backgroundColor: "navbarColor.light",
-                height: 17,
-                width: 17,
-                borderRadius: "50%",
-              },
-              height: 20,
-              width: 20,
-            }}
-          >
-            <Close sx={{ height: 20, width: 20 }} />
-          </IconButton>
-        </InputAdornment>
+                "& :hover": {
+                  backgroundColor: "navbarColor.light",
+                  height: 17,
+                  width: 17,
+                  borderRadius: "50%",
+                },
+                height: 20,
+                width: 20,
+              }}
+            >
+              <Close sx={{ height: 20, width: 20 }} />
+            </IconButton>
+          </InputAdornment>
+        ) : null
       }
       aria-describedby="outlined-weight-helper-text"
       inputProps={{
@@ -288,11 +292,12 @@ function Navbar({ called, userId }) {
         <p>Settings</p>
       </MenuItem>
 
-      <MenuItem onClick={()=>{
-          handleSignOut()
-        handleProfileMenuOpen()
-        
-        }}>
+      <MenuItem
+        onClick={() => {
+          handleSignOut();
+          handleProfileMenuOpen();
+        }}
+      >
         <IconButton
           size="large"
           aria-label="account of current user"
@@ -300,9 +305,7 @@ function Navbar({ called, userId }) {
           aria-haspopup="true"
           color="inherit"
         >
-          <Logout
-           
-          />
+          <Logout />
         </IconButton>
         <p>Log Out</p>
       </MenuItem>
