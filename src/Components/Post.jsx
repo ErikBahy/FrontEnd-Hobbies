@@ -545,7 +545,7 @@ function Post({
                 }}
                 component={Link}
                 to={`/chat/${_id}`}
-                target={"_blank"}
+                target={"_parent"}
                 size="small"
                 variant="outlined"
               >
@@ -565,7 +565,7 @@ function Post({
                 }}
                 to={`/chat/${_id}`}
                 component={Link}
-                target={"_blank"}
+                target={"_parent"}
                 size="small"
                 variant="outlined"
               >
