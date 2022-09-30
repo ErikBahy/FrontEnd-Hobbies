@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Skeleton, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import moment from "moment/moment";
 import React, { useEffect, useState } from "react";
@@ -7,16 +7,20 @@ import { getUserFromCognitoId } from "../apiCalls";
 
 function Comment(data) {
   const [user, setUser] = useState();
+  const [loading, setloading] = useState(true)
 
   const commentedFromNow = moment(data.data.date).fromNow();
 
   useEffect(() => {
-    getUserFromCognitoId(data.data.commentCognitoId).then((userr) =>
+    getUserFromCognitoId(data.data.commentCognitoId).then((userr) =>{
       setUser(userr)
+      setloading(false);}
     );
   }, []);
 
   return (
+      <>
+    {loading ? <Skeleton  variant="text" sx={{ fontSize: '1rem' }}/> : (
     <Stack paddingLeft="2px" marginBottom={1}>
       <Stack flexDirection="row">
         <Typography
@@ -41,7 +45,9 @@ function Comment(data) {
         </Typography>
       </Stack>
     </Stack>
-  );
+        )}
+        </>
+        );
 }
 
 export default Comment;
