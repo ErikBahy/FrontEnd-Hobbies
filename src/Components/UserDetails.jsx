@@ -133,7 +133,7 @@ function UserDetails({
             follow(e, currentUserMongoId, userMongoId);
           }}
         >
-          follow
+          Follow
         </Button>
       ) : checkId === false && isFollowed === true ? (
         <Button
@@ -372,6 +372,12 @@ function UserDetails({
               Edit Profile
             </Button>
           )
+        ) : loading ? (
+          <Skeleton
+            variant="rectangular"
+            sx={{ width: "95%", my: 1 }}
+            height={25}
+          />
         ) : (
           renderFollowButton
         )}{" "}
