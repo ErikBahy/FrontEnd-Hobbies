@@ -311,12 +311,9 @@ function Post({
       console.log(error);
     }
   };
-  const renderComments =
-    comments.length > 0
-      ? comments.map((data) => {
-          return <Comment data={data} />;
-        })
-      : null;
+  const renderComments = comments.map((data) => {
+    return <Comment data={data} />;
+  });
 
   const addLikeAtPost = async () => {
     try {
@@ -458,7 +455,7 @@ function Post({
 
         <CardContent sx={{ padding: "10px" }}>
           <Typography
-            sx={{ fontSize: 16, wordBreak: "break-all" }}
+            sx={{ fontSize: 16, wordBreak: "break-word" }}
             variant="body2"
             color="text.primary"
           >
