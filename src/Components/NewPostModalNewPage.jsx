@@ -190,7 +190,13 @@ function NewPostModalNewPage({
           type="number"
           value={limit}
           onChange={(e) =>
-            setLimit(e.target.value < 0 ? (e.target.value = 0) : e.target.value)
+            setLimit(
+              e.target.value < 0
+                ? (e.target.value = 0)
+                : e.target.value == NaN
+                ? (e.target.value = 0)
+                : e.target.value
+            )
           }
           InputProps={{
             startAdornment: (
