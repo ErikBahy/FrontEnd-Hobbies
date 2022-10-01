@@ -13,6 +13,8 @@ function FollowedData({
   setfollowedEffect,
   seteffectRun,
   effectRun,
+  settabValue,
+  tabValue,
 }) {
   const [followed, setFollowed] = useState();
   const [loading, setloading] = useState(true);
@@ -21,6 +23,7 @@ function FollowedData({
     setFollowedU(false);
     setfollowedEffect(!followedEffect);
     seteffectRun(!effectRun);
+    settabValue("MyPosts");
 
     navigate(`/userprofile/${cognitoId}`);
   };

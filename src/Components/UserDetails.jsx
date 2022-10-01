@@ -36,6 +36,8 @@ function UserDetails({
   effectRun,
   seteffectRun,
   setdividerLoading,
+  settabValue,
+  tabValue,
 }) {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
@@ -126,7 +128,7 @@ function UserDetails({
         <Button
           size="medium"
           sx={{
-            width: { xs: 0.95, sm: 1 },
+            width: { xs: 0.97, sm: 1 },
           }}
           variant="contained"
           onClick={(e) => {
@@ -139,7 +141,7 @@ function UserDetails({
         <Button
           size="medium"
           sx={{
-            width: { xs: 0.95, sm: 1 },
+            width: { xs: 0.97, sm: 1 },
           }}
           variant="contained"
           onClick={(e) => {
@@ -365,7 +367,7 @@ function UserDetails({
               sx={{
                 color: "text.primary",
                 borderColor: "text.primary",
-                width: { xs: 0.95, sm: 1 },
+                width: { xs: 0.97, sm: 1 },
               }}
               variant="outlined"
             >
@@ -402,6 +404,8 @@ function UserDetails({
             checkId={checkId}
             setFollowersU={setFollowersU}
             userId={checkId ? currentUserMongoId : userMongoId}
+            settabValue={settabValue}
+            tabValue={tabValue}
           />
         </Modal>
         <Modal
@@ -416,6 +420,8 @@ function UserDetails({
           aria-describedby="modal-modal-description"
         >
           <FollowedData
+            settabValue={settabValue}
+            tabValue={tabValue}
             followedEffect={followedEffect}
             setfollowedEffect={setfollowedEffect}
             seteffectRun={seteffectRun}

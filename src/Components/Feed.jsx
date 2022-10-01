@@ -6,6 +6,7 @@ import {
   useTheme,
   useMediaQuery,
   Skeleton,
+  Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Post from "./Post";
@@ -19,6 +20,7 @@ function Feed({ called, setTag, tag, effectRunFromModal }) {
   const [feedEffectRun, setfeedEffectRun] = useState(false);
   const [shouldEffectRun, setshouldEffectRun] = useState(false);
   const [loading, setloading] = useState(true);
+  const [noPosts, setnoPosts] = useState(false);
 
   const theme = useTheme();
   const matchesDesktop = useMediaQuery(theme.breakpoints.up("sm"));
@@ -51,6 +53,11 @@ function Feed({ called, setTag, tag, effectRunFromModal }) {
       setPosts(i);
 
       setloading(false);
+      if (data.length == 0) {
+        setnoPosts(true);
+      } else {
+        setnoPosts(false);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -82,6 +89,11 @@ function Feed({ called, setTag, tag, effectRunFromModal }) {
         data.map((el) => i.push(el));
 
         setPosts(i);
+        if (data.length == 0) {
+          setnoPosts(true);
+        } else {
+          setnoPosts(false);
+        }
       } else if (tag.length > 1) {
         const page = await axios.get(
           `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/allPagesforTags?tags=${tag}`,
@@ -100,6 +112,11 @@ function Feed({ called, setTag, tag, effectRunFromModal }) {
         data.map((el) => i.push(el));
 
         setPosts(i);
+        if (data.length == 0) {
+          setnoPosts(true);
+        } else {
+          setnoPosts(false);
+        }
       } else {
         shouldEffectRun ? setshouldEffectRun(false) : setshouldEffectRun(true);
       }
@@ -138,6 +155,16 @@ function Feed({ called, setTag, tag, effectRunFromModal }) {
             <Skeleton variant="rectangular" height={300} />
             <Skeleton variant="text" height={100} />
             <Skeleton variant="rectangular" height={300} />
+          </Stack>
+        ) : noPosts ? (
+          <Stack
+            height="70vh"
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="center"
+          >
+            {" "}
+            <Typography> No Posts Yet</Typography>{" "}
           </Stack>
         ) : (
           <Box sx={{ flex: { xs: 1, sm: 4 } }}>

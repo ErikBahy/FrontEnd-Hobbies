@@ -19,6 +19,8 @@ function FollowersData({
   setfollowedEffect,
   seteffectRun,
   effectRun,
+  settabValue,
+  tabValue,
 }) {
   const [followers, setFollowers] = useState();
   const [loading, setloading] = useState(true);
@@ -86,6 +88,8 @@ function FollowersData({
         <Stack width={1} sx={{ overflow: "hidden", overflowY: "scroll" }}>
           {followers?.map((aFollower) => (
             <UnFollowUsersLine
+              settabValue={settabValue}
+              tabValue={tabValue}
               setFollowersU={setFollowersU}
               followedEffect={followedEffect}
               setfollowedEffect={setfollowedEffect}

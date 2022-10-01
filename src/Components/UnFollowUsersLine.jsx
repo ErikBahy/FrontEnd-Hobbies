@@ -17,12 +17,15 @@ function UnFollowUsersLine({
   seteffectRun,
   effectRun,
   setFollowersU,
+  settabValue,
+  tabValue,
 }) {
   const navigate = useNavigate();
   const handleNavigateClick = (cognitoId) => {
     setFollowersU(false);
     setfollowedEffect(!followedEffect);
     seteffectRun(!effectRun);
+    settabValue("MyPosts");
 
     navigate(`/userprofile/${cognitoId}`);
   };

@@ -1,4 +1,4 @@
-import { Skeleton, Stack } from "@mui/material";
+import { Skeleton, Stack, Typography } from "@mui/material";
 import React, { useContext, useEffect } from "react";
 import Post from "./Post";
 import axios from "axios";
@@ -9,7 +9,15 @@ import { Auth } from "aws-amplify";
 
 const url = "https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com";
 
-function Feed({ cognitoId, seteffectRun, effectRun, tabValue, settabValue }) {
+function Feed({
+  cognitoId,
+  seteffectRun,
+  effectRun,
+  tabValue,
+  settabValue,
+  setnoPosts,
+  noPosts,
+}) {
   const userContext = useContext(UserContext);
   const { posts } = userContext.user;
   const [userProfileFeedEffect, setuserProfileFeedEffect] = useState(false);
@@ -36,6 +44,11 @@ function Feed({ cognitoId, seteffectRun, effectRun, tabValue, settabValue }) {
 
       setUserPosts(data);
       setloading(false);
+      if (data.length == 0) {
+        setnoPosts(true);
+      } else {
+        setnoPosts(false);
+      }
     } catch (error) {}
   };
   const renderPosts = userPosts
@@ -70,6 +83,21 @@ function Feed({ cognitoId, seteffectRun, effectRun, tabValue, settabValue }) {
         >
           <Skeleton variant="rectangular" height={300} />
           <Skeleton variant="rectangular" height={300} />
+        </Stack>
+      ) : noPosts ? (
+        <Stack
+          height="50vh"
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="center"
+        >
+          {" "}
+          <Typography>
+            {" "}
+            {tabValue == "MyPosts"
+              ? "No Posts Yet"
+              : "You haven't joined any events yet"}
+          </Typography>
         </Stack>
       ) : (
         renderPosts

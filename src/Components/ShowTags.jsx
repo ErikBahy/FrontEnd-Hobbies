@@ -11,28 +11,30 @@ function ShowTags({ tags }) {
 
   const getLocationTag = async () => {
     const userAuth = await Auth.currentAuthenticatedUser();
-      const token = userAuth.signInUserSession.idToken.jwtToken;
-      const requestInfo = {
-        headers: {
-          Authorization: token,
-        },
-      }
+    const token = userAuth.signInUserSession.idToken.jwtToken;
+    const requestInfo = {
+      headers: {
+        Authorization: token,
+      },
+    };
     const res = await axios.get(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/locations/${tags}`, requestInfo
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/locations/${tags}`,
+      requestInfo
     );
     setlocationTag(res.data);
   };
 
   const getSportTag = async () => {
     const userAuth = await Auth.currentAuthenticatedUser();
-      const token = userAuth.signInUserSession.idToken.jwtToken;
-      const requestInfo = {
-        headers: {
-          Authorization: token,
-        },
-      }
+    const token = userAuth.signInUserSession.idToken.jwtToken;
+    const requestInfo = {
+      headers: {
+        Authorization: token,
+      },
+    };
     const res = await axios.get(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/sports/${tags}`, requestInfo
+      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/sports/${tags}`,
+      requestInfo
     );
     setsportTag(res.data);
   };

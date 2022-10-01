@@ -16,9 +16,12 @@ function UserProfile() {
   const [effectRun, seteffectRun] = useState(false);
   const [dividerLoading, setdividerLoading] = useState(true);
   const [tabValue, settabValue] = useState("MyPosts");
+  const [noPosts, setnoPosts] = useState(false);
+
   const check = cognitoId === userContext.currentUserId;
   const handleChange = (event, newValue) => {
     settabValue(newValue);
+    setnoPosts(false);
   };
 
   return (
@@ -43,6 +46,8 @@ function UserProfile() {
               userId={cognitoId}
               bio={bio}
               location={location}
+              settabValue={settabValue}
+              tabValue={tabValue}
             />
 
             {dividerLoading ? (
@@ -83,6 +88,8 @@ function UserProfile() {
             <Stack>
               {" "}
               <Feed
+                setnoPosts={setnoPosts}
+                noPosts={noPosts}
                 settabValue={settabValue}
                 tabValue={tabValue}
                 seteffectRun={seteffectRun}
