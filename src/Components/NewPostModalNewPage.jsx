@@ -9,6 +9,7 @@ import {
   IconButton,
   InputAdornment,
   Modal,
+  Popover,
   styled,
   TextField,
   Typography,
@@ -58,6 +59,19 @@ function NewPostModalNewPage({
   const [mongoId, setmongoId] = useState();
   const userContext = useContext(UserContext);
   const { loggedUser } = userContext;
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+    setTimeout(() => {
+      setAnchorEl(false);
+    }, 2000);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const navigate = useNavigate();
   const handleNavigateClick = () => {
@@ -255,11 +269,33 @@ function NewPostModalNewPage({
           sx={{ width: "100%", marginY: 3 }}
           flex={1}
           onClick={(e) => {
-            postPost(e);
+            if (text && limit && value && tag) {
+              postPost(e);
+            } else {
+              handleClick(e);
+            }
           }}
         >
           {isposting ? "Posting ..." : "Post"}
         </Button>
+        <Popover
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "center",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+        >
+          <Typography sx={{ p: 2 }}>
+            Please fill all of the inputs above
+          </Typography>
+        </Popover>
       </Stack>
     </>
   );

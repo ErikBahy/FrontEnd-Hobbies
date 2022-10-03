@@ -426,7 +426,6 @@ function Post({
                         setnumberJoined((numberJoined) => numberJoined - 1);
                         unjoinPost();
                       }}
-                      sx={{ marginRight: 1 }}
                       size="small"
                       variant="contained"
                     >
