@@ -68,24 +68,46 @@ function Login() {
       await Auth.forgotPassword(username);
       updateFormState(() => ({ ...formState, formType: "forgotPasswordd" }));
       console.log(username, "data");
-    } catch (error) {
-      console.log(error);
+    }  catch (d){
+      console.log(d.message);
+      toast.error(d.message);
     }
   }
   async function forgotPasswordd() {
+    try {
     const { username, authCode, new_password } = formState;
     Auth.forgotPasswordSubmit(username, authCode, new_password);
     updateFormState(() => ({ ...formState, formType: "signedIn" }));
+    }
+    catch (c){
+      console.log(c.message);
+      toast.error(c.message);
+      updateFormState(()=>({...formState, formType: "forgotPasswordd"}))
+    }
   }
-  async function signUp() {
+  async function signUp() { 
+    try {
     const { username, email, password } = formState;
     await Auth.signUp({ username, password, attributes: { email } });
     updateFormState(() => ({ ...formState, formType: "confirmSignUp" }));
+    }
+    catch (b){
+      console.log(b.message);
+      toast.error(b.message);
+      updateFormState(()=>({...formState, formType: "signUp"}))
+    }
   }
   async function confirmSignUp() {
+    try {
     const { username, authCode } = formState;
     await Auth.confirmSignUp(username, authCode);
     updateFormState(() => ({ ...formState, formType: "signIn" }));
+    }
+    catch (a){
+      console.log(a.message);
+      toast.error(a.message);
+      updateFormState(()=>({...formState, formType: "confirmSignUp"}))
+    }
   }
 
   async function signIn() {
@@ -136,6 +158,7 @@ function Login() {
                     <Grid item xs={12}>
                       <TextField
                         required
+                        validate
                         fullWidth
                         label="Username"
                         autoFocus
@@ -147,6 +170,7 @@ function Login() {
                     <Grid item xs={12}>
                       <TextField
                         required
+                        validate
                         fullWidth
                         id="email"
                         label="Email Address"
@@ -159,6 +183,7 @@ function Login() {
                     <Grid item xs={12}>
                       <TextField
                         required
+                        validate
                         fullWidth
                         name="password"
                         label="Password"
@@ -176,7 +201,7 @@ function Login() {
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
-                    onClick={() => {
+                     onClick={() => {
                       signUp();
                       updateFormState(() => ({
                         ...formState,
