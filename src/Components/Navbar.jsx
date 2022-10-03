@@ -457,8 +457,6 @@ function Navbar({ called, userId }) {
                   <Typography
                     variant="h6"
                     noWrap
-                    component={Link}
-                    to="/mainpage"
                     color={"inherit"}
                   >
                     <img src={logoHobbytales} height={30} width={175} />
