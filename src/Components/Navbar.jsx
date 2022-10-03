@@ -78,6 +78,7 @@ function Navbar({ called, userId }) {
   const [navbarsearch, setnavbarsearch] = useState("");
   const [usersFound, setusersFound] = useState();
   const [modal, setmodal] = useState(false);
+  console.log(searchvalue == "");
 
   const SearchResults = async () => {
     const userAuth = await Auth.currentAuthenticatedUser();
@@ -175,7 +176,9 @@ function Navbar({ called, userId }) {
       startAdornment={
         <InputAdornment
           onClick={() => {
-            setnavbarsearch(searchvalue);
+            searchvalue == ""
+              ? setsearchvalue("")
+              : setnavbarsearch(searchvalue);
             SearchResults();
             setmodal(true);
           }}
@@ -232,9 +235,13 @@ function Navbar({ called, userId }) {
             },
           }}
           onClick={() => {
-            setnavbarsearch(searchvalue);
-            SearchResults();
-            setmodal(true);
+            if (searchvalue == "") {
+              setsearchvalue("");
+            } else {
+              setnavbarsearch(searchvalue);
+              SearchResults();
+              setmodal(true);
+            }
           }}
           position="start"
         >
@@ -454,11 +461,7 @@ function Navbar({ called, userId }) {
                     alignItems: "center",
                   }}
                 >
-                  <Typography
-                    variant="h6"
-                    noWrap
-                    color={"inherit"}
-                  >
+                  <Typography variant="h6" noWrap color={"inherit"}>
                     <img src={logoHobbytales} height={30} width={175} />
                   </Typography>
                 </Box>
