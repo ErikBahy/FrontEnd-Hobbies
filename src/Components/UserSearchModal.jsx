@@ -25,42 +25,55 @@ function UserSearchModal({ usersFound }) {
       >
         Results
       </Typography>
+      {usersFound.length > 0 ? (
+        usersFound?.map((aUser) => (
+          <Stack
+            flexDirection="row"
+            alignSelf="flex-start"
+            alignItems="center"
+            justifyContent="flex-start"
+            gap={2}
+            padding={1}
+            sx={{ textDecoration: "none" }}
+            component={Link}
+            to={`/userprofile/${aUser.userCognitoId}`}
+          >
+            <Avatar
+              src={aUser.prfilePicture}
+              sx={{
+                bgcolor: `red`,
+                textDecoration: "none",
+                width: "30px",
+                height: "30px",
+                marginRight: "auto",
+              }}
+              aria-label="recipe"
+            >
+              {aUser?.username.substring(0, 1)}
+            </Avatar>
 
-      {usersFound?.map((aUser) => (
+            <Typography
+              sx={{ textDecoration: "none", color: "text.primary" }}
+              marginRight={1}
+              fontWeight={600}
+            >
+              {aUser?.username}
+            </Typography>
+          </Stack>
+        ))
+      ) : (
         <Stack
-          flexDirection="row"
-          alignSelf="flex-start"
-          alignItems="center"
-          justifyContent="flex-start"
-          gap={2}
-          padding={1}
-          sx={{ textDecoration: "none" }}
-          component={Link}
-          to={`/userprofile/${aUser.userCognitoId}`}
+          sx={{
+            height: "100%",
+            width: "100%",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
         >
-          <Avatar
-            src={aUser.prfilePicture}
-            sx={{
-              bgcolor: `red`,
-              textDecoration: "none",
-              width: "30px",
-              height: "30px",
-              marginRight: "auto",
-            }}
-            aria-label="recipe"
-          >
-            {aUser?.username.substring(0, 1)}
-          </Avatar>
-
-          <Typography
-            sx={{ textDecoration: "none", color: "text.primary" }}
-            marginRight={1}
-            fontWeight={600}
-          >
-            {aUser?.username}
-          </Typography>
+          <Typography>No Users Found</Typography>
         </Stack>
-      ))}
+      )}
     </Stack>
   );
 }

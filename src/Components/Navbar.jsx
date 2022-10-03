@@ -176,11 +176,13 @@ function Navbar({ called, userId }) {
       startAdornment={
         <InputAdornment
           onClick={() => {
-            searchvalue == ""
-              ? setsearchvalue("")
-              : setnavbarsearch(searchvalue);
-            SearchResults();
-            setmodal(true);
+            if (searchvalue == "") {
+              setsearchvalue("");
+            } else {
+              setnavbarsearch(searchvalue);
+              SearchResults();
+              setmodal(true);
+            }
           }}
           position="start"
         >
