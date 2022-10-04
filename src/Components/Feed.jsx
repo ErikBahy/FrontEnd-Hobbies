@@ -143,6 +143,8 @@ function Feed({ called, setTag, tag, effectRunFromModal }) {
         {loading ? (
           <Stack
             sx={{
+              alignContent: "center",
+              justifyContent: "center",
               height: "100vh",
               width: { xs: "100%", sm: "48%" },
               margin: { xs: 2, sm: 1 },
