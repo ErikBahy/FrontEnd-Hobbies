@@ -303,7 +303,7 @@ function UserDetails({
           ) : (
             <Typography
               sx={{
-                paddingLeft: { xs: "8px", sm: 0 },
+                paddingX: { xs: "8px", sm: 0 },
                 fontSize: { xs: "14px", sm: "16px" },
                 fontWeight: { xs: 300, sm: 400 },
               }}

@@ -14,8 +14,6 @@ function JoinedUsersLine({
 }) {
   const navigate = useNavigate();
   const handleNavigateClick = (cognitoId) => {
-    seteffectRun(!effectRun);
-
     navigate(`/userprofile/${cognitoId}`);
   };
 
