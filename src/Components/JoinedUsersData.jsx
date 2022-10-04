@@ -73,8 +73,8 @@ function JoinedUsersData({
           <MoonLoader color="grey" loading speedMultiplier={1} />
         </div>
       ) : (
-        joinedU?.map((aFollower) => (
-          <Stack width={1} sx={{ overflow: "hidden", overflowY: "scroll" }}>
+        <Stack width={1} sx={{ overflow: "hidden", overflowY: "scroll" }}>
+          {joinedU?.map((aFollower) => (
             <JoinedUsersLine
               effectRun={effectRun}
               seteffectRun={seteffectRun}
@@ -83,8 +83,8 @@ function JoinedUsersData({
               _id={_id}
               effect={effect}
             />
-          </Stack>
-        ))
+          ))}
+        </Stack>
       )}
     </Stack>
   );

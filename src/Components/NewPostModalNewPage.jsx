@@ -47,6 +47,7 @@ function NewPostModalNewPage({
   effectRunFromModal,
 }) {
   const [value, setValue] = useState(dayjs());
+  console.log(value.unix());
 
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));

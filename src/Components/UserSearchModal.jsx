@@ -25,7 +25,7 @@ function UserSearchModal({ usersFound }) {
       >
         Results
       </Typography>
-      {usersFound.length > 0 ? (
+      {usersFound?.length > 0 ? (
         usersFound?.map((aUser) => (
           <Stack
             flexDirection="row"
