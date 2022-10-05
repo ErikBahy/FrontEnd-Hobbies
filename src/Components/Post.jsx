@@ -91,7 +91,6 @@ function Post({
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [postLoading, setpostLoading] = useState(true);
   const [postLikes, setpostLikes] = useState(likes.length);
-  console.log(status);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

@@ -78,7 +78,6 @@ function Navbar({ called, userId }) {
   const [navbarsearch, setnavbarsearch] = useState("");
   const [usersFound, setusersFound] = useState();
   const [modal, setmodal] = useState(false);
-  console.log(searchvalue == "");
 
   const SearchResults = async () => {
     const userAuth = await Auth.currentAuthenticatedUser();
