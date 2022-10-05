@@ -76,6 +76,7 @@ function Post({
     postCognitoId,
     _id,
     joined,
+    status,
   } = post;
   const [numberJoined, setnumberJoined] = useState(joined.length);
   const [commentsOpen, setcommentsOpen] = useState(false);
@@ -90,6 +91,7 @@ function Post({
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [postLoading, setpostLoading] = useState(true);
   const [postLikes, setpostLikes] = useState(likes.length);
+  console.log(status);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -250,6 +252,77 @@ function Post({
       )}
     </>
   );
+
+  const renderJoinButton = (
+    <>
+      {currentUserId == postCognitoId ? (
+        <>
+          <StyledButton
+            onClick={(e) =>
+              joined?.length > 0 ? setJoinedUsers(true) : handleClick(e)
+            }
+            sx={{
+              fontSize: "10px",
+            }}
+            size="small"
+            variant="contained"
+          >
+            Check{" "}
+          </StyledButton>
+          <Popover
+            id={id}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "center",
+            }}
+          >
+            <Typography sx={{ p: 2 }}>No one has joined yet</Typography>
+          </Popover>
+        </>
+      ) : isJoined === true ? (
+        <StyledButton
+          onClick={() => {
+            setisJoined(false);
+            setnumberJoined((numberJoined) => numberJoined - 1);
+            unjoinPost();
+          }}
+          size="small"
+          variant="contained"
+        >
+          Leave
+        </StyledButton>
+      ) : numberJoined == limit ? (
+        <StyledButton
+          disabled
+          sx={{ paddingX: 1 }}
+          color="secondary"
+          size="small"
+          variant="contained"
+        >
+          Completed
+        </StyledButton>
+      ) : (
+        <StyledButton
+          onClick={() => {
+            setisJoined(true);
+            setnumberJoined((numberJoined) => numberJoined + 1);
+            joinPost();
+          }}
+          size="small"
+          variant="contained"
+        >
+          Join
+        </StyledButton>
+      )}
+    </>
+  );
   const getLikes = async () => {
     try {
       const userAuth = await Auth.currentAuthenticatedUser();
@@ -384,54 +457,7 @@ function Post({
               }
               action={
                 <Stack flexDirection="row" alignItems="center">
-                  {currentUserId == postCognitoId ? (
-                    <>
-                      <StyledButton
-                        onClick={(e) =>
-                          joined?.length > 0
-                            ? setJoinedUsers(true)
-                            : handleClick(e)
-                        }
-                        sx={{
-                          fontSize: "10px",
-                        }}
-                        size="small"
-                        variant="contained"
-                      >
-                        Check{" "}
-                      </StyledButton>
-                      <Popover
-                        id={id}
-                        open={open}
-                        anchorEl={anchorEl}
-                        onClose={handleClose}
-                        anchorOrigin={{
-                          vertical: "bottom",
-                          horizontal: "left",
-                        }}
-                        transformOrigin={{
-                          vertical: "top",
-                          horizontal: "center",
-                        }}
-                      >
-                        <Typography sx={{ p: 2 }}>
-                          No one has joined yet
-                        </Typography>
-                      </Popover>
-                    </>
-                  ) : isJoined === true ? (
-                    <StyledButton
-                      onClick={() => {
-                        setisJoined(false);
-                        setnumberJoined((numberJoined) => numberJoined - 1);
-                        unjoinPost();
-                      }}
-                      size="small"
-                      variant="contained"
-                    >
-                      Leave
-                    </StyledButton>
-                  ) : numberJoined == limit ? (
+                  {status === "Completed" ? (
                     <StyledButton
                       disabled
                       sx={{ paddingX: 1 }}
@@ -439,20 +465,10 @@ function Post({
                       size="small"
                       variant="contained"
                     >
-                      Completed
+                      Event Finished
                     </StyledButton>
                   ) : (
-                    <StyledButton
-                      onClick={() => {
-                        setisJoined(true);
-                        setnumberJoined((numberJoined) => numberJoined + 1);
-                        joinPost();
-                      }}
-                      size="small"
-                      variant="contained"
-                    >
-                      Join
-                    </StyledButton>
+                    renderJoinButton
                   )}
 
                   {renderDeleteButton}
