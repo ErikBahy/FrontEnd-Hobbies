@@ -77,7 +77,7 @@ function UserProfile() {
                       sx={{ padding: "0px", marginX: "4px" }}
                       component="p"
                       value="JoinedPosts"
-                      label="Joined Posts"
+                      label="Joined Events"
                     />
                   </Tabs>
                 ) : (
