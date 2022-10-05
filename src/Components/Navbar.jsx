@@ -78,7 +78,7 @@ function Navbar({ called, userId }) {
   const [navbarsearch, setnavbarsearch] = useState("");
   const [usersFound, setusersFound] = useState();
   const [modal, setmodal] = useState(false);
-
+  const [loading, setloading] = useState(true);
   const SearchResults = async () => {
     const userAuth = await Auth.currentAuthenticatedUser();
     const token = userAuth.signInUserSession.idToken.jwtToken;
@@ -87,12 +87,16 @@ function Navbar({ called, userId }) {
         Authorization: token,
       },
     };
-    const res = await axios.get(
-      `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/searchParams?searchQuery=${searchvalue}`,
-      requestInfo
-    );
-    const data = res.data;
-    setusersFound(data);
+
+    try {
+      const res = await axios.get(
+        `https://0tcdj2tfi8.execute-api.eu-central-1.amazonaws.com/dev/searchParams?searchQuery=${searchvalue}`,
+        requestInfo
+      );
+      const data = res.data;
+      setusersFound(data);
+      setloading(false);
+    } catch (error) {}
   };
 
   async function handleSignOut() {
@@ -401,6 +405,7 @@ function Navbar({ called, userId }) {
             onClose={() => {
               setsearchvalue("");
               setmodal(false);
+              setloading(true);
             }}
             anchorReference="anchorPosition"
             anchorPosition={{ top: 67, left: 0 }}
@@ -412,7 +417,7 @@ function Navbar({ called, userId }) {
               horizontal: "center",
             }}
           >
-            <UserSearchModal usersFound={usersFound} />
+            <UserSearchModal loading={loading} usersFound={usersFound} />
           </Popover>
 
           <Box
@@ -500,6 +505,7 @@ function Navbar({ called, userId }) {
                   onClose={() => {
                     setsearchvalue("");
                     setmodal(false);
+                    setloading(true);
                   }}
                   anchorReference="anchorPosition"
                   anchorPosition={{ top: 67, left: percentageINeed }}
@@ -511,7 +517,7 @@ function Navbar({ called, userId }) {
                     horizontal: "center",
                   }}
                 >
-                  <UserSearchModal usersFound={usersFound} />
+                  <UserSearchModal loading={loading} usersFound={usersFound} />
                 </Popover>
 
                 <Stack
