@@ -99,7 +99,7 @@ function NewPostModal({ effectRunFromModal, seteffectRunFromModal, called }) {
         title="POST"
         sx={{
           position: "fixed",
-          bottom: 50,
+          bottom: called === "UserProfile " ? 20 : 50,
           right: { xs: "calc(0% + 15px)", md: 30 },
         }}
         onClick={(e) => {
