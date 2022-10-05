@@ -160,121 +160,149 @@ function Navbar({ called, userId }) {
   );
 
   const renderMobileSearchInput = searchOpen ? (
-    <OutlinedInput
-      sx={{
-        padding: 1,
-        color: "background.paper",
-        backgroundColor: "navbarColor.dark",
-        height: "40px",
-        width: 1,
+    <form
+      onSubmit={(e) => {
+        if (searchvalue == "") {
+          e.preventDefault();
+          setsearchvalue("");
+        } else {
+          e.preventDefault();
+          setnavbarsearch(searchvalue);
+          SearchResults();
+          setmodal(true);
+        }
       }}
-      id="outlined-adornment-weight"
-      placeholder="Search"
-      value={searchvalue}
-      onChange={(e) => setsearchvalue(e.target.value)}
-      startAdornment={
-        <InputAdornment
-          onClick={() => {
-            if (searchvalue == "") {
-              setsearchvalue("");
-            } else {
-              setnavbarsearch(searchvalue);
-              SearchResults();
-              setmodal(true);
-            }
-          }}
-          position="start"
-        >
-          <img src={searchIcon} height={20} width={20} />
-        </InputAdornment>
-      }
-      endAdornment={
-        searchvalue ? (
-          <InputAdornment onClick={() => setsearchvalue("")} position="end">
-            <IconButton
-              sx={{
-                backgroundColor: "navbarColor.light",
-                "& :hover": {
-                  backgroundColor: "navbarColor.light",
-                  height: 17,
-                  width: 17,
-                  borderRadius: "50%",
-                },
-                height: 20,
-                width: 20,
-              }}
-            >
-              <Close sx={{ height: 20, width: 20 }} />
-            </IconButton>
+    >
+      <OutlinedInput
+        sx={{
+          padding: 1,
+          color: "background.paper",
+          backgroundColor: "navbarColor.dark",
+          height: "40px",
+          width: 1,
+        }}
+        id="outlined-adornment-weight"
+        placeholder="Search"
+        value={searchvalue}
+        onChange={(e) => setsearchvalue(e.target.value)}
+        startAdornment={
+          <InputAdornment
+            onClick={() => {
+              if (searchvalue == "") {
+                setsearchvalue("");
+              } else {
+                setnavbarsearch(searchvalue);
+                SearchResults();
+                setmodal(true);
+              }
+            }}
+            position="start"
+          >
+            <img src={searchIcon} height={20} width={20} />
           </InputAdornment>
-        ) : null
-      }
-      aria-describedby="outlined-weight-helper-text"
-      inputProps={{
-        "aria-label": "weight",
-      }}
-    />
+        }
+        endAdornment={
+          searchvalue ? (
+            <InputAdornment onClick={() => setsearchvalue("")} position="end">
+              <IconButton
+                sx={{
+                  backgroundColor: "navbarColor.light",
+                  "& :hover": {
+                    backgroundColor: "navbarColor.light",
+                    height: 17,
+                    width: 17,
+                    borderRadius: "50%",
+                  },
+                  height: 20,
+                  width: 20,
+                }}
+              >
+                <Close sx={{ height: 20, width: 20 }} />
+              </IconButton>
+            </InputAdornment>
+          ) : null
+        }
+        aria-describedby="outlined-weight-helper-text"
+        inputProps={{
+          "aria-label": "weight",
+        }}
+      />
+    </form>
   ) : null;
   const renderDesktopSearchInput = (
-    <OutlinedInput
-      sx={{
-        padding: 1,
-        color: "background.paper",
-        backgroundColor: "navbarColor.dark",
-        height: "40px",
-        width: 1,
+    <form
+      onSubmit={(e) => {
+        if (searchvalue == "") {
+          e.preventDefault();
+          setsearchvalue("");
+        } else {
+          e.preventDefault();
+          setnavbarsearch(searchvalue);
+          SearchResults();
+          setmodal(true);
+        }
       }}
-      id="outlined-adornment-weight"
-      placeholder="Search"
-      value={searchvalue}
-      onChange={(e) => setsearchvalue(e.target.value)}
-      startAdornment={
-        <InputAdornment
-          sx={{
-            "& :hover": {
-              cursor: "pointer",
-            },
-          }}
-          onClick={() => {
-            if (searchvalue == "") {
-              setsearchvalue("");
-            } else {
-              setnavbarsearch(searchvalue);
-              SearchResults();
-              setmodal(true);
-            }
-          }}
-          position="start"
-        >
-          <img src={searchIcon} height={20} width={20} />
-        </InputAdornment>
-      }
-      endAdornment={
-        searchvalue ? (
-          <InputAdornment onClick={() => setsearchvalue("")} position="end">
-            <IconButton
-              sx={{
-                backgroundColor: "navbarColor.light",
-                "& :hover": {
-                  backgroundColor: "navbarColor.light",
-                  height: 17,
-                  width: 17,
-                  borderRadius: "50%",
-                },
-                height: 20,
-                width: 20,
-              }}
-            >
-              <Close sx={{ height: 20, width: 20 }} />
-            </IconButton>
+    >
+      <OutlinedInput
+        sx={{
+          padding: 1,
+          color: "background.paper",
+          backgroundColor: "navbarColor.dark",
+          height: "40px",
+          width: 1,
+        }}
+        id="outlined-adornment-weight"
+        placeholder="Search"
+        value={searchvalue}
+        onChange={(e) => setsearchvalue(e.target.value)}
+        startAdornment={
+          <InputAdornment
+            sx={{
+              "& :hover": {
+                cursor: "pointer",
+              },
+            }}
+            onClick={() => {
+              if (searchvalue == "") {
+                setsearchvalue("");
+              } else {
+                setnavbarsearch(searchvalue);
+                SearchResults();
+                setmodal(true);
+              }
+            }}
+            position="start"
+          >
+            <img src={searchIcon} height={20} width={20} />
           </InputAdornment>
-        ) : null
-      }
-      aria-describedby="outlined-weight-helper-text"
-      inputProps={{
-        "aria-label": "weight",
-      }}
-    />
+        }
+        endAdornment={
+          searchvalue ? (
+            <InputAdornment onClick={() => setsearchvalue("")} position="end">
+              <IconButton
+                sx={{
+                  backgroundColor: "navbarColor.light",
+                  "& :hover": {
+                    backgroundColor: "navbarColor.light",
+                    height: 17,
+                    width: 17,
+                    borderRadius: "50%",
+                  },
+                  height: 20,
+                  width: 20,
+                }}
+              >
+                <Close sx={{ height: 20, width: 20 }} />
+              </IconButton>
+            </InputAdornment>
+          ) : null
+        }
+        aria-describedby="outlined-weight-helper-text"
+        inputProps={{
+          "aria-label": "weight",
+        }}
+      />
+    </form>
   );
 
   const renderMobileMenu = (
