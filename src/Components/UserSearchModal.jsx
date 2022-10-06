@@ -4,7 +4,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { MoonLoader } from "react-spinners";
 const style = {
-  position: "fixed",
+  position: "relative",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
